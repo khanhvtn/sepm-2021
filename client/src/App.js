@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
 import Home from './components/Home/Home';
+import Footer from './components/Footer/Footer'
 
 const theme = createMuiTheme({
     typography: {
@@ -41,6 +42,7 @@ const App = () => {
                             </Route>
                         </Switch>
                     </Container>
+                    <Footer title="Footer" description="Something here to give the footer a purpose!" />
                 </div>
             </ThemeProvider>
         </Router>
