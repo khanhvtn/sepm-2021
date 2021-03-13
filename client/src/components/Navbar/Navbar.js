@@ -4,7 +4,7 @@ import useStyles from './styles';
 const Navbar = () => {
     const classes = useStyles();
     return (
-        <AppBar className={classes.appBar} position="static" color="inherit">
+        <AppBar className={classes.appBar} position="sticky" color="inherit">
             <img src={logo} alt="logo" height="60" />
         </AppBar>
     );
