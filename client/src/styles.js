@@ -10,7 +10,6 @@ export default makeStyles((theme) => ({
     heading: {
         color: 'rgba(0,183,255, 1)',
     },
-    
     mainContainer: {
         minHeight: '100vh',
         margin: '30px auto',
