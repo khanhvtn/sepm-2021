@@ -10,11 +10,11 @@ export default makeStyles((theme) => ({
     heading: {
         color: 'rgba(0,183,255, 1)',
     },
-    image: {
-        marginLeft: '15px',
-    },
+    
     mainContainer: {
         minHeight: '100vh',
         margin: '30px auto',
+        padding: '16px',
+        maxWidth: '900px',
     },
 }));
