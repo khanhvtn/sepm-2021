@@ -1,7 +1,7 @@
 import React from 'react';
 import Voucher from './Voucher/Voucher';
 import { useSelector } from 'react-redux';
-import { Grid, CircularProgress, Paper, Container } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import useStyles from './styles';
 const Vouchers = ({ setCurrentId }) => {
     const classes = useStyles();
