@@ -36,6 +36,7 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '0',
         paddingTop: '56.25%', // 16:9,
+
     },
     controls: {
         display: 'flex',
