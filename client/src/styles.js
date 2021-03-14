@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
-        height: '100vh',
     },
     heading: {
         color: 'rgba(0,183,255, 1)',
@@ -12,6 +11,7 @@ export default makeStyles((theme) => ({
         marginLeft: '15px',
     },
     mainContainer: {
-        height: '100%',
+        minHeight: '100vh',
+        margin: '30px auto',
     },
 }));
