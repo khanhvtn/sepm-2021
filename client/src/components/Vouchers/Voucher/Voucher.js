@@ -1,8 +1,7 @@
 import React from 'react';
 import { Grid, Typography, ButtonBase, Paper, Button } from '@material-ui/core';
 
-import { ThumbUpAlt, Delete, MoreHoriz, Edit } from '@material-ui/icons';
-import moment from 'moment';
+import { Delete, Edit } from '@material-ui/icons';
 
 import useStyles from './styles';
 
