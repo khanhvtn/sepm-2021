@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 
-const Banner = () => {
+const Brand = () => {
     const classes = useStyles();
     return (
         <>
@@ -41,4 +41,4 @@ const Banner = () => {
     );
 };
 
-export default Banner;
+export default Brand;
