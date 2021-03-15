@@ -1,5 +1,5 @@
 import useStyles from './styles';
-import { Typography } from '@material-ui/core';
+import { CardActions, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -12,16 +12,16 @@ const Banner = () => {
         <>
             <Card className={classes.root}>
                 <div className={classes.details}>
-                    <CardContent className={classes.branding}>
+                    <CardActions className={classes.branding}>
                         <Avatar className={classes.logo} alt='logo' src='https://source.unsplash.com/featured/?macbook'/>
-                    </CardContent>
+                    </CardActions>
                     <CardContent className={classes.content}>
                         <Typography className={classes.title} component="h5" variant="h5">
                             Student now get 6% free month
                         </Typography>
                     </CardContent>
                     <CardContent className={classes.description}>
-                        <Typography variant="subtitle1" color="textSecondary">
+                        <Typography className={classes.textDescription} variant="subtitle1" color="textSecondary">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                         </Typography>
                     </CardContent>
