@@ -11,6 +11,11 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         width: '50%',
     },
+    detailsNoMedia: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+    },
     branding: {
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(3),
@@ -51,6 +56,10 @@ export default makeStyles((theme) => ({
         fontWeight: 'bold',
     },
 
+    readMore:{
+        fontWeight: 'bold'
+    },
+
     [theme.breakpoints.down('sm')]: {
         logo: {
             width: theme.spacing(6),
@@ -73,6 +82,10 @@ export default makeStyles((theme) => ({
         },
         getButton: {
             border: '2px solid',
+            fontWeight: 'bold',
+            fontSize: 12
+        },
+        readMore:{
             fontWeight: 'bold',
             fontSize: 12
         },

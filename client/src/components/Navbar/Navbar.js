@@ -117,12 +117,14 @@ const Navbar = () => {
                 color="inherit"
             >
                 <Toolbar disableGutters={true}>
-                    <img
-                        className={classes.logo}
-                        src={logo}
-                        alt="logo"
-                        height="60"
-                    />
+                    <Link to="/">
+                        <img
+                            className={classes.logo}
+                            src={logo}
+                            alt="logo"
+                            height="60"
+                        />
+                    </Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />

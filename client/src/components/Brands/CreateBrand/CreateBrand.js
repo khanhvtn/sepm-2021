@@ -1,10 +1,20 @@
 import { Container, Grow, Grid } from '@material-ui/core';
-import Vouchers from '../Vouchers';
-import Form from '../../Form/Form';
+import BrandForm from '../../Form/BrandForm/BrandForm';
+import Brands from '../Brands';
 import useStyles from './styles';
-const CreateVoucher = ({ currentId, setCurrentId }) => {
+import { getBrands } from '../../../actions/brands';
+import React, {useEffect, useState} from 'react';
+import { useDispatch } from 'react-redux';
+
+
+const CreateBrand = () => {
     const classes = useStyles();
-    
+    const dispatch = useDispatch();
+    const [currentId, setCurrentId] = useState(null);
+
+    useEffect(() => {
+        dispatch(getBrands());
+    }, [currentId, dispatch]);
 
     return (
         <Grow in>
@@ -17,10 +27,10 @@ const CreateVoucher = ({ currentId, setCurrentId }) => {
                     spacing={3}
                 >
                     <Grid item xs={12} sm={12} md={8}>
-                        <Vouchers setCurrentId={setCurrentId} />
+                        <Brands setCurrentId={setCurrentId} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
-                        <Form
+                        <BrandForm
                             currentId={currentId}
                             setCurrentId={setCurrentId}
                         />
@@ -31,4 +41,4 @@ const CreateVoucher = ({ currentId, setCurrentId }) => {
     );
 };
 
-export default CreateVoucher;
+export default CreateBrand;

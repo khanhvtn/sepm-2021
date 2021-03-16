@@ -4,8 +4,6 @@ import useStyles from './styles';
 import Carousel from 'react-material-ui-carousel'
 import Banner from '../Banner/Banner'
 import Brand from '../Brands/Brand/Brand'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
     Typography, Button, Link, Grid, GridList, GridListTile 
 } from '@material-ui/core';
@@ -13,7 +11,7 @@ import {
 const Home = () => {
 
     const classes = useStyles();
-    const [width, setWidth] = React.useState(window.innerWidth);
+    const [width, setWidth] = useState(window.innerWidth);
     const breakpoint = 768;
 
     useEffect(() => {
@@ -30,7 +28,7 @@ const Home = () => {
         <>
             <Carousel navButtonsAlwaysInvisible={true}>
                 {[0, 1, 2].map((value) => {
-                        return <Banner />
+                        return <Banner key={value} isBanner={true} item />
                 })}
             </Carousel>
 
