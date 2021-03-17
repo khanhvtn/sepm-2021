@@ -16,6 +16,7 @@ import Footer from './components/Footer/Footer';
 import BrandHome from './components/Brands/BrandHome/BrandHome'
 import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
 import Auth from './components/Auth/Auth';
+import { checkUserLogin } from './actions/auths';
 
 const theme = createMuiTheme({
     typography: {
@@ -28,6 +29,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(checkUserLogin());
         dispatch(getVouchers());
     }, [currentId, dispatch]);
 
