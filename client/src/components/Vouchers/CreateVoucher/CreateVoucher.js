@@ -1,3 +1,4 @@
+import React from 'react';
 import { Container, Grow, Grid } from '@material-ui/core';
 import Vouchers from '../Vouchers';
 import Form from '../../Form/Form';

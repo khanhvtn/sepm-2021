@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import useStyles from './styles';
 import { useDispatch } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import useStyles from './styles';
 import { getVouchers } from './actions/vouchers';
 import Navbar from './components/Navbar/Navbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
+import Auth from './components/Auth/Auth';
 
 const theme = createMuiTheme({
     typography: {
@@ -33,7 +34,7 @@ const App = () => {
                     <Container
                         className={classes.mainContainer}
                         maxWidth="lg"
-                        disableGutters={true}
+                        disableGutters
                     >
                         <Switch>
                             <Route exact path="/create-voucher">
@@ -44,6 +45,12 @@ const App = () => {
                             </Route>
                             <Route exact path="/">
                                 <Home />
+                            </Route>
+                            <Route exact path="/login">
+                                <Auth isSignup={false} />
+                            </Route>
+                            <Route exact path="/register">
+                                <Auth isSignup={true} />
                             </Route>
                             <Route>
                                 <Error />
