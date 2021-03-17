@@ -8,6 +8,7 @@ import {
     InputBase,
     Button,
     Avatar,
+    Link
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -142,7 +143,7 @@ const Navbar = () => {
                 color="inherit"
             >
                 <Toolbar disableGutters={true}>
-                    <Link to="/">
+                    <Link href="/">
                         <img
                             className={classes.logo}
                             src={logo}

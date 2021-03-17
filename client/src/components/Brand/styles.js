@@ -55,7 +55,20 @@ export default makeStyles((theme) => ({
     marginTop: 30,
     marginBottom: 12,
     lineHeight: 1
-  }
+  },
+  suggested: {
+    fontWeight: 'bold',
+    fontSize: '1.25rem',
+    marginTop: 24,
+    marginBottom: 12,
+    lineHeight: 1
+  },
+
+  viewAll: {
+    float: 'right',
+    fontSize: '1rem',
+    lineHeight: 1,
+  },
 
 
 }));
