@@ -25,7 +25,8 @@ export default makeStyles((theme) => ({
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(1),
         textAlign: 'center',
-        marginBottom: 20
+        marginBottom: 20,
+        cursor: "pointer"
         
     },
 
