@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
   content: {
     flex: '1 0 auto',
   },
-  media:{
+  media: {
     width: 2000,
     height: 400
   },
@@ -27,17 +27,17 @@ export default makeStyles((theme) => ({
     marginRight: 10
 
   },
-  action:{
+  action: {
     paddingTop: 20,
     color: "#4a6fe6",
     cursor: "pointer",
-    
+
     '&:hover': {
-      color:"#1243de",
-   },
-  
+      color: "#1243de",
+    },
+
   },
-  brandDesc:{
+  brandDesc: {
     width: 400,
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -47,9 +47,15 @@ export default makeStyles((theme) => ({
     fontSize: 20
   },
 
-  brandDesc1:{
+  brandDesc1: {
     fontSize: 20
+  },
+
+  brandDiscountTagSection: {
+    marginTop: 30,
+    marginBottom: 12,
+    lineHeight: 1
   }
-  
-  
+
+
 }));

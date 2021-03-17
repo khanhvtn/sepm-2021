@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import useStyles from './styles'
-import { Card, CardContent, Typography, Avatar, CardActions, ButtonBase } from '@material-ui/core'
+import { Card, CardContent, Typography, Avatar, Grid } from '@material-ui/core'
 import logo from '../../images/sumo-logo.jpeg'
 import brandImg from '../../images/sumo-brand.jpeg'
 import CardMedia from '@material-ui/core/CardMedia'
-
-
+import BrandDiscountTag from './BrandDiscountTag/BrandDiscountTag'
+import BrandBundle from './BrandBundle/BrandBundle'
 
 
 const Brand = () => {
     const classes = useStyles();
     const [read, setRead] = useState(true)
     return (
+        <>
         <Card className={classes.root}>
             <div className={classes.details}>
                 <CardContent className={classes.content}>
@@ -51,6 +52,27 @@ const Brand = () => {
             /> : <div></div>}
 
         </Card>
+        <Grid item xs={12} md={12} className={classes.brandDiscountTagSection}>
+                <Grid container justify="center" spacing={2}>
+                    {[0, 1, 2, 3].map((value) => (
+                        <Grid xs={12} sm={6} md={3} lg={3} xl={3} key={value} item>
+                            <BrandDiscountTag/>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Grid>
+
+
+            <Grid item xs={12} md={12} className={classes.brandDiscountTagSection}>
+                <Grid container justify="center" spacing={2}>
+                    {[0, 1, 2].map((value) => (
+                        <Grid xs={12} sm={6} md={4} lg={4} xl={4} key={value} item>
+                            <BrandBundle/>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Grid>
+        </>
     )
 }
 
