@@ -12,6 +12,7 @@ import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
 import Auth from './components/Auth/Auth';
+import { checkUserLogin } from './actions/auths';
 
 const theme = createMuiTheme({
     typography: {
@@ -24,6 +25,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(checkUserLogin());
         dispatch(getVouchers());
     }, [currentId, dispatch]);
     return (

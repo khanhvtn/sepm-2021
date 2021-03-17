@@ -58,25 +58,25 @@ const Auth = ({ isSignup }) => {
         setFormData(initialFormData);
         history.push(isSignup ? '/login' : '/register');
     };
-    const googleSuccess = async (res) => {
-        const result = res?.profileObj;
-        const token = res?.tokenId;
-        try {
-            dispatch({
-                type: 'AUTH',
-                data: {
-                    result,
-                    token,
-                },
-            });
-            history.push('/');
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    const googleFailure = () => {
-        console.log('Google Sign In Failure');
-    };
+    // const googleSuccess = async (res) => {
+    //     const result = res?.profileObj;
+    //     const token = res?.tokenId;
+    //     try {
+    //         dispatch({
+    //             type: 'AUTH',
+    //             data: {
+    //                 result,
+    //                 token,
+    //             },
+    //         });
+    //         history.push('/');
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+    // const googleFailure = () => {
+    //     console.log('Google Sign In Failure');
+    // };
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
@@ -143,7 +143,7 @@ const Auth = ({ isSignup }) => {
                     >
                         {isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                         clientId="649113248320-vcuks8cgnta6u2uhdbm67m73go4h9kdh.apps.googleusercontent.com"
                         render={(renderProps) => (
                             <Button
@@ -161,7 +161,7 @@ const Auth = ({ isSignup }) => {
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                         cookiePolicy="single_host_origin"
-                    />
+                    /> */}
                     <Grid container justify="flex-end">
                         <Grid item>
                             <Button onClick={switchAuth}>

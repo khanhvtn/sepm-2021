@@ -19,27 +19,22 @@ import {
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
-    const [user, setUser] = useState(
-        JSON.parse(localStorage.getItem('userProfile'))
-    );
+    const authData = useSelector((state) => state.auth.authData);
+    const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
         null
     );
 
     useEffect(() => {
-        const token = user?.token;
-        //jwt
-
-        setUser(JSON.parse(localStorage.getItem('userProfile')));
-    }, [location]);
+        setUser(authData);
+    }, [authData]);
 
     //Logout
     const logout = () => {

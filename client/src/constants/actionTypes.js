@@ -7,3 +7,4 @@ export const DELETE = 'DELETE';
 // Auth Actions
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+export const CHECKUSERLOGIN = 'CHECKUSERLOGIN';
