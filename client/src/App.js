@@ -8,6 +8,7 @@ import { getVouchers } from './actions/vouchers';
 import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
+import Brand from './components/Brand/Brand'
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
@@ -44,6 +45,10 @@ const App = () => {
                             </Route>
                             <Route exact path="/">
                                 <Home />
+                            </Route>
+
+                            <Route exact path="/brand">
+                                <Brand />
                             </Route>
                             <Route>
                                 <Error />
