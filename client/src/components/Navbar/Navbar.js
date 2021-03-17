@@ -20,7 +20,7 @@ import {
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
