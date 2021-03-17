@@ -90,9 +90,6 @@ export default makeStyles((theme) => ({
             display: 'none',
         },
     },
-    removeStyleLink: {
-        textDecoration: 'none',
-    },
     btnAuth: {
         marginLeft: '10px',
     },

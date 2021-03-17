@@ -2,7 +2,13 @@ import mongoose from 'mongoose';
 
 const voucherSchema = mongoose.Schema(
     {
-        name: { type: String, required: [true, 'Name can not be blanked.'] },
+        title: { type: String, required: [true, 'Title can not be blanked.'] },
+        creator: {
+            type: String,
+        },
+        creatorName: {
+            type: String,
+        },
         description: {
             type: String,
             required: [true, 'Description can not be blanked.'],

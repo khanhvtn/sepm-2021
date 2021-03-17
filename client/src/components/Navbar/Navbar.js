@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useCountUp } from 'react-countup';
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Menu,
@@ -10,7 +9,6 @@ import {
     Button,
     Avatar,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,16 +19,43 @@ import {
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
-import avatar from '../../images/test-image.JPG';
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
     const classes = useStyles();
-    const { countUp } = useCountUp({ end: 1000 });
-    const [auth, setAuth] = useState(true);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
+    const [user, setUser] = useState(
+        JSON.parse(localStorage.getItem('userProfile'))
+    );
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
         null
     );
+
+    useEffect(() => {
+        const token = user?.token;
+        //jwt
+
+        setUser(JSON.parse(localStorage.getItem('userProfile')));
+    }, [location]);
+
+    //Logout
+    const logout = () => {
+        dispatch({
+            type: 'LOGOUT',
+        });
+        history.push('/');
+        setUser(null);
+        handleMenuClose();
+    };
+
+    //handle to go to register page
+    const handleGoToAuth = (type) => {
+        history.push(type === 'register' ? '/register' : '/login');
+    };
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileUnAuthMoreAnchorEl = Boolean(mobileUnAuthMoreAnchorEl);
@@ -85,7 +110,7 @@ const Navbar = () => {
                 <p>My Profile</p>
             </MenuItem>
 
-            <MenuItem onClick={handleMenuClose}>
+            <MenuItem onClick={logout}>
                 <IconButton aria-label="logout" color="inherit">
                     <ExitToApp />
                 </IconButton>
@@ -142,14 +167,14 @@ const Navbar = () => {
             </AppBar> */}
 
                     <div className={classes.grow} />
-                    {auth ? (
+                    {user ? (
                         <>
                             <div className={classes.sectionDesktop}>
                                 <Button
                                     color="inherit"
                                     endIcon={<MonetizationOn />}
                                 >
-                                    {countUp}
+                                    {user.result.points}
                                 </Button>
                                 <IconButton
                                     edge="end"
@@ -159,7 +184,10 @@ const Navbar = () => {
                                     onClick={handleProfileMenuOpen}
                                     color="inherit"
                                 >
-                                    <Avatar alt="Khanh Vo" src={avatar} />
+                                    <Avatar
+                                        alt={user.result.name}
+                                        src={user.result.imageUrl}
+                                    />
                                 </IconButton>
                             </div>
                             <div className={classes.sectionMobile}>
@@ -181,25 +209,17 @@ const Navbar = () => {
                                     className={classes.btnAuth}
                                     variant="outlined"
                                     color="secondary"
+                                    onClick={() => handleGoToAuth('register')}
                                 >
-                                    <Link
-                                        className={classes.removeStyleLink}
-                                        to="/register"
-                                    >
-                                        Register
-                                    </Link>
+                                    Register
                                 </Button>
                                 <Button
                                     className={classes.btnAuth}
                                     variant="contained"
                                     color="secondary"
+                                    onClick={() => handleGoToAuth('login')}
                                 >
-                                    <Link
-                                        className={classes.removeStyleLink}
-                                        to="/login"
-                                    >
-                                        Login
-                                    </Link>
+                                    Login
                                 </Button>
                             </div>
                             <div className={classes.sectionMobileUnAuth}>

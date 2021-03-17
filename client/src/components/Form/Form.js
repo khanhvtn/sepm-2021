@@ -3,16 +3,16 @@ import { TextField, Button, Typography, Paper, Grid } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useStyles from './styles';
-import { createVoucher, updateVoucher } from '../../actions/vouchers';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import useStyles from './styles';
+import { createVoucher, updateVoucher } from '../../actions/vouchers';
 
 const initialVoucherData = {
-    name: '',
+    title: '',
     description: '',
     brand: '',
     category: '',
@@ -31,6 +31,7 @@ const Form = ({ currentId, setCurrentId }) => {
             ? state.vouchers.find((voucher) => voucher._id === currentId)
             : null
     );
+    const user = JSON.parse(localStorage.getItem('userProfile'));
 
     useEffect(() => {
         if (voucher) {
@@ -40,9 +41,16 @@ const Form = ({ currentId, setCurrentId }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (currentId) {
-            dispatch(updateVoucher(currentId, voucherData));
+            dispatch(
+                updateVoucher(currentId, {
+                    ...voucherData,
+                    name: user?.result?.name,
+                })
+            );
         } else {
-            dispatch(createVoucher(voucherData));
+            dispatch(
+                createVoucher({ ...voucherData, name: user?.result?.name })
+            );
         }
         clear();
     };
@@ -65,12 +73,15 @@ const Form = ({ currentId, setCurrentId }) => {
                 </Typography>
                 <TextField
                     fullWidth
-                    name="name"
+                    name="title"
                     variant="outlined"
-                    label="Name"
-                    value={voucherData.name}
+                    label="Title"
+                    value={voucherData.title}
                     onChange={(e) =>
-                        setVoucherData({ ...voucherData, name: e.target.value })
+                        setVoucherData({
+                            ...voucherData,
+                            title: e.target.value,
+                        })
                     }
                 />
                 <TextField

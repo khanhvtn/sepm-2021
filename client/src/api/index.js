@@ -1,19 +1,31 @@
 import axios from 'axios';
 
-const urlVoucher = 'http://localhost:5000/api/vouchers';
 
-export const fetchVouchers = () => axios.get(urlVoucher);
-export const createVoucher = (newVoucher) => axios.post(urlVoucher, newVoucher);
+const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+
+API.interceptors.request.use((req) => {
+    if (localStorage.getItem('userProfile')) {
+        const token = JSON.parse(localStorage.getItem('userProfile')).token;
+        req.headers.Authorization = `Bearer ${token}`;
+    }
+    return req;
+});
+
+
+// API for Voucher
+export const fetchVouchers = () => API.get('/vouchers');
+export const createVoucher = (newVoucher) => API.post('/vouchers', newVoucher);
 export const updateVoucher = (id, updateVoucher) =>
-    axios.patch(`${urlVoucher}/${id}`, updateVoucher);
-export const deleteVoucher = (id) => axios.delete(`${urlVoucher}/${id}`);
+    API.patch(`${'/vouchers'}/${id}`, updateVoucher);
+export const deleteVoucher = (id) => API.delete(`${'/vouchers'}/${id}`);
 
+// API for User
+export const signIn = (formData) => API.post('/user/signin', formData);
+export const signUp = (formData) => API.post('/user/signup', formData);
 
-
-
-const urlBrand = 'http://localhost:5000/api/brands';
-export const fetchBrands = () => axios.get(urlBrand);
-export const createBrand = (newBrand) => axios.post(urlBrand, newBrand);
+// API for Brand
+export const fetchBrands = () => axios.get('/brands');
+export const createBrand = (newBrand) => axios.post('/brands', newBrand);
 export const updateBrand = (id, updateBrand) =>
-    axios.patch(`${urlBrand}/${id}`, updateBrand);
-export const deleteBrand = (id) => axios.delete(`${urlBrand}/${id}`);
+    axios.patch(`${'/brands'}/${id}`, updateBrand);
+export const deleteBrand = (id) => axios.delete(`${'/brands'}/${id}`);
