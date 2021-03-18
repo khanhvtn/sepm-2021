@@ -1,6 +1,14 @@
 import * as api from '../api';
-import { AUTH, CHECKUSERLOGIN } from '../constants/actionTypes';
+import { AUTH, CHECKUSERLOGIN, UPDATE_USER } from '../constants/actionTypes';
 
+export const updateUser = (newUpdateUser) => async (dispatch) => {
+    try {
+        const { data } = await api.updateUser(newUpdateUser);
+        dispatch({ type: UPDATE_USER, data });
+    } catch (error) {
+        console.log(error);
+    }
+};
 export const checkUserLogin = () => async (dispatch) => {
     try {
         /*Check user profile in local storage.

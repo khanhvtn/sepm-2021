@@ -1,4 +1,9 @@
-import { AUTH, LOGOUT, CHECKUSERLOGIN } from '../constants/actionTypes';
+import {
+    AUTH,
+    LOGOUT,
+    CHECKUSERLOGIN,
+    UPDATE_USER,
+} from '../constants/actionTypes';
 
 const authReducer = (state = { authData: null }, action) => {
     switch (action.type) {
@@ -17,6 +22,11 @@ const authReducer = (state = { authData: null }, action) => {
             //clear local storage and update state to null
             localStorage.clear();
             return { ...state, authData: null };
+        case UPDATE_USER:
+            return {
+                ...state,
+                authData: { ...state.authData, result: action?.data },
+            };
         case CHECKUSERLOGIN:
             //update new information for user local storage
             if (action?.data) {

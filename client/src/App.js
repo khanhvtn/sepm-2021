@@ -13,6 +13,7 @@ import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
 import Auth from './components/Auth/Auth';
 import { checkUserLogin } from './actions/auths';
+import UserProfile from './components/User/UserProfile';
 
 const theme = createMuiTheme({
     typography: {
@@ -53,6 +54,9 @@ const App = () => {
                             </Route>
                             <Route exact path="/register">
                                 <Auth isSignup={true} />
+                            </Route>
+                            <Route exact path="/user-profile">
+                                <UserProfile />
                             </Route>
                             <Route>
                                 <Error />

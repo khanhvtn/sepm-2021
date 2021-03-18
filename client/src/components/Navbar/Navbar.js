@@ -51,6 +51,15 @@ const Navbar = () => {
         history.push(type === 'register' ? '/register' : '/login');
     };
 
+    //handle to go to user profile
+    const handleGoToProfile = (type) => {
+        const action = type === 'profile' ? 0 : type === 'wallet' ? 0 : 1;
+        history.push('/user-profile', {
+            action,
+        });
+        handleMenuClose();
+    };
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileUnAuthMoreAnchorEl = Boolean(mobileUnAuthMoreAnchorEl);
 
@@ -80,19 +89,19 @@ const Navbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem>
+            <MenuItem onClick={() => handleGoToProfile('changecoin')}>
                 <IconButton aria-label="change coin" color="inherit">
                     <MonetizationOn />
                 </IconButton>
                 <p>Change Coin</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => handleGoToProfile('wallet')}>
                 <IconButton aria-label="wallet of current user" color="inherit">
                     <AccountBalanceWallet />
                 </IconButton>
                 <p>My Wallet</p>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
+            <MenuItem onClick={() => handleGoToProfile('profile')}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -174,8 +183,13 @@ const Navbar = () => {
                                     color="inherit"
                                 >
                                     <Avatar
+                                        className={classes.avatar}
                                         alt={user.result.name}
-                                        src={user.result.imageUrl}
+                                        src={
+                                            user.result.imageUrl
+                                                ? user.result.imageUrl
+                                                : '/error.png'
+                                        }
                                     />
                                 </IconButton>
                             </div>

@@ -15,6 +15,24 @@ export const getUser = async (req, res) => {
         res.status(500).json({ message: 'Some thing went wrong.' });
     }
 };
+export const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const user = req.body;
+    try {
+        const newUpdateUser = await User.findByIdAndUpdate(
+            id,
+            {
+                ...user,
+            },
+            {
+                new: true,
+            }
+        );
+        res.status(200).json(newUpdateUser);
+    } catch (error) {
+        res.status(500).json({ message: 'Some thing went wrong.' });
+    }
+};
 export const signin = async (req, res) => {
     const { email, password } = req.body;
     try {
