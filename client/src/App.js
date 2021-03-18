@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import useStyles from './styles';
 import { useDispatch } from 'react-redux';
-import { getVouchers } from './actions/vouchers';
-import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import useStyles from './styles';
+import { getVouchers } from './actions/vouchers';
+import { getBrands } from './actions/brands';
+import Navbar from './components/Navbar/Navbar';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
-import Brand from './components/Brand/Brand'
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
+import BrandHome from './components/Brands/BrandHome/BrandHome'
+import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
+import Auth from './components/Auth/Auth';
+import { checkUserLogin } from './actions/auths';
 
 const theme = createMuiTheme({
     typography: {
@@ -24,8 +28,10 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(checkUserLogin());
         dispatch(getVouchers());
     }, [currentId, dispatch]);
+
     return (
         <Router>
             <ThemeProvider theme={theme}>
@@ -34,7 +40,7 @@ const App = () => {
                     <Container
                         className={classes.mainContainer}
                         maxWidth="lg"
-                        disableGutters={true}
+                        disableGutters
                     >
                         <Switch>
                             <Route exact path="/create-voucher">
@@ -43,12 +49,20 @@ const App = () => {
                                     setCurrentId={setCurrentId}
                                 />
                             </Route>
+                            <Route exact path="/create-brand">
+                                <CreateBrand />
+                            </Route>
                             <Route exact path="/">
                                 <Home />
                             </Route>
-
                             <Route exact path="/brand">
-                                <Brand />
+                                <BrandHome />
+                            </Route>
+                            <Route exact path="/login">
+                                <Auth isSignup={false} />
+                            </Route>
+                            <Route exact path="/register">
+                                <Auth isSignup={true} />
                             </Route>
                             <Route>
                                 <Error />

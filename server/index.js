@@ -3,6 +3,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import voucherRoutes from './routes/vouchers.js';
+import brandRoutes from './routes/brands.js';
+import userRoutes from './routes/users.js';
 import dotenv from 'dotenv';
 
 const app = express();
@@ -16,10 +18,12 @@ app.use(cors());
 
 //All Routes
 app.use('/api/vouchers', voucherRoutes);
+app.use('/api/brands', brandRoutes);
+app.use('/api/user', userRoutes);
 
 //Database connection
-const CONNECTION_URL = `mongodb+srv://khanhvtn93:khanhvtn93123@cluster0.zjom9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const CONNECTION_URL = `mongodb://localhost:27017/vouchy_dev`;
+// const CONNECTION_URL = `mongodb+srv://khanhvtn93:khanhvtn93123@cluster0.zjom9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const CONNECTION_URL = `mongodb://localhost:27017`;
 
 const PORT = process.env.PORT || 5000;
 mongoose

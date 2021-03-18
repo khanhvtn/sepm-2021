@@ -7,6 +7,7 @@ const Vouchers = ({ setCurrentId }) => {
     const classes = useStyles();
     const vouchers = useSelector((state) => state.vouchers);
     console.log(vouchers);
+
     return !vouchers.length ? (
         <Grid container direction="column" alignItems="stretch">
             <Grid item style={{ textAlign: 'center' }}>

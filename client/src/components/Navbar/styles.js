@@ -1,9 +1,19 @@
 import { makeStyles, fade } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+    
+    title: {
+        flexGrow: 1,
+        display: 'none',
+        marginTop: 5,
+        textAlign:'center',
+    },
+
     grow: {
         flexGrow: 1,
     },
+
+
     appBar: {
         padding: '5px 20px',
     },
@@ -19,9 +29,9 @@ export default makeStyles((theme) => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.black, 0.1),
+        backgroundColor: fade(theme.palette.common.black, 0.05),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.black, 0.15),
+            backgroundColor: fade(theme.palette.common.black, 0.1),
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
@@ -79,9 +89,6 @@ export default makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
-    },
-    removeStyleLink: {
-        textDecoration: 'none',
     },
     btnAuth: {
         marginLeft: '10px',
