@@ -6,6 +6,19 @@ export default makeStyles((theme) => ({
         borderRadius: '0 24px 24px 24px',
 
     },
+    brandDesc: {
+        width: 300,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        "-webkit-line-clamp": 6,
+        "-webkit-box-orient": "vertical",
+        fontSize: 16
+    },
+
+    brandDesc1: {
+        fontSize: 16
+    },
     details: {
         display: 'flex',
         flexDirection: 'column',
@@ -19,6 +32,8 @@ export default makeStyles((theme) => ({
     branding: {
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'row',
     },
     logo: {
         width: theme.spacing(8),
@@ -56,7 +71,7 @@ export default makeStyles((theme) => ({
         fontWeight: 'bold',
     },
 
-    readMore:{
+    readMore: {
         fontWeight: 'bold'
     },
 
@@ -74,18 +89,18 @@ export default makeStyles((theme) => ({
             paddingLeft: theme.spacing(3),
             paddingTop: theme.spacing(0),
         },
-        textDescription: {
+        brandDesc: {
             fontSize: 14
         },
         title: {
-            fontSize: 20            
+            fontSize: 20
         },
         getButton: {
             border: '2px solid',
             fontWeight: 'bold',
             fontSize: 12
         },
-        readMore:{
+        readMore: {
             fontWeight: 'bold',
             fontSize: 12
         },
@@ -96,8 +111,8 @@ export default makeStyles((theme) => ({
             display: 'flex',
             flexDirection: 'column',
         },
-        details: {
-            width: '100%',
+        brandDesc: {
+            width: 500,
         },
         logo: {
             width: theme.spacing(6),

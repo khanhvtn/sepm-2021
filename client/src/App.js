@@ -9,7 +9,6 @@ import { getVouchers } from './actions/vouchers';
 import { getBrands } from './actions/brands';
 import Navbar from './components/Navbar/Navbar';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
-import Brand from './components/Brand/Brand'
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
@@ -56,11 +55,8 @@ const App = () => {
                             <Route exact path="/">
                                 <Home />
                             </Route>
-                            <Route exact path="/brandHome">
-                                <BrandHome />
-                            </Route>
                             <Route exact path="/brand">
-                                <Brand />
+                                <BrandHome />
                             </Route>
                             <Route exact path="/login">
                                 <Auth isSignup={false} />

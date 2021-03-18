@@ -3,6 +3,9 @@ import useStyles from './styles';
 
 import Banner from '../../Banner/Banner'
 import Brand from '../Brand/Brand'
+import BrandDiscountTag from '../BrandDiscountTag/BrandDiscountTag'
+import BrandBundle from '../BrandBundle/BrandBundle'
+
 import {
     Typography, Button, Link, Grid, GridList, GridListTile 
 } from '@material-ui/core';
@@ -27,18 +30,28 @@ const Home = () => {
         <>
             <Banner isBanner={false}/>
 
-            <Typography className={classes.suggested} variant="h5">
-                Current
+            <Grid item xs={12} md={12} className={classes.brandDiscountTagSection}>
+                <Typography className={classes.suggested} variant="h5">
+                    Current
                 <Link className={classes.viewAll} href="#" color="inherit">
-                    View all &gt;
+                        View all &gt;
                 </Link>
-            </Typography>
+                </Typography>
+                <Grid container justify="center" spacing={2}>
+                    {[0, 1, 2, 3].map((value) => (
+                        <Grid xs={12} sm={6} md={3} lg={3} xl={3} key={value} item>
+                            <BrandDiscountTag />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Grid>
 
-            <Grid item xs={12} md={12}>
+
+            <Grid item xs={12} md={12} className={classes.brandDiscountTagSection}>
                 <Grid container justify="center" spacing={2}>
                     {[0, 1, 2].map((value) => (
                         <Grid xs={12} sm={6} md={4} lg={4} xl={4} key={value} item>
-                            <Brand />
+                            <BrandBundle />
                         </Grid>
                     ))}
                 </Grid>

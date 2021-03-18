@@ -14,4 +14,9 @@ export default makeStyles((theme) => ({
         fontSize: '1rem',
         lineHeight: 1,
     },
+    brandDiscountTagSection: {
+        marginTop: 30,
+        marginBottom: 12,
+        lineHeight: 1
+    },
 }));

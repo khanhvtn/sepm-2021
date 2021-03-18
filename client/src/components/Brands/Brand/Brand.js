@@ -33,7 +33,7 @@ const Brand = ({ brand, setCurrentId }) => {
                         <div className={classes.controls}>
                             <Button className={classes.getButton} variant="outlined" color="primary">
                                 Get now
-                        </Button>
+                            </Button>
                         </div>
                     </div>
                     <CardMedia
@@ -68,7 +68,6 @@ const Brand = ({ brand, setCurrentId }) => {
                     />
                 </Card>
             }
-
         </>
     );
 };
