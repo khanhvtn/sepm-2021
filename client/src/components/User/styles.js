@@ -20,6 +20,7 @@ export default makeStyles((theme) => ({
     },
     input: {
         width: '100%',
+        marginBottom: '15px',
     },
     inputImage: {
         display: 'none',
@@ -39,7 +40,10 @@ export default makeStyles((theme) => ({
         marginTop: '10px',
     },
     briefInfo: {
-        fontSize: '1.5em',
+        fontSize: '1.2em',
+    },
+    btnCancel: {
+        marginLeft: '10px',
     },
     [theme.breakpoints.down('xs')]: {
         gridRight: {

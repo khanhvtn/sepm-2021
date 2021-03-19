@@ -55,7 +55,7 @@ const Navbar = () => {
 
     //handle to go to user profile
     const handleGoToProfile = (type) => {
-        const action = type === 'profile' ? 0 : type === 'wallet' ? 0 : 1;
+        const action = type === 'profile' ? 0 : type === 'wallet' ? 1 : 2;
         history.push('/user-profile', {
             action,
         });
