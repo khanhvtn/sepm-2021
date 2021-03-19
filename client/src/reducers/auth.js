@@ -1,19 +1,17 @@
 import {
     AUTH,
     LOGOUT,
-    CHECKUSERLOGIN,
+    CHECK_CURRENT_USER,
     UPDATE_USER,
 } from '../constants/actionTypes';
 
 const authReducer = (state = { authData: null }, action) => {
     switch (action.type) {
         case AUTH:
-            //Save user info in local storage and update state
-            console.log(action);
+            //Save user token into local storage and update state
             localStorage.setItem(
                 'userProfile',
                 JSON.stringify({
-                    id: action?.data.result._id,
                     token: action?.data.token,
                 })
             );
@@ -27,18 +25,21 @@ const authReducer = (state = { authData: null }, action) => {
                 ...state,
                 authData: { ...state.authData, result: action?.data },
             };
-        case CHECKUSERLOGIN:
-            //update new information for user local storage
+        case CHECK_CURRENT_USER:
+            //Save user token into local storage and update new information for state
             if (action?.data) {
                 localStorage.setItem(
                     'userProfile',
                     JSON.stringify({
-                        id: action?.data.result._id,
                         token: action?.data.token,
                     })
                 );
+                return { ...state, authData: action?.data };
+            } else {
+                //clear local storage and update state to null
+                localStorage.clear();
+                return { ...state, authData: action?.data };
             }
-            return { ...state, authData: action?.data };
         default:
             return state;
     }

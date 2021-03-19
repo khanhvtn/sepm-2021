@@ -12,8 +12,9 @@ import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import Footer from './components/Footer/Footer';
 import Auth from './components/Auth/Auth';
-import { checkUserLogin } from './actions/auths';
+import { checkCurrentUser } from './actions/auths';
 import UserProfile from './components/User/UserProfile';
+import { useHistory } from 'react-router-dom';
 
 const theme = createMuiTheme({
     typography: {
@@ -24,9 +25,10 @@ const App = () => {
     const [currentId, setCurrentId] = useState(null);
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch(checkUserLogin());
+        dispatch(checkCurrentUser(history));
         dispatch(getVouchers());
     }, [currentId, dispatch]);
     return (
@@ -50,10 +52,10 @@ const App = () => {
                                 <Home />
                             </Route>
                             <Route exact path="/login">
-                                <Auth isSignup={false} />
+                                <Auth />
                             </Route>
                             <Route exact path="/register">
-                                <Auth isSignup={true} />
+                                <Auth />
                             </Route>
                             <Route exact path="/user-profile">
                                 <UserProfile />

@@ -48,7 +48,9 @@ const Navbar = () => {
 
     //handle to go to register page
     const handleGoToAuth = (type) => {
-        history.push(type === 'register' ? '/register' : '/login');
+        type === 'register'
+            ? history.push('/register', { isSignup: true })
+            : history.push('/login', { isSignup: false });
     };
 
     //handle to go to user profile
@@ -133,8 +135,10 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            <MenuItem onClick={handleMobileUnAuthMenuClose}>Register</MenuItem>
-            <MenuItem onClick={handleMobileUnAuthMenuClose}>Login</MenuItem>
+            <MenuItem onClick={() => handleGoToAuth('register')}>
+                Register
+            </MenuItem>
+            <MenuItem onClick={() => handleGoToAuth('login')}>Login</MenuItem>
         </Menu>
     );
     return (

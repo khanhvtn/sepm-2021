@@ -181,7 +181,7 @@ const UserProfile = () => {
             </Grid>
             <Grid className={classes.gridRight} item container xs={12} sm={8}>
                 <Paper className={classes.root}>
-                    <AppBar position="static" color="default">
+                    <AppBar position="static" color="inherit">
                         <Tabs
                             value={value}
                             onChange={handleTabChange}
