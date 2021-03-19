@@ -25,8 +25,8 @@ export const signUp = (formData) => API.post('/user/signup', formData);
 export const getUser = (id) => API.get(`/user/${id}`);
 
 // API for Brand
-export const fetchBrands = () => axios.get('/brands');
-export const createBrand = (newBrand) => axios.post('/brands', newBrand);
+export const fetchBrands = () => API.get('/brands');
+export const createBrand = (newBrand) => API.post('/brands', newBrand);
 export const updateBrand = (id, updateBrand) =>
-    axios.patch(`${'/brands'}/${id}`, updateBrand);
-export const deleteBrand = (id) => axios.delete(`${'/brands'}/${id}`);
+    API.patch(`${'/brands'}/${id}`, updateBrand);
+export const deleteBrand = (id) => API.delete(`${'/brands'}/${id}`);

@@ -12,13 +12,10 @@ const Banner = (props) => {
     const classes = useStyles();
     const [displayCardMedia, setDisplayCardMedia] = useState(true)
     const { title, description, button, image, brand, isBanner } = props
-    console.log(isBanner)
-
 
     const readFullDescription = () => {
         setDisplayCardMedia(!displayCardMedia)
     }
-
 
     return (
         <>
