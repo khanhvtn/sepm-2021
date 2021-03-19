@@ -14,14 +14,16 @@ import {
 } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import photo from '../../images/test-image.JPG';
 import useStyles from './styles';
 import {
     PhotoCamera,
     AccountBalance,
     MonetizationOn,
+    Save,
+    Cancel,
 } from '@material-ui/icons';
 import { updateUser } from '../../actions/auths';
+import { convertBase64 } from '../../utils';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -57,6 +59,7 @@ function a11yProps(index) {
 const initialState = {
     points: '0',
     accountBalance: '0',
+    imageUrl: null,
 };
 
 const initialError = {
@@ -100,7 +103,11 @@ const UserProfile = () => {
         setErrorForm(initialError);
     };
     //handle change photo
-    const handleChangePhoto = () => {};
+    const handleChangePhoto = async (e) => {
+        const file = e.target.files[0];
+        const fileBase64 = await convertBase64(file);
+        setState({ ...state, imageUrl: fileBase64 });
+    };
     //handle exchange point
     const handleExchangePoint = (e) => {
         e.preventDefault();
@@ -150,18 +157,58 @@ const UserProfile = () => {
                                 src={
                                     userInfo?.imageUrl
                                         ? userInfo?.imageUrl
-                                        : photo
+                                        : '/error.png'
                                 }
                                 alt={userInfo?.name}
                                 className={classes.avatar}
                             />
-                            <Button
-                                onClick={handleChangePhoto}
-                                className={classes.btnPhotoCamera}
-                                endIcon={<PhotoCamera />}
-                            >
-                                Change Image
-                            </Button>
+                            <input
+                                accept="image/*"
+                                className={classes.inputImage}
+                                id="change-image"
+                                type="file"
+                                onChange={handleChangePhoto}
+                            />
+                            {state.imageUrl ? (
+                                <Grid
+                                    item
+                                    container
+                                    direction="row"
+                                    justify="space-between"
+                                    alignItems="center"
+                                >
+                                    <Button
+                                        size="small"
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.btnPhotoCamera}
+                                        endIcon={<Save />}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        size="small"
+                                        variant="contained"
+                                        color="secondary"
+                                        className={classes.btnPhotoCamera}
+                                        endIcon={<Cancel />}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            ) : (
+                                <label htmlFor="change-image">
+                                    <Button
+                                        component="span"
+                                        // onClick={handleChangePhoto}
+                                        className={classes.btnPhotoCamera}
+                                        endIcon={<PhotoCamera />}
+                                    >
+                                        Change Image
+                                    </Button>
+                                </label>
+                            )}
+
                             {/* Brief infomation */}
                             <Button
                                 className={classes.briefInfo}

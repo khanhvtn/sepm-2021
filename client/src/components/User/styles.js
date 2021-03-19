@@ -21,6 +21,9 @@ export default makeStyles((theme) => ({
     input: {
         width: '100%',
     },
+    inputImage: {
+        display: 'none',
+    },
     paper: {
         width: '100%',
         padding: '15px 0',
