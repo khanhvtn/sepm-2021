@@ -17,6 +17,7 @@ import Auth from './components/Auth/Auth';
 import UserProfile from './components/User/UserProfile';
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
+import PrivateRoute from './Routes/PrivateRoute';
 
 const theme = createMuiTheme({
     typography: {
@@ -66,9 +67,14 @@ const App = () => {
                         <Route exact path="/register">
                             <Auth />
                         </Route>
-                        <Route exact path="/user-profile">
+                        <PrivateRoute
+                            exact
+                            path="/user-profile"
+                            component={UserProfile}
+                        />
+                        {/* <Route exact path="/user-profile">
                             <UserProfile />
-                        </Route>
+                        </Route> */}
                         <Route>
                             <Error />
                         </Route>

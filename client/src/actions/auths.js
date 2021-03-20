@@ -14,18 +14,22 @@ export const updateUser = (newUpdateUser) => async (dispatch) => {
     }
 };
 export const checkCurrentUser = (history) => async (dispatch) => {
+    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
     try {
         /*Check user profile in local storage to get user token.
         Then, sen request to the server to check the token.
         If the token is valid, then update user data.
         If not set state null and redirec to homepage
          */
-        const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-        const { data } = await api.checkCurrentUser();
-        dispatch({
-            type: CHECK_CURRENT_USER,
-            data: { result: data.result, token: userProfile.token },
-        });
+        if (userProfile) {
+            const { data } = await api.checkCurrentUser();
+            dispatch({
+                type: CHECK_CURRENT_USER,
+                data: { result: data.result, token: userProfile.token },
+            });
+        } else {
+            dispatch({ type: CHECK_CURRENT_USER, data: null });
+        }
     } catch (error) {
         const previousPath = history.location.pathname;
         dispatch({ type: CHECK_CURRENT_USER, data: null });
