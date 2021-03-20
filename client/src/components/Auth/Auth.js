@@ -7,7 +7,6 @@ import {
     Grid,
     Container,
     Button,
-    Icon,
 } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import Input from './Input';
@@ -30,7 +29,7 @@ const Auth = () => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
-    const isSignup = location.state.isSignup;
+    const { isSignup, previousPath } = location.state;
 
     //useEffect
     useEffect(() => {
@@ -43,7 +42,7 @@ const Auth = () => {
         if (isSignup) {
             dispatch(signup(formData, history));
         } else {
-            dispatch(signin(formData, history));
+            dispatch(signin(formData, history, previousPath));
         }
     };
     const handleChange = (e) => {

@@ -27,8 +27,11 @@ export const checkCurrentUser = (history) => async (dispatch) => {
             data: { result: data.result, token: userProfile.token },
         });
     } catch (error) {
+        const previousPath = history.location.pathname;
         dispatch({ type: CHECK_CURRENT_USER, data: null });
-        history.push('/');
+        previousPath === '/'
+            ? history.push('/')
+            : history.push('/login', { isSignup: false, previousPath });
     }
 };
 export const signup = (formData, history) => async (dispatch) => {
@@ -40,11 +43,19 @@ export const signup = (formData, history) => async (dispatch) => {
         console.log(error);
     }
 };
-export const signin = (formData, history) => async (dispatch) => {
+export const signin = (formData, history, previousPath) => async (dispatch) => {
     try {
         const { data } = await api.signIn(formData);
         dispatch({ type: AUTH, data });
-        history.push('/');
+        /* 
+        If previous path exists, then redirect to previous path.
+        If not, redirect to home page.
+        Note:
+            set action equal to 0 to set default tab when redirect to profile page.
+         */
+        previousPath
+            ? history.push(`${previousPath}`, { action: 0 })
+            : history.push('/');
     } catch (error) {
         console.log(error);
     }
