@@ -72,9 +72,6 @@ const App = () => {
                             path="/user-profile"
                             component={UserProfile}
                         />
-                        {/* <Route exact path="/user-profile">
-                            <UserProfile />
-                        </Route> */}
                         <Route>
                             <Error />
                         </Route>
