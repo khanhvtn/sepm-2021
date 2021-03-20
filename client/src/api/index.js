@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const API = axios.create({ baseURL: 'http://localhost:5000/api' });
 
 API.interceptors.request.use((req) => {
@@ -10,7 +9,6 @@ API.interceptors.request.use((req) => {
     }
     return req;
 });
-
 
 // API for Voucher
 export const fetchVouchers = () => API.get('/vouchers');
@@ -22,7 +20,9 @@ export const deleteVoucher = (id) => API.delete(`${'/vouchers'}/${id}`);
 // API for User
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
-export const getUser = (id) => API.get(`/user/${id}`);
+export const checkCurrentUser = () => API.get(`/user/checkCurrentUser`);
+export const updateUser = (newUser) =>
+    API.patch(`/user/${newUser._id}`, newUser);
 
 // API for Brand
 export const fetchBrands = () => axios.get('/brands');

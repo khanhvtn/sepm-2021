@@ -2,15 +2,33 @@ import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export const getUser = async (req, res) => {
-    const { id } = req.params;
+export const checkCurrentUser = async (req, res) => {
+    const { userId } = req;
     try {
-        const existingUser = await User.findById(id);
+        const existingUser = await User.findById(userId);
         if (existingUser) {
             res.status(200).json({ result: existingUser });
         } else {
             res.status(404).json({ message: "User doesn't exist" });
         }
+    } catch (error) {
+        res.status(500).json({ message: 'Some thing went wrong.' });
+    }
+};
+export const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const user = req.body;
+    try {
+        const newUpdateUser = await User.findByIdAndUpdate(
+            id,
+            {
+                ...user,
+            },
+            {
+                new: true,
+            }
+        );
+        res.status(200).json(newUpdateUser);
     } catch (error) {
         res.status(500).json({ message: 'Some thing went wrong.' });
     }

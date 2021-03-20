@@ -1,24 +1,34 @@
 import * as api from '../api';
-import { AUTH, CHECKUSERLOGIN } from '../constants/actionTypes';
+import {
+    AUTH,
+    CHECK_CURRENT_USER,
+    UPDATE_USER,
+} from '../constants/actionTypes';
 
-export const checkUserLogin = () => async (dispatch) => {
+export const updateUser = (newUpdateUser) => async (dispatch) => {
     try {
-        /*Check user profile in local storage.
-        If have user, use id in user profile to fetch new user information and update state.
-        If not set state null
-         */
-        const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-        if (userProfile) {
-            const { data } = await api.getUser(userProfile.id);
-            dispatch({
-                type: CHECKUSERLOGIN,
-                data: { result: data.result, token: userProfile.token },
-            });
-        } else {
-            dispatch({ type: CHECKUSERLOGIN, data: null });
-        }
+        const { data } = await api.updateUser(newUpdateUser);
+        dispatch({ type: UPDATE_USER, data });
     } catch (error) {
         console.log(error);
+    }
+};
+export const checkCurrentUser = (history) => async (dispatch) => {
+    try {
+        /*Check user profile in local storage to get user token.
+        Then, sen request to the server to check the token.
+        If the token is valid, then update user data.
+        If not set state null and redirec to homepage
+         */
+        const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+        const { data } = await api.checkCurrentUser();
+        dispatch({
+            type: CHECK_CURRENT_USER,
+            data: { result: data.result, token: userProfile.token },
+        });
+    } catch (error) {
+        dispatch({ type: CHECK_CURRENT_USER, data: null });
+        history.push('/');
     }
 };
 export const signup = (formData, history) => async (dispatch) => {
