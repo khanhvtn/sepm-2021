@@ -21,7 +21,7 @@ const initialFormData = {
     password: '',
     confirmPassword: '',
 };
-const Auth = () => {
+const Auth = ({ isSignup }) => {
     //useState
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
@@ -29,7 +29,7 @@ const Auth = () => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
-    const { isSignup, previousPath } = location.state;
+    const previousPath = location.state?.previousPath;
 
     //useEffect
     useEffect(() => {

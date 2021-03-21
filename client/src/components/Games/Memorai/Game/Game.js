@@ -3,7 +3,9 @@ import { v4 as uuid } from 'uuid';
 import cardImages from '../cards';
 import Card from '../Card/Card';
 import deepcopy from 'deepcopy';
-import example from '../../../../images/memorai/clubs_10.png';
+import * as imagrCards from './imageCards';
+import { Button, Typography, Zoom } from '@material-ui/core';
+import { Replay } from '@material-ui/icons';
 
 function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -17,8 +19,7 @@ function generateCards(count) {
         .slice(0, count / 2)
         .map((imageURL) => ({
             id: uuid(),
-            // imageURL: 'static/images/cards/' + imageURL,
-            imageURL: example,
+            imageURL: imagrCards[imageURL],
             isFlipped: false,
             canFlip: true,
         }))
@@ -34,6 +35,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
     const [canFlip, setCanFlip] = useState(false);
     const [firstCard, setFirstCard] = useState(null);
     const [secondCard, setSecondCard] = useState(null);
+    const [isWin, setIsWin] = useState(false);
 
     function setCardIsFlipped(cardID, isFlipped) {
         setCards((prev) =>
@@ -54,6 +56,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
 
     // showcase
     useEffect(() => {
+        if (isWin) return;
         setTimeout(() => {
             let index = 0;
             for (const card of cards) {
@@ -64,19 +67,31 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
             }
             setTimeout(() => setCanFlip(true), cards.length * 100);
         }, 3000);
-    }, []);
+    }, [isWin]);
 
     function resetFirstAndSecondCards() {
         setFirstCard(null);
         setSecondCard(null);
     }
 
+    const checkWinGame = () => {
+        const isWin = cards.every((card) => card.isFlipped === false);
+        if (isWin) {
+            setIsWin((prevState) => ({ ...prevState, isWin }));
+        }
+    };
+
+    const handlePlayAgagin = () => {
+        setCards(() => generateCards(totalCards));
+        setIsWin(false);
+    };
     function onSuccessGuess() {
         setCardCanFlip(firstCard.id, false);
         setCardCanFlip(secondCard.id, false);
         setCardIsFlipped(firstCard.id, false);
         setCardIsFlipped(secondCard.id, false);
         resetFirstAndSecondCards();
+        checkWinGame();
     }
     function onFailureGuess() {
         const firstCardID = firstCard.id;
@@ -116,6 +131,24 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
 
     return (
         <div className="game container-md">
+            <Typography variant="h3" gutterBottom>
+                Memorai
+            </Typography>
+            {isWin ? (
+                <Zoom
+                    in
+                    style={{
+                        transitionDelay: '500ms',
+                    }}
+                >
+                    <Typography variant="h5">
+                        Congratulation! You won the game and got 500 points
+                    </Typography>
+                </Zoom>
+            ) : (
+                ''
+            )}
+
             <div className="cards-container">
                 {cards.map((card) => (
                     <Card
@@ -125,6 +158,20 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
                     />
                 ))}
             </div>
+            {isWin ? (
+                <Button
+                    onClick={handlePlayAgagin}
+                    className="btn-back"
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    startIcon={<Replay />}
+                >
+                    Play Again
+                </Button>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

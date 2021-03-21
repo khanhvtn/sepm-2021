@@ -8,7 +8,9 @@ import {
     InputBase,
     Button,
     Avatar,
-    Link
+    Link,
+    Divider,
+    Hidden,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -17,11 +19,12 @@ import {
     MonetizationOn,
     AccountBalanceWallet,
     ExitToApp,
+    SportsEsports,
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -51,8 +54,8 @@ const Navbar = () => {
     //handle to go to register page
     const handleGoToAuth = (type) => {
         type === 'register'
-            ? history.push('/register', { isSignup: true })
-            : history.push('/login', { isSignup: false });
+            ? history.push('/register')
+            : history.push('/login');
     };
 
     //handle to go to user profile
@@ -62,6 +65,9 @@ const Navbar = () => {
             action,
         });
         handleMenuClose();
+    };
+    const handleGoToGameCenter = () => {
+        history.push('/game-center');
     };
 
     const isMenuOpen = Boolean(anchorEl);
@@ -93,6 +99,15 @@ const Navbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+            <MenuItem
+                className={classes.btnGameCenter}
+                onClick={handleGoToGameCenter}
+            >
+                <IconButton aria-label="game center" color="inherit">
+                    <SportsEsports />
+                </IconButton>
+                <p>Game Center</p>
+            </MenuItem>
             <MenuItem onClick={() => handleGoToProfile('changecoin')}>
                 <IconButton aria-label="change coin" color="inherit">
                     <MonetizationOn />
@@ -172,13 +187,18 @@ const Navbar = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
-                {/* </Toolbar>
-            </AppBar> */}
 
                     <div className={classes.grow} />
                     {user ? (
                         <>
                             <div className={classes.sectionDesktop}>
+                                <Button
+                                    color="inherit"
+                                    endIcon={<SportsEsports />}
+                                    onClick={handleGoToGameCenter}
+                                >
+                                    Game Center
+                                </Button>
                                 <Button
                                     color="inherit"
                                     endIcon={<MonetizationOn />}

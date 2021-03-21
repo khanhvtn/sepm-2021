@@ -18,8 +18,9 @@ import UserProfile from './components/User/UserProfile';
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
-import Games from './components/Games/Games';
+import Games from './components/Games/GameCenter';
 import Memorai from './components/Games/Memorai/Memorai';
+import GameCenter from './components/Games/GameCenter';
 
 const theme = createMuiTheme({
     typography: {
@@ -64,17 +65,21 @@ const App = () => {
                             <BrandHome />
                         </Route>
                         <Route exact path="/login">
-                            <Auth />
+                            <Auth isSignup={false} />
                         </Route>
                         <Route exact path="/register">
-                            <Auth />
+                            <Auth isSignup={true} />
                         </Route>
-                        <Route exact path="/list-games">
-                            <Games />
-                        </Route>
-                        <Route exact path="/list-games/memorai">
-                            <Memorai />
-                        </Route>
+                        <PrivateRoute
+                            exact
+                            path="/game-center"
+                            component={GameCenter}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/game-center/memorai"
+                            component={Memorai}
+                        />
                         <PrivateRoute
                             exact
                             path="/user-profile"
