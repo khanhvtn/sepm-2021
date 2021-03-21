@@ -3,6 +3,7 @@ import {
     AUTH,
     CHECK_CURRENT_USER,
     UPDATE_USER,
+    USER_LOADING,
 } from '../constants/actionTypes';
 
 export const updateUser = (newUpdateUser) => async (dispatch) => {
@@ -22,17 +23,33 @@ export const checkCurrentUser = (history) => async (dispatch) => {
         If not set state null and redirec to homepage
          */
         if (userProfile) {
+            dispatch({
+                type: USER_LOADING,
+                payload: true,
+            });
             const { data } = await api.checkCurrentUser();
             dispatch({
                 type: CHECK_CURRENT_USER,
                 data: { result: data.result, token: userProfile.token },
             });
+            dispatch({
+                type: USER_LOADING,
+                payload: false,
+            });
         } else {
             dispatch({ type: CHECK_CURRENT_USER, data: null });
+            dispatch({
+                type: USER_LOADING,
+                payload: false,
+            });
         }
     } catch (error) {
         const previousPath = history.location.pathname;
         dispatch({ type: CHECK_CURRENT_USER, data: null });
+        dispatch({
+            type: USER_LOADING,
+            payload: false,
+        });
         previousPath === '/'
             ? history.push('/')
             : history.push('/login', { isSignup: false, previousPath });

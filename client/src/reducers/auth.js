@@ -3,9 +3,10 @@ import {
     LOGOUT,
     CHECK_CURRENT_USER,
     UPDATE_USER,
+    USER_LOADING,
 } from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null }, action) => {
+const authReducer = (state = { isLoading: true, authData: null }, action) => {
     switch (action.type) {
         case AUTH:
             //Save user token into local storage and update state
@@ -24,6 +25,11 @@ const authReducer = (state = { authData: null }, action) => {
             return {
                 ...state,
                 authData: { ...state.authData, result: action?.data },
+            };
+        case USER_LOADING:
+            return {
+                ...state,
+                isLoading: action.payload,
             };
         case CHECK_CURRENT_USER:
             //Save user token into local storage and update new information for state
