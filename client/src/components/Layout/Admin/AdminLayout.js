@@ -3,25 +3,10 @@ import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 
-import Navigator from '../../Admin/Navigator';
-import Header from '../../Admin/Header';
+import Navigator from '../../Admin/Navigator/Navigator';
+import Header from '../../Admin/Header/Header';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="/">
-                The Vouchy
-            </Link>
-            {' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 
 let theme = createMuiTheme({
@@ -167,9 +152,6 @@ const AdminLayout = ({ children }) => {
                         <main className={classes.main}>
                             {children}
                         </main>
-                        <footer className={classes.footer}>
-                            <Copyright />
-                        </footer>
                     </div>
                 </div>
             </ThemeProvider>

@@ -1,0 +1,104 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import PeopleIcon from '@material-ui/icons/People';
+import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
+import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
+import useStyles from './styles'
+import { Link } from 'react-router-dom';
+
+
+const categories = [
+    {
+        id: 'Develop',
+        children: [
+            { id: 'Authentication', icon: <PeopleIcon />, link: '/admin/users', selectedId: 0 },
+            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/brands', selectedId: 1 },
+            { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/admin/voucher-state', selectedId: 2 },
+        ],
+    },
+];
+
+function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+}
+
+
+function Navigator(props) {
+    const { ...other } = props;
+    const classes = useStyles();
+    const [selectedIndex, setSelectedIndex] = useState();
+
+    const handleListItemClick = (index) => {
+        console.log(index)
+        setSelectedIndex(index);
+    };
+
+    return (
+        <Drawer variant="permanent" {...other}>
+            <List disablePadding>
+                <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
+                    Vouchy
+                </ListItem>
+                <ListItem className={clsx(classes.item, classes.itemCategory)}>
+                    <ListItemIcon className={classes.itemIcon}>
+                        <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                        classes={{
+                            primary: classes.itemPrimary,
+                        }}>
+                        Dashboard
+                    </ListItemText>
+                </ListItem>
+                {categories.map(({ id, children }) => (
+                    <React.Fragment key={id}>
+                        <ListItem
+                            className={classes.categoryHeader}
+
+                        >
+                            <ListItemText
+                                classes={{
+                                    primary: classes.categoryHeaderPrimary,
+                                }}
+                            >
+                                {id}
+                            </ListItemText>
+                        </ListItem>
+                        {children.map(({ id: childId, icon, selectedId, link }) => (
+                            <ListItem
+                                key={childId}
+                                button
+                                onClick={(e) => handleListItemClick(selectedId)}
+                                className={selectedIndex === selectedId ? classes.itemActiveItem : classes.item}
+                            >
+                                {/*  */}
+                                <ListItem component={Link} to={link}>
+                                    <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
+                                    <ListItemText
+                                        classes={{
+                                            primary: classes.itemPrimary,
+                                        }}
+                                    >
+                                        {childId}
+                                    </ListItemText>
+                                </ListItem>
+                            </ListItem>
+                        ))}
+
+                        <Divider className={classes.divider} />
+                    </React.Fragment>
+                ))}
+            </List>
+        </Drawer>
+    );
+}
+
+export default Navigator;

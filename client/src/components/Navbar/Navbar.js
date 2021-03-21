@@ -21,7 +21,7 @@ import {
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Navbar = () => {
     const classes = useStyles();

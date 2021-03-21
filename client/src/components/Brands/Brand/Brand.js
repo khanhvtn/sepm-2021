@@ -1,3 +1,4 @@
+import React from 'react';
 import useStyles from './styles';
 import { CardActions, Typography, Link } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -7,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 
 
-const Brand = ({ brand, setCurrentId }) => {
+const Brand = ({ brand }) => {
     const classes = useStyles();
 
     return (

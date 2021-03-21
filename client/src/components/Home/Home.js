@@ -5,7 +5,7 @@ import Carousel from 'react-material-ui-carousel'
 import Banner from '../Banner/Banner'
 import Brand from '../Brands/Brand/Brand'
 import {
-    Typography, Button, Link, Grid, GridList, GridListTile 
+    Typography, Link, Grid, GridList, GridListTile 
 } from '@material-ui/core';
 
 const Home = () => {

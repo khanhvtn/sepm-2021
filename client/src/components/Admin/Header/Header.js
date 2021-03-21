@@ -2,37 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import HelpIcon from '@material-ui/icons/Help';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import useStyles from './styles'
 
-const styles = (theme) => ({
-    secondaryBar: {
-        zIndex: 0,
-    },
-    menuButton: {
-        marginLeft: -theme.spacing(1),
-    },
-    iconButtonAvatar: {
-        padding: 4,
-    },
-});
 
-function Header(props) {
-    const { classes, onDrawerToggle } = props;
 
+function Header(props){
+    const { onDrawerToggle } = props;
+    const classes = useStyles()
+    
     return (
-        <React.Fragment>
+        <>
             <AppBar color="default" position="sticky" elevation={0}>
                 <Toolbar>
                     <Grid container spacing={1} alignItems="center">
@@ -64,43 +50,12 @@ function Header(props) {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <AppBar
-                component="div"
-                className={classes.secondaryBar}
-                position="static"
-                elevation={0}
-                color="default"
-            >
-                <Toolbar>
-                    <Grid container alignItems="center" spacing={1}>
-                        <Grid item xs>
-                            <Typography color="inherit" variant="h5" component="h1">
-                                Authentication
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <AppBar
-                component="div"
-                className={classes.secondaryBar}
-                position="static"
-                elevation={1}
-                color="default"
-            >
-                <Tabs value={0} textColor="inherit" TabIndicatorProps={{style: {background:'black'}}}>
-                    <Tab textColor="inherit" label="Users" />
-                    <Tab textColor="inherit" label="Suppliers" />
-                    <Tab textColor="inherit" label="Brands" />
-                </Tabs>
-            </AppBar>
-        </React.Fragment>
+        </>
     );
 }
 
 Header.propTypes = {
-    classes: PropTypes.object.isRequired,
     onDrawerToggle: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Header);
+export default Header;

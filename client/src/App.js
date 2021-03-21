@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { getVouchers } from './actions/vouchers';
-import { getBrands } from './actions/brands';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
@@ -14,8 +13,9 @@ import { checkUserLogin } from './actions/auths';
 import AdminHome from './components/Admin/AdminHome'
 import AdminLayout from './components/Layout/Admin/AdminLayout';
 import UserLayout from './components/Layout/User/UserLayout';
-import AppRoute from './AppRoute'
-
+import Authentication from './components/Admin/Authentication/Authentication'
+import Database from './components/Admin/Database/Database';
+import Functions from './components/Admin/Functions/Functions';
 
 
 
@@ -31,14 +31,44 @@ const App = () => {
     return (
         <Router>
             <Switch>
-                <AppRoute exact path="/" component={Home} layout={UserLayout} />
-                <AppRoute exact path="/admin" layout={AdminLayout} component={AdminHome} />
-                <AppRoute exact path="/create-voucher" layout={UserLayout} component={CreateVoucher} currentId={currentId} setCurrentId={setCurrentId} />
-                <AppRoute exact path="/create-brand" layout={UserLayout} component={CreateBrand} />
-                <AppRoute exact path="/brand" layout={UserLayout} component={BrandHome} />
-                <AppRoute exact path="/login" layout={UserLayout} component={Auth} isSignup={false} />
-                <AppRoute exact path="/register" layout={UserLayout} component={Auth} isSignup={true} />
-                <AppRoute layout={UserLayout} component={Error} />
+                <Route path='/admin/:path?' exact>
+                    <AdminLayout>
+                        <Switch>
+                            <Route path='/admin' component={AdminHome} exact />
+                            <Route path='/admin/users' component={Authentication} />
+                            <Route path='/admin/suppliers' component={Authentication} />
+                            <Route path='/admin/brands' component={Database} />
+                            <Route path='/admin/vouchers' component={Database} />
+                            <Route path='/admin/voucher-state' component={Functions} />
+                            <Route path='/admin/share-link' component={Functions} />
+                            <Route component={Error} />
+                        </Switch>
+                    </AdminLayout>
+                </Route>
+
+                <Route>
+                    <UserLayout>
+                        <Switch>
+                            <Route path='/' component={Home} exact />
+                            <Route path='/login'>
+                                <Auth isSignup={false} />
+                            </Route>
+                            <Route path='/register'>
+                                <Auth isSignup={true} />
+                            </Route>
+                            <Route path='/brand' component={BrandHome} />
+                            <Route path='/create-voucher'>
+                                <CreateVoucher currentId={currentId} setCurrentId={setCurrentId} />
+                            </Route>
+                            <Route path='/create-brand' component={CreateBrand} />
+
+                            <Route component={Error} />
+                        </Switch>
+                    </UserLayout>
+                </Route>
+
+
+
             </Switch>
         </Router >
     );

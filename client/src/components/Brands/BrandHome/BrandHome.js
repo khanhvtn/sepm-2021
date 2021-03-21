@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import useStyles from './styles';
 
 import Banner from '../../Banner/Banner'
-import Brand from '../Brand/Brand'
 import BrandDiscountTag from '../BrandDiscountTag/BrandDiscountTag'
 import BrandBundle from '../BrandBundle/BrandBundle'
 
 import {
-    Typography, Button, Link, Grid, GridList, GridListTile 
+    Typography, Link, Grid
 } from '@material-ui/core';
 
 const Home = () => {

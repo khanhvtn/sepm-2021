@@ -1,3 +1,4 @@
+import React from 'react';
 import useStyles from './styles';
 import PropTypes from 'prop-types';
 import { CardActions, Typography, Link } from '@material-ui/core';
@@ -6,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const Banner = (props) => {
     const classes = useStyles();

@@ -31,6 +31,8 @@ const Auth = ({ isSignup }) => {
     const history = useHistory();
     const location = useLocation();
 
+    console.log(isSignup)
+
     //useEffect
     useEffect(() => {
         setFormData(initialFormData);

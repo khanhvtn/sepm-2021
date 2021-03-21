@@ -1,9 +1,9 @@
+import React from 'react';
 import useStyles from './styles';
 import Navbar from '../../Navbar/Navbar'
 import Footer from '../../Footer/Footer'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
-
 
 
 const theme = createMuiTheme({
@@ -15,6 +15,8 @@ const theme = createMuiTheme({
 
 const UserLayout = ({ children }) => {
     const classes = useStyles();
+
+    console.log(children)
 
     return (
         <>
