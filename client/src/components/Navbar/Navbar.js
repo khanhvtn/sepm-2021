@@ -7,8 +7,7 @@ import {
     Toolbar,
     InputBase,
     Button,
-    Avatar,
-    Link
+    Avatar
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -21,7 +20,7 @@ import {
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -138,7 +137,7 @@ const Navbar = () => {
                 color="inherit"
             >
                 <Toolbar disableGutters={true}>
-                    <Link href="/">
+                    <Link to="/">
                         <img
                             className={classes.logo}
                             src={logo}

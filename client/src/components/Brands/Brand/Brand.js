@@ -1,6 +1,6 @@
 import React from 'react';
 import useStyles from './styles';
-import { CardActions, Typography, Link } from '@material-ui/core';
+import { CardActions, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { Delete, Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { deleteBrand } from '../../../actions/brands';
+import { Link } from 'react-router-dom'
 
 
 const Brand = ({ brand, setCurrentId }) => {
@@ -21,7 +22,7 @@ const Brand = ({ brand, setCurrentId }) => {
                 <Card className={classes.root}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
-                            <Link href="/brand">
+                            <Link to="/brand">
                                 <Avatar className={classes.logo} alt='logo' src='https://source.unsplash.com/featured/?macbook' />
                             </Link>
                         </CardActions>
@@ -51,7 +52,7 @@ const Brand = ({ brand, setCurrentId }) => {
                 <Card className={classes.root}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
-                            <Link href="/brand">
+                            <Link to="/brand">
                                 <Avatar className={classes.logo} alt='logo' src={brand.image} />
                             </Link>
                         </CardActions>
