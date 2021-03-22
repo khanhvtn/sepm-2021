@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
@@ -12,16 +12,16 @@ import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import useStyles from './styles'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 const categories = [
     {
         id: 'Develop',
         children: [
-            { id: 'Authentication', icon: <PeopleIcon />, link: '/admin/users', selectedId: 0 },
-            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/brands', selectedId: 1 },
-            { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/admin/voucher-state', selectedId: 2 },
+            { id: 'Authentication', icon: <PeopleIcon />, link: '/admin/users' },
+            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/orders' },
+            { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/admin/voucher-state' },
         ],
     },
 ];
@@ -32,13 +32,14 @@ function ListItemLink(props) {
 
 
 function Navigator(props) {
+    const location = useLocation();
     const { ...other } = props;
     const classes = useStyles();
     const [selectedIndex, setSelectedIndex] = useState();
 
-    const handleListItemClick = (index) => {
-        setSelectedIndex(index);
-    };
+    useEffect(() => {
+        setSelectedIndex(location.pathname)
+    });
 
     return (
         <Drawer variant="permanent" {...other}>
@@ -71,14 +72,12 @@ function Navigator(props) {
                                 {id}
                             </ListItemText>
                         </ListItem>
-                        {children.map(({ id: childId, icon, selectedId, link }) => (
+                        {children.map(({ id: childId, icon, link }) => (
                             <ListItem
                                 key={childId}
                                 button
-                                onClick={(e) => handleListItemClick(selectedId)}
-                                className={selectedIndex === selectedId ? classes.itemActiveItem : classes.item}
+                                className={selectedIndex === link ? classes.itemActiveItem : classes.item}
                             >
-                                {/*  */}
                                 <ListItem component={Link} to={link}>
                                     <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
                                     <ListItemText

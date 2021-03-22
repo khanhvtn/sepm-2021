@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
-const SuppliersHandle = () => {
+const BrandsHandle = () => {
     const classes = useStyles();
 
     return (
@@ -37,7 +37,7 @@ const SuppliersHandle = () => {
                                 </Grid>
                                 <Grid item>
                                     <Button variant="contained" color="primary" className={classes.addUser}>
-                                        Add supplier
+                                        Add brand
                             </Button>
                                     <Tooltip title="Reload">
                                         <IconButton>
@@ -50,7 +50,7 @@ const SuppliersHandle = () => {
                     </AppBar>
                     <div className={classes.contentWrapper}>
                         <Typography color="textSecondary" align="center">
-                            No suppliers for this project yet
+                            No brands for this project yet
                     </Typography>
                     </div>
                 </Paper>
@@ -59,6 +59,6 @@ const SuppliersHandle = () => {
     );
 }
 
-export default SuppliersHandle;
+export default BrandsHandle;
 
 

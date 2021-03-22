@@ -1,16 +1,16 @@
 import React from 'react';
 import useStyles from './styles'
 
-const BrandsHandle = () => {
+const OrdersHandle = () => {
     const classes = useStyles();
 
     return (
         <>
             <div className={classes.main}>
-                This place is for brands
+                This place is for orders
             </div>
         </>
     )
 }
 
-export default BrandsHandle;
+export default OrdersHandle;

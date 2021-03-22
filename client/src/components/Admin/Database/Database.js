@@ -1,7 +1,7 @@
 import React from 'react';
 import useStyles from './styles'
 import VouchersHandle from './Vouchers/VouchersHandle';
-import BrandsHandle from './Brands/BrandsHandle';
+import OrdersHandle from './Orders/OrdersHandle';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -46,14 +46,14 @@ const Database = () => {
                             <Tabs
                                 value={history.location.pathname}
                                 textColor="inherit" TabIndicatorProps={{ style: { background: 'black' } }}>
-                                <Tab value="/brands" textColor="inherit" label="Brands" component={Link} to="/brands" />
+                                <Tab value="/orders" textColor="inherit" label="Orders" component={Link} to="/orders" />
                                 <Tab value="/vouchers" textColor="inherit" label="Vouchers" component={Link} to="/vouchers" />
                             </Tabs>
                         </AppBar>
                     )}
                 />
                 <Switch>
-                    <Route path="/brands" component={BrandsHandle} />
+                    <Route path="/orders" component={OrdersHandle} />
                     <Route path="/vouchers" component={VouchersHandle} />
                 </Switch>
             </BrowserRouter>

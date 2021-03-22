@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import { Link, Route, BrowserRouter, Switch } from "react-router-dom";
 import UsersHandle from './Users/UsersHandle'
-import SuppliersHandle from './Suppliers/SuppliersHandle'
+import BrandsHandle from './Brands/BrandsHandle'
 import useStyles from './styles';
 
 
@@ -50,14 +50,14 @@ const Authentication = () => {
                                 value={history.location.pathname}
                                 textColor="inherit" TabIndicatorProps={{ style: { background: 'black' } }}>
                                 <Tab value="/users" textColor="inherit" label="Users" component={Link} to="/users" />
-                                <Tab value="/suppliers" textColor="inherit" label="Suppliers" component={Link} to="/suppliers" />
+                                <Tab value="/brands" textColor="inherit" label="Brands" component={Link} to="/brands" />
                             </Tabs>
                         </AppBar>
                     )}
                 />
                 <Switch>
                     <Route path="/users" component={UsersHandle} />
-                    <Route path="/suppliers" component={SuppliersHandle} />
+                    <Route path="/brands" component={BrandsHandle} />
                 </Switch>
             </BrowserRouter>
         </>

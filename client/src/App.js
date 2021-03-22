@@ -20,7 +20,6 @@ import Functions from './components/Admin/Functions/Functions';
 
 
 const App = () => {
-    const [currentId, setCurrentId] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -35,8 +34,8 @@ const App = () => {
                         <Switch>
                             <Route path='/admin' component={AdminHome} exact />
                             <Route path='/admin/users' component={Authentication} />
-                            <Route path='/admin/suppliers' component={Authentication} />
-                            <Route path='/admin/brands' component={Database} />
+                            <Route path='/admin/brands' component={Authentication} />
+                            <Route path='/admin/orders' component={Database} />
                             <Route path='/admin/vouchers' component={Database} />
                             <Route path='/admin/voucher-state' component={Functions} />
                             <Route path='/admin/share-link' component={Functions} />
