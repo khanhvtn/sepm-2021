@@ -24,7 +24,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(checkUserLogin());
-    }, [currentId]);
+    }, []);
 
     return (
         <Router>
@@ -62,9 +62,6 @@ const App = () => {
                         </Switch>
                     </UserLayout>
                 </Route>
-
-
-
             </Switch>
         </Router >
     );

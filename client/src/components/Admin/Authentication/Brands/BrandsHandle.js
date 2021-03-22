@@ -38,7 +38,7 @@ const BrandsHandle = () => {
                                 <Grid item>
                                     <Button variant="contained" color="primary" className={classes.addUser}>
                                         Add brand
-                            </Button>
+                                    </Button>
                                     <Tooltip title="Reload">
                                         <IconButton>
                                             <RefreshIcon className={classes.block} color="inherit" />
@@ -51,7 +51,7 @@ const BrandsHandle = () => {
                     <div className={classes.contentWrapper}>
                         <Typography color="textSecondary" align="center">
                             No brands for this project yet
-                    </Typography>
+                        </Typography>
                     </div>
                 </Paper>
             </div>
