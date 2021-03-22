@@ -6,8 +6,9 @@ import BrandDiscountTag from '../BrandDiscountTag/BrandDiscountTag'
 import BrandBundle from '../BrandBundle/BrandBundle'
 
 import {
-    Typography, Link, Grid
+    Typography, Grid
 } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 const Home = () => {
 
@@ -32,7 +33,7 @@ const Home = () => {
             <Grid item xs={12} md={12} className={classes.brandDiscountTagSection}>
                 <Typography className={classes.suggested} variant="h5">
                     Current
-                <Link className={classes.viewAll} href="#" color="inherit">
+                <Link className={classes.viewAll} to="#" color="inherit">
                         View all &gt;
                 </Link>
                 </Typography>

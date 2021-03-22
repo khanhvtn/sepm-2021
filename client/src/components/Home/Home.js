@@ -5,8 +5,9 @@ import Carousel from 'react-material-ui-carousel'
 import Banner from '../Banner/Banner'
 import Brand from '../Brands/Brand/Brand'
 import {
-    Typography, Link, Grid, GridList, GridListTile 
+    Typography, Grid, GridList, GridListTile 
 } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 const Home = () => {
 
@@ -34,7 +35,7 @@ const Home = () => {
 
             <Typography className={classes.suggested} variant="h5">
                 Suggested
-                <Link className={classes.viewAll} href="#" color="inherit">
+                <Link className={classes.viewAll} to="#" color="inherit">
                     View all &gt;
                 </Link>
             </Typography>
@@ -51,7 +52,7 @@ const Home = () => {
 
             <Typography className={classes.vouchers} variant="h5">
                 Voucher
-                <Link className={classes.viewAll} href="#" color="inherit">
+                <Link className={classes.viewAll} to="#" color="inherit">
                     View all &gt;
                 </Link>
             </Typography>
