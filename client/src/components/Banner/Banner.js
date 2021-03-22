@@ -1,13 +1,14 @@
 import React from 'react';
 import useStyles from './styles';
 import PropTypes from 'prop-types';
-import { CardActions, Typography, Link } from '@material-ui/core';
+import { CardActions, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Banner = (props) => {
     const classes = useStyles();
@@ -23,7 +24,7 @@ const Banner = (props) => {
             <Card className={classes.root}>
                 <div className={displayCardMedia ? classes.details : classes.detailsNoMedia}>
                     <CardActions className={classes.branding}>
-                        <Link href="/brand">
+                        <Link to="/brand">
                             <Avatar className={classes.logo} alt='logo' src='https://source.unsplash.com/featured/?macbook' />
                         </Link>
                         <Typography className={classes.title} component="h6" variant="h6">
