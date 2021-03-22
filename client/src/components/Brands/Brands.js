@@ -7,9 +7,7 @@ import useStyles from './styles';
 
 const Brands = ({ setCurrentId }) => {
     const classes = useStyles();
-    const brands = useSelector(state => state.brands);
-    console.log(brands)
-    
+    const brands = useSelector(state => state.brands);    
 
     return !brands.length ? (
         <Grid container direction="column" alignItems="stretch">

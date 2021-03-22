@@ -16,8 +16,6 @@ const theme = createMuiTheme({
 const UserLayout = ({ children }) => {
     const classes = useStyles();
 
-    console.log(children)
-
     return (
         <>
             <ThemeProvider theme={theme}>

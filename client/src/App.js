@@ -25,8 +25,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(checkUserLogin());
-        dispatch(getVouchers());
-    }, [currentId, dispatch]);
+    }, [currentId]);
 
     return (
         <Router>
@@ -57,9 +56,7 @@ const App = () => {
                                 <Auth isSignup={true} />
                             </Route>
                             <Route path='/brand' component={BrandHome} />
-                            <Route path='/create-voucher'>
-                                <CreateVoucher currentId={currentId} setCurrentId={setCurrentId} />
-                            </Route>
+                            <Route path='/create-voucher' component={CreateVoucher} />
                             <Route path='/create-brand' component={CreateBrand} />
 
                             <Route component={Error} />

@@ -37,7 +37,6 @@ function Navigator(props) {
     const [selectedIndex, setSelectedIndex] = useState();
 
     const handleListItemClick = (index) => {
-        console.log(index)
         setSelectedIndex(index);
     };
 

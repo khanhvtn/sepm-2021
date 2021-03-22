@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Container, Grow, Grid } from '@material-ui/core';
 import Vouchers from '../Vouchers';
 import Form from '../../Form/Form';
 import useStyles from './styles';
-const CreateVoucher = ({ currentId, setCurrentId }) => {
+import { useDispatch } from 'react-redux';
+import { getVouchers } from '../../../actions/vouchers';
+
+const CreateVoucher = () => {
     const classes = useStyles();
-    
+    const dispatch = useDispatch();
+    const [currentId, setCurrentId] = useState(null);
+
+    useEffect(() => {
+        dispatch(getVouchers());
+    }, [currentId]);
 
     return (
         <Grow in>

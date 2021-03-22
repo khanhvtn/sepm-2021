@@ -14,7 +14,7 @@ const CreateBrand = () => {
 
     useEffect(() => {
         dispatch(getBrands());
-    }, [currentId, dispatch]);
+    }, [currentId]);
 
     return (
         <Grow in>
