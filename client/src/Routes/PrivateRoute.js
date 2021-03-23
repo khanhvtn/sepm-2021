@@ -1,16 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { authData, isLoading } = useSelector((state) => state.auth);
+    const { authData } = useSelector((state) => state.auth);
     return (
         <Route
             {...rest}
             render={(props) =>
-                isLoading ? (
-                    <CircularProgress />
-                ) : authData ? (
+                authData ? (
                     <Component {...props} />
                 ) : (
                     <Redirect

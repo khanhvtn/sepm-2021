@@ -9,8 +9,7 @@ import {
     Button,
     Avatar,
     Link,
-    Divider,
-    Hidden,
+    CircularProgress,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -30,7 +29,7 @@ const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const authData = useSelector((state) => state.auth.authData);
+    const { authData, isLoading } = useSelector((state) => state.auth);
     const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
@@ -152,10 +151,18 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            <MenuItem onClick={() => handleGoToAuth('register')}>
-                Register
-            </MenuItem>
-            <MenuItem onClick={() => handleGoToAuth('login')}>Login</MenuItem>
+            {isLoading ? (
+                ''
+            ) : (
+                <div>
+                    <MenuItem onClick={() => handleGoToAuth('register')}>
+                        Register
+                    </MenuItem>
+                    <MenuItem onClick={() => handleGoToAuth('login')}>
+                        Login
+                    </MenuItem>
+                </div>
+            )}
         </Menu>
     );
     return (
@@ -239,22 +246,32 @@ const Navbar = () => {
                     ) : (
                         <>
                             <div className={classes.sectionDesktopUnAuth}>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="outlined"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('register')}
-                                >
-                                    Register
-                                </Button>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('login')}
-                                >
-                                    Login
-                                </Button>
+                                {isLoading ? (
+                                    ''
+                                ) : (
+                                    <div>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="outlined"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('register')
+                                            }
+                                        >
+                                            Register
+                                        </Button>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('login')
+                                            }
+                                        >
+                                            Login
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                             <div className={classes.sectionMobileUnAuth}>
                                 <IconButton
