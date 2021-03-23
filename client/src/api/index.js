@@ -26,7 +26,12 @@ export const getUser = (id) => API.get(`/user/${id}`);
 
 // API for Brand
 export const fetchBrands = () => API.get('/brands');
+export const signInBrands = (formData) => API.post('/brands/signin', formData)
+export const signUpBrands = (formData) => API.post('brands/signup', formData)
 export const createBrand = (newBrand) => API.post('/brands', newBrand);
 export const updateBrand = (id, updateBrand) =>
     API.patch(`${'/brands'}/${id}`, updateBrand);
 export const deleteBrand = (id) => API.delete(`${'/brands'}/${id}`);
+
+// API for Admin
+export const fetchUsers = () => API.get('/admin/users')

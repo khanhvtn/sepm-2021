@@ -2,26 +2,22 @@ import mongoose from 'mongoose';
 
 const brandSchema = mongoose.Schema(
     {
-        name: { 
-            type: String, 
-            required: [true, 'Name can not be blanked.'] 
-        },
-        title: {
+        email: {
             type: String,
-            required: [true, 'Title can not be blanked.'],
+            required: [true, 'Email can not be blanked.']
         },
-        description: {
+        password: {
             type: String,
-            required: [true, 'Description can not be blanked.'],
+            required: true
         },
+        name: { type: String },
+        description: { type: String },
         category: {
             type: String,
             required: [true, 'Category can not be blanked.'],
         },
-        image: {
-            type: String,
-            required: [true, 'Image can not be blanked.'],
-        },
+        brandImage: { type: String },
+        coverImage: { type: String },
     },
     { timestamps: true }
 );

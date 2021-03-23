@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import useStyles from './styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -8,12 +8,58 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../../../../actions/admins'
+import { CircularProgress } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+
 
 const UsersHandle = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const users = useSelector(state => state.users)
+    console.log(users)
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, []);
+
+
 
     return (
         <>
@@ -38,7 +84,7 @@ const UsersHandle = () => {
                                 <Grid item>
                                     <Button variant="contained" color="primary" className={classes.addUser}>
                                         Add user
-                            </Button>
+                                    </Button>
                                     <Tooltip title="Reload">
                                         <IconButton>
                                             <RefreshIcon className={classes.block} color="inherit" />
@@ -48,11 +94,97 @@ const UsersHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    <div className={classes.contentWrapper}>
+                    {/* <div className={classes.contentWrapper}>
                         <Typography color="textSecondary" align="center">
                             No users for this project yet
-                    </Typography>
-                    </div>
+                        </Typography>
+                    </div> */}
+                    {!users.length
+                        ?
+                        <Grid container direction="column" alignItems="stretch">
+                            <Grid item style={{ textAlign: 'center' }}>
+                                <CircularProgress variant="indeterminate" />
+                            </Grid>
+                        </Grid>
+                        :
+                        <Paper className={classes.root}>
+                            <TableContainer className={classes.container}>
+                                <Table aria-label="sticky table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell
+                                                key='identifier'
+                                            // style={{ minWidth: 170 }}
+                                            >
+                                                Identifier
+                                            </TableCell>
+                                            <TableCell
+                                                key='created'
+                                            // style={{ minWidth: 170 }}
+                                            >
+                                                Created
+                                            </TableCell>
+                                            <TableCell
+                                                key='signed-in'
+                                            // style={{ minWidth: 170 }}
+                                            >
+                                                Signed In
+                                            </TableCell>
+                                            <TableCell
+                                                key='user-uid'
+                                            // style={{ minWidth: 170 }}
+                                            >
+                                                User UID
+                                            </TableCell>
+                                            <TableCell
+                                                key='setting'
+                                            // style={{ minWidth: 170 }}
+                                            />
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {users.map((row) => (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                                                <TableCell key='email' align='left'>{row.email}</TableCell>
+                                                <TableCell key='createdAt' align='left'>{row.createdAt}</TableCell>
+                                                <TableCell key='name' align='left'>{row.name}</TableCell>
+                                                <TableCell key='_id' align='left'>{row._id}</TableCell>
+                                                <TableCell key='setting' align='right'>
+                                                    <IconButton
+                                                        aria-label="more"
+                                                        aria-controls="long-menu"
+                                                        aria-haspopup="true"
+                                                        onClick={handleClick}
+                                                    >
+                                                        <MoreVertIcon />
+                                                    </IconButton>
+                                                    <Menu
+                                                        id="simple-menu"
+                                                        anchorEl={anchorEl}
+                                                        keepMounted
+                                                        open={Boolean(anchorEl)}
+                                                        onClose={handleClose}
+                                                    >
+                                                        <MenuItem onClick={handleClose}>Edit</MenuItem>
+                                                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                                                    </Menu>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[10, 25, 100]}
+                                component="div"
+                                count={users.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onChangePage={handleChangePage}
+                                onChangeRowsPerPage={handleChangeRowsPerPage}
+                            />
+                        </Paper>
+                    }
                 </Paper>
             </div>
         </>

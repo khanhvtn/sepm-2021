@@ -4,6 +4,8 @@ import {
     createBrand,
     updateBrand,
     deleteBrand,
+    signInBrand,
+    signUpBrand,
 } from '../controllers/brands.js';
 
 
@@ -13,5 +15,7 @@ router.get('/', getBrands);
 router.post('/', createBrand);
 router.patch('/:id', updateBrand);
 router.delete('/:id', deleteBrand);
+router.post('/signin', signInBrand);
+router.post('/signup', signUpBrand)
 
 export default router;
