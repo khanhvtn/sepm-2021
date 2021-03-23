@@ -23,7 +23,7 @@ import { CircularProgress } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import UserDialog from './UserDialog'
 
 
 const UsersHandle = () => {
@@ -33,6 +33,7 @@ const UsersHandle = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = React.useState(false);
 
     const users = useSelector(state => state.users)
     console.log(users)
@@ -53,6 +54,15 @@ const UsersHandle = () => {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+
+    const handleDialogOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
     };
 
     useEffect(() => {
@@ -82,9 +92,14 @@ const UsersHandle = () => {
                                     />
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="contained" color="primary" className={classes.addUser}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleDialogOpen}
+                                        className={classes.addUser}>
                                         Add user
                                     </Button>
+                                    <UserDialog handleDialogClose={handleDialogClose} open={open} />
                                     <Tooltip title="Reload">
                                         <IconButton>
                                             <RefreshIcon className={classes.block} color="inherit" />

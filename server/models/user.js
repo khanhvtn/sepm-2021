@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema(
         password: { type: String, required: true },
         points: { type: String, default: '0' },
         accountBalance: { type: String, default: '0' },
+        loggedIn: { type: Date }
     },
     { timestamps: true }
 );
