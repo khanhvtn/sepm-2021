@@ -11,6 +11,7 @@ import {
     Tab,
     AppBar,
     TextField,
+    CircularProgress,
 } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,6 +27,7 @@ import {
 } from '@material-ui/icons';
 import { updateUser } from '../../actions/auths';
 import { convertBase64 } from '../../utils';
+import { USER_LOADING } from '../../constants/actionTypes';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -128,7 +130,10 @@ const validateChangePoint = (userInfo, changePoints) => {
     return { points: { error, message } };
 };
 const UserProfile = () => {
-    const userInfo = useSelector((state) => state.auth.authData?.result);
+    const { userInfo, auth } = useSelector((state) => ({
+        userInfo: state.auth.authData?.result,
+        auth: state.auth,
+    }));
     const location = useLocation();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -188,6 +193,7 @@ const UserProfile = () => {
             parseInt(userInfo.accountBalance) + parseInt(state.points)
         );
         const newUpdateUser = { ...userInfo, points, accountBalance };
+        dispatch({ type: USER_LOADING, payload: true });
         dispatch(updateUser(newUpdateUser));
         setState(initialState);
     };
@@ -231,6 +237,7 @@ const UserProfile = () => {
     const handleSaveUserImage = () => {
         const { imageUrl } = state;
         const newUpdateUser = { ...userInfo, imageUrl };
+        dispatch({ type: USER_LOADING, payload: true });
         dispatch(updateUser(newUpdateUser));
         setState(initialState);
     };
@@ -258,6 +265,7 @@ const UserProfile = () => {
                                 {userInfo?.name}
                             </Typography>
                             {/* Photo Section */}
+
                             <Avatar
                                 src={
                                     state.imageUrl

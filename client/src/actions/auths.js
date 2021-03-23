@@ -13,6 +13,7 @@ export const updateUser = (newUpdateUser) => async (dispatch) => {
     } catch (error) {
         console.log(error);
     }
+    dispatch({ type: USER_LOADING, payload: false });
 };
 export const checkCurrentUser = (history) => async (dispatch) => {
     const userProfile = JSON.parse(localStorage.getItem('userProfile'));
