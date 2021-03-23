@@ -1,5 +1,4 @@
 import React from 'react';
-import useStyles from './styles';
 import { Button } from '@material-ui/core';
 import Game from './Game/Game';
 import './scss/main.scss';
@@ -7,7 +6,6 @@ import { ArrowBack } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 const Memorai = () => {
     const history = useHistory();
-    const classes = useStyles();
     return (
         <div>
             <Button

@@ -266,17 +266,21 @@ const UserProfile = () => {
                             </Typography>
                             {/* Photo Section */}
 
-                            <Avatar
-                                src={
-                                    state.imageUrl
-                                        ? state.imageUrl
-                                        : userInfo?.imageUrl
-                                        ? userInfo?.imageUrl
-                                        : '/error.png'
-                                }
-                                alt={userInfo?.name}
-                                className={classes.avatar}
-                            />
+                            {auth.isLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                <Avatar
+                                    src={
+                                        state.imageUrl
+                                            ? state.imageUrl
+                                            : userInfo?.imageUrl
+                                            ? userInfo?.imageUrl
+                                            : '/error.png'
+                                    }
+                                    alt={userInfo?.name}
+                                    className={classes.avatar}
+                                />
+                            )}
                             <input
                                 ref={fileInput}
                                 accept="image/*"
@@ -296,7 +300,6 @@ const UserProfile = () => {
                                 >
                                     <Button
                                         onClick={handleSaveUserImage}
-                                        size="small"
                                         variant="contained"
                                         color="primary"
                                         endIcon={<Save />}
@@ -311,7 +314,6 @@ const UserProfile = () => {
                                             });
                                             fileInput.current.value = '';
                                         }}
-                                        size="small"
                                         variant="contained"
                                         color="secondary"
                                         className={classes.btnCancel}
@@ -422,7 +424,11 @@ const UserProfile = () => {
                                 fullWidth
                                 color="primary"
                             >
-                                Update Profile
+                                {auth.isLoading ? (
+                                    <CircularProgress color="inherit" />
+                                ) : (
+                                    'Update Profile'
+                                )}
                             </Button>
                         </form>
                     </TabPanel>
@@ -449,7 +455,11 @@ const UserProfile = () => {
                                 fullWidth
                                 color="primary"
                             >
-                                Deposit to wallet
+                                {auth.isLoading ? (
+                                    <CircularProgress color="inherit" />
+                                ) : (
+                                    'Deposit to wallet'
+                                )}
                             </Button>
                         </form>
                     </TabPanel>
@@ -488,7 +498,11 @@ const UserProfile = () => {
                                 fullWidth
                                 color="primary"
                             >
-                                Exchange to Money
+                                {auth.isLoading ? (
+                                    <CircularProgress color="inherit" />
+                                ) : (
+                                    'Exchange to Money'
+                                )}
                             </Button>
                         </form>
                     </TabPanel>

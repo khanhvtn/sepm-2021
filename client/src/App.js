@@ -48,7 +48,7 @@ const App = () => {
                     maxWidth="lg"
                     disableGutters
                 >
-                    {auth.isLoading ? (
+                    {auth.isUserChecking ? (
                         <Grid container justify="center" alignItems="center">
                             <CircularProgress
                                 style={{

@@ -4,8 +4,10 @@ import cardImages from '../cards';
 import Card from '../Card/Card';
 import deepcopy from 'deepcopy';
 import * as imagrCards from './imageCards';
-import { Button, Typography, Zoom } from '@material-ui/core';
+import { Button, Typography, Zoom, CircularProgress } from '@material-ui/core';
 import { Replay } from '@material-ui/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser } from '../../../../actions/auths';
 
 function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -30,7 +32,11 @@ function generateCards(count) {
 
 export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
     const totalCards = fieldWidth * fieldHeight;
-
+    const dispatch = useDispatch();
+    const { userInfo, auth } = useSelector((state) => ({
+        userInfo: state.auth.authData?.result,
+        auth: state.auth,
+    }));
     const [cards, setCards] = useState(generateCards(totalCards));
     const [canFlip, setCanFlip] = useState(false);
     const [firstCard, setFirstCard] = useState(null);
@@ -78,6 +84,11 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
         const isWin = cards.every((card) => card.isFlipped === false);
         if (isWin) {
             setIsWin((prevState) => ({ ...prevState, isWin }));
+            //calculate points after user win the game
+
+            const points = String(parseInt(userInfo.points) + 500);
+            const newUpdatedUser = { ...userInfo, points };
+            dispatch(updateUser(newUpdatedUser));
         }
     };
 
@@ -134,7 +145,11 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
             <Typography variant="h3" gutterBottom>
                 Memorai
             </Typography>
-            {isWin ? (
+            {!isWin ? (
+                ''
+            ) : auth.isLoading ? (
+                <CircularProgress />
+            ) : (
                 <Zoom
                     in
                     style={{
@@ -145,8 +160,6 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
                         Congratulation! You won the game and got 500 points
                     </Typography>
                 </Zoom>
-            ) : (
-                ''
             )}
 
             <div className="cards-container">

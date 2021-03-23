@@ -28,7 +28,7 @@ const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { authData, isLoading } = useSelector((state) => state.auth);
+    const { authData, isUserChecking } = useSelector((state) => state.auth);
     const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
@@ -150,7 +150,7 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            {isLoading ? (
+            {isUserChecking ? (
                 ''
             ) : (
                 <div>
@@ -245,7 +245,7 @@ const Navbar = () => {
                     ) : (
                         <>
                             <div className={classes.sectionDesktopUnAuth}>
-                                {isLoading ? (
+                                {isUserChecking ? (
                                     ''
                                 ) : (
                                     <div>

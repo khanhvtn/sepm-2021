@@ -7,11 +7,12 @@ import {
     Grid,
     Container,
     Button,
+    CircularProgress,
 } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import Input from './Input';
 import { LockOutlined } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { signin, signup } from '../../actions/auths';
 const initialFormData = {
@@ -30,6 +31,7 @@ const Auth = ({ isSignup }) => {
     const history = useHistory();
     const location = useLocation();
     const previousPath = location.state?.previousPath;
+    const { auth } = useSelector((state) => state);
 
     //useEffect
     useEffect(() => {
@@ -139,7 +141,13 @@ const Auth = ({ isSignup }) => {
                         color="primary"
                         className={classes.submit}
                     >
-                        {isSignup ? 'Sign Up' : 'Sign In'}
+                        {auth.isLoading ? (
+                            <CircularProgress color="inherit" />
+                        ) : isSignup ? (
+                            'Sign Up'
+                        ) : (
+                            'Sign In'
+                        )}
                     </Button>
                     {/* <GoogleLogin
                         clientId="649113248320-vcuks8cgnta6u2uhdbm67m73go4h9kdh.apps.googleusercontent.com"

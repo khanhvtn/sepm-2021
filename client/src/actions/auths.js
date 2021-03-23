@@ -4,10 +4,12 @@ import {
     CHECK_CURRENT_USER,
     UPDATE_USER,
     USER_LOADING,
+    IS_USER_CHECKING,
 } from '../constants/actionTypes';
 
 export const updateUser = (newUpdateUser) => async (dispatch) => {
     try {
+        dispatch({ type: USER_LOADING, payload: true });
         const { data } = await api.updateUser(newUpdateUser);
         dispatch({ type: UPDATE_USER, data });
     } catch (error) {
@@ -25,7 +27,7 @@ export const checkCurrentUser = (history) => async (dispatch) => {
          */
         if (userProfile) {
             dispatch({
-                type: USER_LOADING,
+                type: IS_USER_CHECKING,
                 payload: true,
             });
             const { data } = await api.checkCurrentUser();
@@ -34,13 +36,13 @@ export const checkCurrentUser = (history) => async (dispatch) => {
                 data: { result: data.result, token: userProfile.token },
             });
             dispatch({
-                type: USER_LOADING,
+                type: IS_USER_CHECKING,
                 payload: false,
             });
         } else {
             dispatch({ type: CHECK_CURRENT_USER, data: null });
             dispatch({
-                type: USER_LOADING,
+                type: IS_USER_CHECKING,
                 payload: false,
             });
         }
@@ -48,7 +50,7 @@ export const checkCurrentUser = (history) => async (dispatch) => {
         const previousPath = history.location.pathname;
         dispatch({ type: CHECK_CURRENT_USER, data: null });
         dispatch({
-            type: USER_LOADING,
+            type: IS_USER_CHECKING,
             payload: false,
         });
         previousPath === '/'
@@ -58,17 +60,22 @@ export const checkCurrentUser = (history) => async (dispatch) => {
 };
 export const signup = (formData, history) => async (dispatch) => {
     try {
+        dispatch({ type: USER_LOADING, payload: true });
         const { data } = await api.signUp(formData);
         dispatch({ type: AUTH, data });
+        dispatch({ type: USER_LOADING, payload: false });
         history.push('/');
     } catch (error) {
+        dispatch({ type: USER_LOADING, payload: false });
         console.log(error);
     }
 };
 export const signin = (formData, history, previousPath) => async (dispatch) => {
     try {
+        dispatch({ type: USER_LOADING, payload: true });
         const { data } = await api.signIn(formData);
         dispatch({ type: AUTH, data });
+        dispatch({ type: USER_LOADING, payload: false });
         /* 
         If previous path exists, then redirect to previous path.
         If not, redirect to home page.
@@ -79,6 +86,7 @@ export const signin = (formData, history, previousPath) => async (dispatch) => {
             ? history.push(`${previousPath}`, { action: 0 })
             : history.push('/');
     } catch (error) {
+        dispatch({ type: USER_LOADING, payload: false });
         console.log(error);
     }
 };
