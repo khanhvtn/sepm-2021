@@ -15,7 +15,7 @@ export const getUsers = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     const { id: _id } = req.params
-    
+
     try {
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(404).send('No user with that id');
@@ -30,17 +30,21 @@ export const deleteUser = async (req, res) => {
 
 export const setVoucher = async (req, res) => {
     const { id: _id } = req.params;
-    const updateVoucher = req.body;
+    const { type } = req.body
+    const action = type === 'ACCEPT' ? true : false
+
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('No post with that id');
     }
     try {
         const updateMessage = await Voucher.findByIdAndUpdate(
             _id,
-            { isAccepted: true }
+            { isAccepted: action }
         );
 
-        res.json(updateMessage);
+        console.log(updateMessage)
+
+        res.status(200).json(updateMessage);
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

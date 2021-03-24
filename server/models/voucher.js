@@ -41,9 +41,9 @@ const voucherSchema = mongoose.Schema(
             type: Date,
             required: [true, 'Expired Date can not be blanked.'],
         },
-        isAccpected: {
+        isAccepted: {
             type: Boolean,
-            default: false
+            default: null
         }
     },
     { timestamps: true }

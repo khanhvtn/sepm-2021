@@ -25,7 +25,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteBrand, getBrands } from '../../../../actions/brands'
 import moment from 'moment';
-import { fetchBrands } from '../../../../api';
 
 
 const BrandsHandle = () => {
@@ -120,7 +119,7 @@ const BrandsHandle = () => {
                     }
                     {!brands.length
                         ?
-                        <Grid container direction="column" alignItems="stretch">
+                        <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
