@@ -7,30 +7,31 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { createBrand } from '../../../../api';
 
-const initialUserData = {
+const initialBrandData = {
     email: '',
     password: ''
 }
 
-export default function UserDialog({ open, handleDialogClose }) {
+export default function BrandDialog({ open, handleDialogClose }) {
     const classes = useStyles();
-    const [userData, setUserData] = useState(initialUserData);
+    const [brandData, setBrandData] = useState(initialBrandData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatchEvent(createUser({ ...userData }))
+        dispatchEvent(createBrand({ ...brandData }))
         clear();
     }
 
     const clear = () => {
-        setUserData(initialUserData)
+        setBrandData(initialBrandData)
     }
 
     return (
         <div>
             <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Add an Email/Password user</DialogTitle>
+                <DialogTitle id="form-dialog-title">Add an account for Brand</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
 
@@ -43,11 +44,6 @@ export default function UserDialog({ open, handleDialogClose }) {
                             label="Email Address"
                             type="email"
                             variant="outlined"
-                            value={userData.email}
-                            onChange={(e) => setUserData({
-                                ...userData,
-                                email: e.target.value
-                            })}
                             fullWidth
                         />
                         <TextField
@@ -57,11 +53,6 @@ export default function UserDialog({ open, handleDialogClose }) {
                             label="Password"
                             type="password"
                             variant="outlined"
-                            value={userData.password}
-                            onChange={(e) => setUserData({
-                                ...userData,
-                                password: e.target.value
-                            })}
                             fullWidth
                         />
                     </div>
@@ -71,7 +62,7 @@ export default function UserDialog({ open, handleDialogClose }) {
                         Cancel
                     </Button>
                     <Button onClick={handleSubmit} color="primary" variant="contained">
-                        Save
+                        Subscribe
                     </Button>
                 </DialogActions>
             </Dialog>

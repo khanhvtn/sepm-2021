@@ -24,7 +24,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import UserDialog from './UserDialog'
-
+import moment from 'moment';
+import { deleteUser } from '../../../../actions/admins';
 
 const UsersHandle = () => {
     const classes = useStyles();
@@ -33,7 +34,7 @@ const UsersHandle = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const users = useSelector(state => state.users)
     console.log(users)
@@ -74,6 +75,7 @@ const UsersHandle = () => {
     return (
         <>
             <div className={classes.main}>
+                <UserDialog handleDialogClose={handleDialogClose} open={open} />
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
                         <Toolbar>
@@ -99,7 +101,6 @@ const UsersHandle = () => {
                                         className={classes.addUser}>
                                         Add user
                                     </Button>
-                                    <UserDialog handleDialogClose={handleDialogClose} open={open} />
                                     <Tooltip title="Reload">
                                         <IconButton>
                                             <RefreshIcon className={classes.block} color="inherit" />
@@ -158,12 +159,12 @@ const UsersHandle = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((row) => (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                                                <TableCell key='email' align='left'>{row.email}</TableCell>
-                                                <TableCell key='createdAt' align='left'>{row.createdAt}</TableCell>
-                                                <TableCell key='name' align='left'>{row.name}</TableCell>
-                                                <TableCell key='_id' align='left'>{row._id}</TableCell>
+                                        {users.map((user) => (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
+                                                <TableCell key='email' align='left'>{user.email}</TableCell>
+                                                <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
+                                                <TableCell key='name' align='left'>{user.name}</TableCell>
+                                                <TableCell key='_id' align='left'>{user._id}</TableCell>
                                                 <TableCell key='setting' align='right'>
                                                     <IconButton
                                                         aria-label="more"
@@ -181,7 +182,12 @@ const UsersHandle = () => {
                                                         onClose={handleClose}
                                                     >
                                                         <MenuItem onClick={handleClose}>Edit</MenuItem>
-                                                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                                                        <MenuItem 
+                                                            onClick={() => 
+                                                                dispatch(deleteUser(user._id))
+                                                            }>
+                                                            Delete
+                                                        </MenuItem>
                                                     </Menu>
                                                 </TableCell>
                                             </TableRow>

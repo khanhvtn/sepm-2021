@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useStyles from './styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -11,13 +11,48 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import BrandDialog from './BrandDialog';
+import { useDispatch } from 'react-redux';
 
 const BrandsHandle = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+
+    const handleDialogOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
             <div className={classes.main}>
+                <BrandDialog handleDialogClose={handleDialogClose} open={open} />
                 <Paper className={classes.paper}>
                     <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
                         <Toolbar>
@@ -36,7 +71,10 @@ const BrandsHandle = () => {
                                     />
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="contained" color="primary" className={classes.addUser}>
+                                    <Button variant="contained" 
+                                        color="primary" 
+                                        onClick={handleDialogOpen}
+                                        className={classes.addUser}>
                                         Add brand
                                     </Button>
                                     <Tooltip title="Reload">

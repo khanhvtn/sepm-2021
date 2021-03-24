@@ -29,4 +29,8 @@ export default makeStyles((theme) => ({
     root: {
         width: '100%',
     },
+    mr16mb8: {
+        marginBottom: theme.spacing(1),
+        marginRight: theme.spacing(2)
+    }
 }));

@@ -35,3 +35,4 @@ export const deleteBrand = (id) => API.delete(`${'/brands'}/${id}`);
 
 // API for Admin
 export const fetchUsers = () => API.get('/admin/users')
+export const deleteUser = (id) => API.delete(`/admin/users/${id}`)

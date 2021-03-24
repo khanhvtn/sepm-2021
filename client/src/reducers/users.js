@@ -1,11 +1,13 @@
-import { FETCH_ALL } from '../constants/actionTypes';
+import { FETCH_ALL, DELETE } from '../constants/actionTypes';
 
-const userReducer = (data = [], action) => {
+const userReducer = (users = [], action) => {
     switch (action.type) {
         case FETCH_ALL:
             return action.payload;
+        case DELETE:
+            return users.filter((user) => user._id !== action.payload);
         default:
-            return data;
+            return users;
     }
 };
 export default userReducer;
