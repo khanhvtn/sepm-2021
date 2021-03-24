@@ -19,7 +19,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../../actions/admins'
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,12 +32,12 @@ const UsersHandle = () => {
     const dispatch = useDispatch();
 
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const users = useSelector(state => state.users)
-    console.log(users)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -53,6 +53,7 @@ const UsersHandle = () => {
         setAnchorEl(event.currentTarget);
     };
 
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -66,9 +67,14 @@ const UsersHandle = () => {
         setOpen(false);
     };
 
+    const handleDeleteUser = (id) => {
+        dispatch(deleteUser(id))
+        setAnchorEl(null)
+    }
+
     useEffect(() => {
         dispatch(getUsers());
-    }, []);
+    }, [dispatch]);
 
 
 
@@ -102,7 +108,7 @@ const UsersHandle = () => {
                                         Add user
                                     </Button>
                                     <Tooltip title="Reload">
-                                        <IconButton>
+                                        <IconButton onClick={() => window.location.reload(false)}>
                                             <RefreshIcon className={classes.block} color="inherit" />
                                         </IconButton>
                                     </Tooltip>
@@ -110,14 +116,15 @@ const UsersHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {/* <div className={classes.contentWrapper}>
+                    {users.length === 0 ? (<div className={classes.contentWrapper}>
                         <Typography color="textSecondary" align="center">
                             No users for this project yet
                         </Typography>
-                    </div> */}
+                    </div>) : null
+                    }
                     {!users.length
                         ?
-                        <Grid container direction="column" alignItems="stretch">
+                        <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
@@ -128,38 +135,15 @@ const UsersHandle = () => {
                                 <Table aria-label="sticky table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell
-                                                key='identifier'
-                                            // style={{ minWidth: 170 }}
-                                            >
-                                                Identifier
-                                            </TableCell>
-                                            <TableCell
-                                                key='created'
-                                            // style={{ minWidth: 170 }}
-                                            >
-                                                Created
-                                            </TableCell>
-                                            <TableCell
-                                                key='signed-in'
-                                            // style={{ minWidth: 170 }}
-                                            >
-                                                Signed In
-                                            </TableCell>
-                                            <TableCell
-                                                key='user-uid'
-                                            // style={{ minWidth: 170 }}
-                                            >
-                                                User UID
-                                            </TableCell>
-                                            <TableCell
-                                                key='setting'
-                                            // style={{ minWidth: 170 }}
-                                            />
+                                            <TableCell key='identifier'>Identifier </TableCell>
+                                            <TableCell key='created'> Created </TableCell>
+                                            <TableCell key='signed-in'> Signed In </TableCell>
+                                            <TableCell key='user-uid'> User UID </TableCell>
+                                            <TableCell key='setting' />
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((user) => (
+                                        {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
                                             <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
                                                 <TableCell key='email' align='left'>{user.email}</TableCell>
                                                 <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
@@ -181,11 +165,8 @@ const UsersHandle = () => {
                                                         open={Boolean(anchorEl)}
                                                         onClose={handleClose}
                                                     >
-                                                        <MenuItem onClick={handleClose}>Edit</MenuItem>
-                                                        <MenuItem 
-                                                            onClick={() => 
-                                                                dispatch(deleteUser(user._id))
-                                                            }>
+                                                        <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
+                                                        <MenuItem onClick={() => handleDeleteUser(user._id)}>
                                                             Delete
                                                         </MenuItem>
                                                     </Menu>
@@ -194,16 +175,16 @@ const UsersHandle = () => {
                                         ))}
                                     </TableBody>
                                 </Table>
+                                <TablePagination
+                                    rowsPerPageOptions={[5, 10, 15]}
+                                    component="div"
+                                    count={users.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                />
                             </TableContainer>
-                            <TablePagination
-                                rowsPerPageOptions={[10, 25, 100]}
-                                component="div"
-                                count={users.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                            />
                         </Paper>
                     }
                 </Paper>

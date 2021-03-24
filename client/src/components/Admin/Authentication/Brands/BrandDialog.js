@@ -11,7 +11,9 @@ import { createBrand } from '../../../../api';
 
 const initialBrandData = {
     email: '',
-    password: ''
+    password: '',
+    name: '',
+    category: '',
 }
 
 export default function BrandDialog({ open, handleDialogClose }) {
@@ -39,21 +41,65 @@ export default function BrandDialog({ open, handleDialogClose }) {
                     <div>
                         <TextField
                             autoFocus
+                            fullWidth
+                            id="email"
+                            label="Email"
                             margin="dense"
-                            id="name"
-                            label="Email Address"
                             type="email"
                             variant="outlined"
-                            fullWidth
+                            value={brandData.email}
+                            onChange={(e) =>
+                                setBrandData({
+                                    ...brandData,
+                                    name: e.target.value
+                                })
+                            }
                         />
                         <TextField
                             autoFocus
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            variant="outlined"
                             margin="dense"
+                            value={brandData.name}
+                            onChange={(e) =>
+                                setBrandData({
+                                    ...brandData,
+                                    name: e.target.value
+                                })
+                            }
+                        />
+                        <TextField
+                            autoFocus
+                            fullWidth
                             id="password"
                             label="Password"
                             type="password"
                             variant="outlined"
+                            margin="dense"
+                            value={brandData.password}
+                            onChange={(e) =>
+                                setBrandData({
+                                    ...brandData,
+                                    name: e.target.value
+                                })
+                            }
+                        />
+                        <TextField
+                            autoFocus
                             fullWidth
+                            id="category"
+                            label="Category"
+                            variant="outlined"
+                            margin="dense"
+                            value={brandData.category}
+                            onChange={(e) =>
+                                setBrandData({
+                                    ...brandData,
+                                    category: e.target.value,
+                                })
+                            }
                         />
                     </div>
                 </DialogContent>
@@ -62,7 +108,7 @@ export default function BrandDialog({ open, handleDialogClose }) {
                         Cancel
                     </Button>
                     <Button onClick={handleSubmit} color="primary" variant="contained">
-                        Subscribe
+                        Save
                     </Button>
                 </DialogActions>
             </Dialog>

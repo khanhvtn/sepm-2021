@@ -26,4 +26,11 @@ export default makeStyles((theme) => ({
     contentWrapper: {
         margin: '40px 16px',
     },
+    root: {
+        width: '100%',
+    },
+    mr16mb8: {
+        marginBottom: theme.spacing(1),
+        marginRight: theme.spacing(2)
+    }
 }));

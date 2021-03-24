@@ -15,11 +15,13 @@ export const getUsers = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     const { id: _id } = req.params
+    
     try {
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             return res.status(404).send('No user with that id');
         }
-        await Brand.findByIdAndRemove(_id);
+        console.log(_id)
+        await User.findByIdAndRemove(_id);
         res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
