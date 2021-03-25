@@ -1,6 +1,10 @@
 import jwt from 'jsonwebtoken';
 const auth = async (req, res, next) => {
     try {
+        /* If clients request without authorization, then request will be denied. */
+        if (!req.headers.authorization) {
+            return res.status(401).json({ message: 'Access Denied.' });
+        }
         const token = req.headers.authorization.split(' ')[1];
         const isCustomAuth = token.length < 500;
 
@@ -16,7 +20,11 @@ const auth = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        console.log(error);
+        if (error.name === 'TokenExpiredError') {
+            return res
+                .status(401)
+                .json({ ...error, message: 'User session is expired' });
+        }
     }
 };
 

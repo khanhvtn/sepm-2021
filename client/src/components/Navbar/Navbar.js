@@ -49,7 +49,18 @@ const Navbar = () => {
 
     //handle to go to register page
     const handleGoToAuth = (type) => {
-        history.push(type === 'register' ? '/register' : '/login');
+        type === 'register'
+            ? history.push('/register', { isSignup: true })
+            : history.push('/login', { isSignup: false });
+    };
+
+    //handle to go to user profile
+    const handleGoToProfile = (type) => {
+        const action = type === 'profile' ? 0 : type === 'wallet' ? 1 : 2;
+        history.push('/user-profile', {
+            action,
+        });
+        handleMenuClose();
     };
 
     const isMenuOpen = Boolean(anchorEl);
@@ -81,19 +92,19 @@ const Navbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem>
+            <MenuItem onClick={() => handleGoToProfile('changecoin')}>
                 <IconButton aria-label="change coin" color="inherit">
                     <MonetizationOn />
                 </IconButton>
                 <p>Change Coin</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => handleGoToProfile('wallet')}>
                 <IconButton aria-label="wallet of current user" color="inherit">
                     <AccountBalanceWallet />
                 </IconButton>
                 <p>My Wallet</p>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
+            <MenuItem onClick={() => handleGoToProfile('profile')}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
@@ -125,8 +136,10 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            <MenuItem onClick={handleMobileUnAuthMenuClose}>Register</MenuItem>
-            <MenuItem onClick={handleMobileUnAuthMenuClose}>Login</MenuItem>
+            <MenuItem onClick={() => handleGoToAuth('register')}>
+                Register
+            </MenuItem>
+            <MenuItem onClick={() => handleGoToAuth('login')}>Login</MenuItem>
         </Menu>
     );
     return (
@@ -158,7 +171,7 @@ const Navbar = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
-                {/* </Toolbar>
+                    {/* </Toolbar>
             </AppBar> */}
 
                     <div className={classes.grow} />
@@ -180,8 +193,13 @@ const Navbar = () => {
                                     color="inherit"
                                 >
                                     <Avatar
+                                        className={classes.avatar}
                                         alt={user.result.name}
-                                        src={user.result.imageUrl}
+                                        src={
+                                            user.result.imageUrl
+                                                ? user.result.imageUrl
+                                                : '/error.png'
+                                        }
                                     />
                                 </IconButton>
                             </div>
@@ -198,38 +216,38 @@ const Navbar = () => {
                             </div>
                         </>
                     ) : (
-                        <>
-                            <div className={classes.sectionDesktopUnAuth}>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="outlined"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('register')}
-                                >
-                                    Register
+                            <>
+                                <div className={classes.sectionDesktopUnAuth}>
+                                    <Button
+                                        className={classes.btnAuth}
+                                        variant="outlined"
+                                        color="secondary"
+                                        onClick={() => handleGoToAuth('register')}
+                                    >
+                                        Register
                                 </Button>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('login')}
-                                >
-                                    Login
+                                    <Button
+                                        className={classes.btnAuth}
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => handleGoToAuth('login')}
+                                    >
+                                        Login
                                 </Button>
-                            </div>
-                            <div className={classes.sectionMobileUnAuth}>
-                                <IconButton
-                                    aria-label="show more"
-                                    aria-controls={mobileUnAuthMenuId}
-                                    aria-haspopup="true"
-                                    onClick={handleMobileUnAuthMenuOpen}
-                                    color="inherit"
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                            </div>
-                        </>
-                    )}
+                                </div>
+                                <div className={classes.sectionMobileUnAuth}>
+                                    <IconButton
+                                        aria-label="show more"
+                                        aria-controls={mobileUnAuthMenuId}
+                                        aria-haspopup="true"
+                                        onClick={handleMobileUnAuthMenuOpen}
+                                        color="inherit"
+                                    >
+                                        <MenuIcon />
+                                    </IconButton>
+                                </div>
+                            </>
+                        )}
                 </Toolbar>
             </AppBar>
             {renderMenu}

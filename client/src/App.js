@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { getVouchers } from './actions/vouchers';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import CreateVoucher from './components/Vouchers/CreateVoucher/CreateVoucher';
 import Home from './components/Home/Home';
 import Error from './components/Error/Error';
 import BrandHome from './components/Brands/BrandHome/BrandHome'
 import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
 import Auth from './components/Auth/Auth';
-import { checkUserLogin } from './actions/auths';
+import { checkCurrentUser } from './actions/auths';
 import AdminHome from './components/Admin/AdminHome'
 import AdminLayout from './components/Layout/Admin/AdminLayout';
 import UserLayout from './components/Layout/User/UserLayout';
 import Authentication from './components/Admin/Authentication/Authentication'
 import Database from './components/Admin/Database/Database';
 import Functions from './components/Admin/Functions/Functions';
-
-
+import UserProfile from './components/User/UserProfile';
+import PrivateRoute from './Routes/PrivateRoute';
 
 const App = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch(checkUserLogin());
+        dispatch(checkCurrentUser(history));
     }, []);
 
     return (
@@ -48,12 +48,13 @@ const App = () => {
                     <UserLayout>
                         <Switch>
                             <Route path='/' component={Home} exact />
-                            <Route path='/login'>
-                                <Auth isSignup={false} />
-                            </Route>
-                            <Route path='/register'>
-                                <Auth isSignup={true} />
-                            </Route>
+                            <Route path='/login' component={Auth} />
+                            <Route path='/register' component={Auth} />
+                            <PrivateRoute
+                                exact
+                                path="/user-profile"
+                                component={UserProfile}
+                            />
                             <Route path='/brand' component={BrandHome} />
                             <Route path='/create-voucher' component={CreateVoucher} />
                             <Route path='/create-brand' component={CreateBrand} />
