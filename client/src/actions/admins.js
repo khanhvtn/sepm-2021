@@ -22,6 +22,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
 export const setVoucherStatus = (id, action) => async (dispatch) => {
     try {
+        console.log(action)
         const { data } = await api.setVoucher(id, action);
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {

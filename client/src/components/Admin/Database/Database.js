@@ -46,15 +46,15 @@ const Database = () => {
                             <Tabs
                                 value={history.location.pathname}
                                 textColor="inherit" TabIndicatorProps={{ style: { background: 'black' } }}>
-                                <Tab value="/orders" textColor="inherit" label="Orders" component={Link} to="/orders" />
                                 <Tab value="/vouchers" textColor="inherit" label="Vouchers" component={Link} to="/vouchers" />
+                                <Tab value="/orders" textColor="inherit" label="Orders" component={Link} to="/orders" />
                             </Tabs>
                         </AppBar>
                     )}
                 />
                 <Switch>
-                    <Route path="/orders" component={OrdersHandle} />
                     <Route path="/vouchers" component={VouchersHandle} />
+                    <Route path="/orders" component={OrdersHandle} />
                 </Switch>
             </BrowserRouter>
         </>

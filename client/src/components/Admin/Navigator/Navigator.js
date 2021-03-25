@@ -20,7 +20,7 @@ const categories = [
         id: 'Develop',
         children: [
             { id: 'Authentication', icon: <PeopleIcon />, link: '/admin/users' },
-            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/orders' },
+            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/vouchers' },
             { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/admin/voucher-state' },
         ],
     },

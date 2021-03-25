@@ -61,6 +61,7 @@ const UsersHandle = () => {
 
     const handleDialogOpen = () => {
         setOpen(true);
+        setAnchorEl(null);
     };
 
     const handleDialogClose = () => {

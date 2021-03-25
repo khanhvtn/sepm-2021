@@ -31,6 +31,7 @@ export const deleteUser = async (req, res) => {
 export const setVoucher = async (req, res) => {
     const { id: _id } = req.params;
     const { type } = req.body
+    console.log(req.body)
     const action = type === 'ACCEPT' ? true : false
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -41,8 +42,6 @@ export const setVoucher = async (req, res) => {
             _id,
             { isAccepted: action }
         );
-
-        console.log(updateMessage)
 
         res.status(200).json(updateMessage);
     } catch (error) {
