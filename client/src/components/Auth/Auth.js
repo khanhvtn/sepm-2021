@@ -7,7 +7,6 @@ import {
     Grid,
     Container,
     Button,
-    Icon,
 } from '@material-ui/core';
 import { GoogleLogin } from 'react-google-login';
 import Input from './Input';
@@ -22,7 +21,7 @@ const initialFormData = {
     password: '',
     confirmPassword: '',
 };
-const Auth = ({ isSignup }) => {
+const Auth = () => {
     //useState
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
@@ -30,6 +29,7 @@ const Auth = ({ isSignup }) => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
+    const { isSignup, previousPath } = location.state;
 
     console.log(isSignup)
 
@@ -43,10 +43,8 @@ const Auth = ({ isSignup }) => {
         e.preventDefault();
         if (isSignup) {
             dispatch(signup(formData, history));
-            console.log('signup');
         } else {
-            console.log('signin');
-            dispatch(signin(formData, history));
+            dispatch(signin(formData, history, previousPath));
         }
     };
     const handleChange = (e) => {

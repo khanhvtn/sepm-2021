@@ -1,4 +1,5 @@
 import { makeStyles, fade } from '@material-ui/core/styles';
+import { pink } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
     
@@ -92,5 +93,9 @@ export default makeStyles((theme) => ({
     },
     btnAuth: {
         marginLeft: '10px',
+    },
+    avatar: {
+        color: theme.palette.getContrastText(pink[400]),
+        backgroundColor: pink[400],
     },
 }));

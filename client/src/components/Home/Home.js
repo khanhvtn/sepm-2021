@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import useStyles from './styles';
 
-import Carousel from 'react-material-ui-carousel'
-import Banner from '../Banner/Banner'
-import Brand from '../Brands/Brand/Brand'
+import Carousel from 'react-material-ui-carousel';
+import Banner from '../Banner/Banner';
+import Brand from '../Brands/Brand/Brand';
 import {
-    Typography, Grid, GridList, GridListTile 
+    Typography,
+    Grid,
+    GridList,
+    GridListTile,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 
 const Home = () => {
-
     const classes = useStyles();
     const [width, setWidth] = useState(window.innerWidth);
     const breakpoint = 768;
@@ -18,10 +20,10 @@ const Home = () => {
     useEffect(() => {
         const handleResizeWindow = () => setWidth(window.innerWidth);
         // subscribe to window resize event "onComponentDidMount"
-        window.addEventListener("resize", handleResizeWindow);
+        window.addEventListener('resize', handleResizeWindow);
         return () => {
             // unsubscribe "onComponentDestroy"
-            window.removeEventListener("resize", handleResizeWindow);
+            window.removeEventListener('resize', handleResizeWindow);
         };
     }, []);
 
@@ -29,7 +31,7 @@ const Home = () => {
         <>
             <Carousel navButtonsAlwaysInvisible={true}>
                 {[0, 1, 2].map((value) => {
-                        return <Banner key={value} isBanner={true} item />
+                    return <Banner key={value} isBanner={true} item />;
                 })}
             </Carousel>
 
@@ -43,7 +45,15 @@ const Home = () => {
             <Grid item xs={12} md={12}>
                 <Grid container justify="center" spacing={2}>
                     {[0, 1, 2].map((value) => (
-                        <Grid xs={12} sm={6} md={4} lg={4} xl={4} key={value} item>
+                        <Grid
+                            xs={12}
+                            sm={6}
+                            md={4}
+                            lg={4}
+                            xl={4}
+                            key={value}
+                            item
+                        >
                             <Brand />
                         </Grid>
                     ))}
@@ -57,28 +67,43 @@ const Home = () => {
                 </Link>
             </Typography>
 
-            {width < breakpoint ?
-                <GridList className={classes.gridList} cols={1.5} cellHeight="auto" spacing={12}>
+            {width < breakpoint ? (
+                <GridList
+                    className={classes.gridList}
+                    cols={1.5}
+                    cellHeight="auto"
+                    spacing={12}
+                >
                     {[0, 1, 2, 3, 4, 5].map((value) => (
-                        <GridListTile className={classes.gridListTile} key={value}>
+                        <GridListTile
+                            className={classes.gridListTile}
+                            key={value}
+                        >
                             <Brand />
                         </GridListTile>
                     ))}
                 </GridList>
-                :
+            ) : (
                 <Grid item xs={12} md={12}>
                     <Grid container justify="center" spacing={2}>
-                        {[0, 1, 2, 3 ,4 ,5].map((value) => (
-                            <Grid xs={12} sm={4} md={4} lg={4} xl={4} key={value} item>
+                        {[0, 1, 2, 3, 4, 5].map((value) => (
+                            <Grid
+                                xs={12}
+                                sm={4}
+                                md={4}
+                                lg={4}
+                                xl={4}
+                                key={value}
+                                item
+                            >
                                 <Brand />
                             </Grid>
                         ))}
                     </Grid>
                 </Grid>
-            }
-
+            )}
         </>
-    )
+    );
 };
 
 export default Home;
