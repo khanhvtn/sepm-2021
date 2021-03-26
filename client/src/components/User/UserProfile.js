@@ -133,7 +133,7 @@ const UserProfile = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const fileInput = useRef(null);
-    const [value, setValue] = React.useState(location.state.action);
+    const [value, setValue] = useState(location.state.action);
     const [state, setState] = useState(initialState);
     const [errorForm, setErrorForm] = useState(initialError);
 

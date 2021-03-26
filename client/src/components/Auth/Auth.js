@@ -29,7 +29,7 @@ const Auth = () => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
-    const { isSignup, previousPath } = location.state;
+    const { isSignup, previousPath } = { ...location.state };
 
     console.log(isSignup)
 

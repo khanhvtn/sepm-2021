@@ -19,9 +19,9 @@ const categories = [
     {
         id: 'Develop',
         children: [
-            { id: 'Authentication', icon: <PeopleIcon />, link: '/admin/users' },
-            { id: 'Database', icon: <DnsRoundedIcon />, link: '/admin/vouchers' },
-            { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/admin/voucher-state' },
+            { id: 'Authentication', icon: <PeopleIcon />, link: '/dashboard/admin/users' },
+            { id: 'Database', icon: <DnsRoundedIcon />, link: '/dashboard/admin/vouchers' },
+            { id: 'Functions', icon: <SettingsEthernetIcon />, link: '/dashboard/admin/voucher-state' },
         ],
     },
 ];

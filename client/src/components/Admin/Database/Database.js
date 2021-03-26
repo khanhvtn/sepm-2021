@@ -32,7 +32,7 @@ const Database = () => {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <BrowserRouter basename="/admin">
+            <BrowserRouter basename="/dashboard/admin">
                 <Route
                     path="/"
                     render={(history) => (
