@@ -1,6 +1,9 @@
 import User from '../models/user.js';
+import Game from '../models/game.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+import dateFNS from 'date-fns';
 
 export const checkCurrentUser = async (req, res) => {
     const { userId } = req;
@@ -29,6 +32,65 @@ export const updateUser = async (req, res) => {
             }
         );
         res.status(200).json(newUpdateUser);
+    } catch (error) {
+        res.status(500).json({ message: 'Some thing went wrong.' });
+    }
+};
+export const winGame = async (req, res) => {
+    const { userId } = req;
+    const user = req.body;
+    try {
+        // example id 6051b7c313efff1a12ee8581
+        //check user have played or not
+        const checkGameUserInfo = await Game.findOne({ userId });
+
+        if (checkGameUserInfo) {
+            const gameAttempts = parseInt(checkGameUserInfo.attempts);
+            if (gameAttempts >= 3) {
+                //warning the user that they reachs limitation for the redeem system.
+                return res.status(403).json({
+                    redeem: true,
+                    message:
+                        'You can not receive the redeem because you have redeemed 3 times today',
+                });
+            } else {
+                //update attempts game for user
+                const updateUserGameInfo = await Game.findOneAndUpdate(
+                    { userId },
+                    {
+                        userId: mongoose.Types.ObjectId(userId),
+                        attempts: gameAttempts + 1,
+                        expireDate: dateFNS.set(Date.now(), {
+                            hours: 24,
+                            minutes: 59,
+                            seconds: 0,
+                        }),
+                    },
+                    { new: true }
+                );
+            }
+        } else {
+            //create new user game information
+            const createNewGame = await Game.create({
+                userId: mongoose.Types.ObjectId(userId),
+                expireDate: dateFNS.set(Date.now(), {
+                    hours: 24,
+                    minutes: 59,
+                    seconds: 0,
+                }),
+            });
+        }
+        //plus 500 points to the user.
+        const newUpdateUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                ...user,
+            },
+            {
+                new: true,
+            }
+        );
+        return res.status(200).json(newUpdateUser);
     } catch (error) {
         res.status(500).json({ message: 'Some thing went wrong.' });
     }
