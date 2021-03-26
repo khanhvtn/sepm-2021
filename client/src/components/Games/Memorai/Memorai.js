@@ -2,10 +2,14 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import Game from './Game/Game';
 import './scss/main.scss';
-import { ArrowBack } from '@material-ui/icons';
+import { ArrowBack, Dialpad } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { CLEAR_ERROR } from '../../../constants/actionTypes';
+
 const Memorai = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     return (
         <div>
             <Button
@@ -14,7 +18,10 @@ const Memorai = () => {
                 size="large"
                 color="default"
                 startIcon={<ArrowBack />}
-                onClick={() => history.push('/game-center')}
+                onClick={() => {
+                    dispatch({ type: CLEAR_ERROR });
+                    history.push('/game-center');
+                }}
             >
                 Back To Game Center
             </Button>

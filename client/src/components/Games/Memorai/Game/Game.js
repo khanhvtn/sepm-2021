@@ -7,7 +7,8 @@ import * as imagrCards from './imageCards';
 import { Button, Typography, Zoom, CircularProgress } from '@material-ui/core';
 import { Replay } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUser } from '../../../../actions/auths';
+import { winGame } from '../../../../actions/auths';
+import { CLEAR_ERROR } from '../../../../constants/actionTypes';
 
 function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -33,9 +34,10 @@ function generateCards(count) {
 export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
     const totalCards = fieldWidth * fieldHeight;
     const dispatch = useDispatch();
-    const { userInfo, auth } = useSelector((state) => ({
+    const { userInfo, auth, error } = useSelector((state) => ({
         userInfo: state.auth.authData?.result,
         auth: state.auth,
+        error: state.error.errors,
     }));
     const [cards, setCards] = useState(generateCards(totalCards));
     const [canFlip, setCanFlip] = useState(false);
@@ -88,11 +90,12 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
 
             const points = String(parseInt(userInfo.points) + 500);
             const newUpdatedUser = { ...userInfo, points };
-            dispatch(updateUser(newUpdatedUser));
+            dispatch(winGame(newUpdatedUser));
         }
     };
 
     const handlePlayAgagin = () => {
+        dispatch({ type: CLEAR_ERROR });
         setCards(() => generateCards(totalCards));
         setIsWin(false);
     };
@@ -149,6 +152,17 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
                 ''
             ) : auth.isLoading ? (
                 <CircularProgress />
+            ) : error?.redeem ? (
+                <Zoom
+                    in
+                    style={{
+                        transitionDelay: '500ms',
+                    }}
+                >
+                    <Typography variant="h5" color="secondary">
+                        {error.message}
+                    </Typography>
+                </Zoom>
             ) : (
                 <Zoom
                     in

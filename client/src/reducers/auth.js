@@ -5,6 +5,7 @@ import {
     UPDATE_USER,
     USER_LOADING,
     IS_USER_CHECKING,
+    USER_WIN_GAME,
 } from '../constants/actionTypes';
 
 const authReducer = (
@@ -25,6 +26,7 @@ const authReducer = (
             //clear local storage and update state to null
             localStorage.clear();
             return { ...state, authData: null };
+        case USER_WIN_GAME:
         case UPDATE_USER:
             return {
                 ...state,

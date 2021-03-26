@@ -23,6 +23,7 @@ import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { CLEAR_ERROR } from '../../constants/actionTypes';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -41,6 +42,9 @@ const Navbar = () => {
 
     //Logout
     const logout = () => {
+        dispatch({
+            type: CLEAR_ERROR,
+        });
         dispatch({
             type: 'LOGOUT',
         });

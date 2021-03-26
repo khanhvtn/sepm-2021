@@ -5,6 +5,8 @@ import {
     UPDATE_USER,
     USER_LOADING,
     IS_USER_CHECKING,
+    USER_WIN_GAME,
+    ERROR,
 } from '../constants/actionTypes';
 
 export const updateUser = (newUpdateUser) => async (dispatch) => {
@@ -14,6 +16,17 @@ export const updateUser = (newUpdateUser) => async (dispatch) => {
         dispatch({ type: UPDATE_USER, data });
     } catch (error) {
         console.log(error);
+    }
+    dispatch({ type: USER_LOADING, payload: false });
+};
+export const winGame = (newUpdateUser) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_LOADING, payload: true });
+        const { data } = await api.userWinGame(newUpdateUser);
+        dispatch({ type: USER_WIN_GAME, data });
+    } catch (error) {
+        console.log(error.response);
+        dispatch({ type: ERROR, payload: error.response.data });
     }
     dispatch({ type: USER_LOADING, payload: false });
 };
