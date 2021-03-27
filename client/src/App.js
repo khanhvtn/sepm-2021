@@ -21,6 +21,7 @@ import PrivateRoute from './Routes/PrivateRoute';
 import Memorai from './components/Games/Memorai/Memorai';
 import GameCenter from './components/Games/GameCenter';
 import { useSelector } from 'react-redux';
+import RPSGame from './components/Games/RPS/RPSGame';
 
 const theme = createMuiTheme({
     typography: {
@@ -89,6 +90,10 @@ const App = () => {
                                 exact
                                 path="/game-center/memorai"
                                 component={Memorai}
+                            />
+                            <PrivateRoute
+                                path="/game-center/rps-game"
+                                component={RPSGame}
                             />
                             <PrivateRoute
                                 exact

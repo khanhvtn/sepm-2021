@@ -1,19 +1,18 @@
 import React from 'react';
 import {
-    Typography,
     Grid,
     Button,
     Card,
     CardActions,
-    CardContent,
     CardHeader,
     CardMedia,
     Container,
 } from '@material-ui/core';
 import useStyles from './styles';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ArrowBack } from '@material-ui/icons';
 import MemoraiPhoto from '../../images/memorai/game_screenshot.png';
+import RPSPhoto from './RPS/images/rock-paper-scissors.png';
 const GameCenter = () => {
     const classes = useStyles();
     const history = useHistory();
@@ -33,6 +32,7 @@ const GameCenter = () => {
                     </Button>
                 </Grid>
                 <Grid xs={12} item container wrap="wrap" spacing={3}>
+                    {/* Memorai Game */}
                     <Grid item>
                         <Card className={classes.root}>
                             <CardHeader
@@ -51,6 +51,33 @@ const GameCenter = () => {
                                     color="primary"
                                     onClick={() =>
                                         history.push('/game-center/memorai')
+                                    }
+                                    className={classes.btnPlay}
+                                >
+                                    Play
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    {/* RPS Game */}
+                    <Grid item>
+                        <Card className={classes.root}>
+                            <CardHeader
+                                title="Rock paper scissors"
+                                className={classes.cardHeader}
+                            />
+                            <CardMedia
+                                className={classes.media}
+                                image={RPSPhoto}
+                                title="Rock paper scissors"
+                            />
+                            <CardActions>
+                                <Button
+                                    size="medium"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() =>
+                                        history.push('/game-center/rps-game')
                                     }
                                     className={classes.btnPlay}
                                 >
