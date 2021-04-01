@@ -25,22 +25,69 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import { getAcceptedVoucher, publishVoucher } from '../../../../actions/admins';
 import { getVouchers } from '../../../../actions/vouchers';
 
+
+const ThreeDotMenu = ({ data }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [action, setAction] = useState('PUBLISH');
+    const dispatch = useDispatch();
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleUnpublishVoucher = (id) => {
+        console.log("Unpublish ID: ", id)
+        dispatch(publishVoucher(id, null))
+        setAnchorEl(null)
+    };
+
+    const handlePublishVoucher = (id) => {
+        console.log("Publish ID: ", id)
+        dispatch(publishVoucher(id, { type: action }))
+        setAnchorEl(null)
+    };
+
+    return (
+        <>
+            <IconButton
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+            >
+                <MoreVertIcon />
+            </IconButton>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={() => handlePublishVoucher(data)}>Publish</MenuItem>
+                <MenuItem onClick={() => handleUnpublishVoucher(data)}>
+                    Remove
+            </MenuItem>
+            </Menu>
+        </>
+    )
+}
+
 const VoucherState = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    const [action, setAction] = useState('PUBLISH');
+
 
 
     const vouchers = useSelector(state => state.vouchers.acceptedVouchers)
-
-    const state = useSelector(state => state)
-
-    console.log(state)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -51,16 +98,6 @@ const VoucherState = () => {
         setPage(0);
     };
 
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-
     const handleDialogOpen = () => {
         setOpen(true);
     };
@@ -69,19 +106,10 @@ const VoucherState = () => {
         setOpen(false);
     };
 
-    const handleUnpublishVoucher = (id) => {
-        dispatch(publishVoucher(id, null))
-        setAnchorEl(null)
-    }
-
-    const handlePublishVoucher = (id) => {
-        dispatch(publishVoucher(id, { type: action }))
-        setAnchorEl(null)
-    }
 
     useEffect(() => {
         dispatch(getAcceptedVoucher())
-    }, []);
+    }, [vouchers]);
 
 
     return (
@@ -149,33 +177,14 @@ const VoucherState = () => {
                                     </TableHead>
                                     <TableBody>
                                         {vouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={voucher._id}>
+                                            <TableRow hover role="checkbox" key={voucher.title}>
                                                 <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
                                                 <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
                                                 <TableCell key='name' align='left'>{voucher.price}</TableCell>
                                                 <TableCell key='_id' align='left'>{voucher._id}</TableCell>
                                                 <TableCell key='status' align='left'>{voucher.isPublished ? 'Published' : 'Unpublished'}</TableCell>
                                                 <TableCell key='setting' align='center'>
-                                                    <IconButton
-                                                        aria-label="more"
-                                                        aria-controls="long-menu"
-                                                        aria-haspopup="true"
-                                                        onClick={handleClick}
-                                                    >
-                                                        <MoreVertIcon />
-                                                    </IconButton>
-                                                    <Menu
-                                                        id="simple-menu"
-                                                        anchorEl={anchorEl}
-                                                        keepMounted
-                                                        open={Boolean(anchorEl)}
-                                                        onClose={handleClose}
-                                                    >
-                                                        <MenuItem onClick={() => handlePublishVoucher(voucher._id)}>Publish</MenuItem>
-                                                        <MenuItem onClick={() => handleUnpublishVoucher(voucher._id)}>
-                                                            Remove
-                                                        </MenuItem>
-                                                    </Menu>
+                                                    <ThreeDotMenu data={voucher._id} />
                                                 </TableCell>
                                             </TableRow>
                                         ))}

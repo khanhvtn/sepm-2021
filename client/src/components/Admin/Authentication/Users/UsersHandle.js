@@ -27,6 +27,7 @@ import UserDialog from './UserDialog'
 import moment from 'moment';
 import { deleteUser } from '../../../../actions/admins';
 
+
 const UsersHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -35,7 +36,6 @@ const UsersHandle = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     const users = useSelector(state => state.users)
 

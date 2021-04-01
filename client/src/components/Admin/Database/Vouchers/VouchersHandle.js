@@ -120,7 +120,7 @@ const VouchersHandle = () => {
                                         </IconButton>
                                     </Tooltip>
                                 </Grid>
-                            </Grid>
+                            </Grid> 
                         </Toolbar>
                     </AppBar>
                     {vouchers && vouchers.length === 0 ? (<div className={classes.contentWrapper}>

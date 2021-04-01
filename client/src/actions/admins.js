@@ -1,5 +1,5 @@
 import * as api from '../api';
-import { FETCH_ALL, DELETE, UPDATE, AUTH, CHECK_CURRENT_USER, FETCH_ACCEPTED_VOUCHER } from '../constants/actionTypes';
+import { FETCH_ALL, DELETE, UPDATE, AUTH, CHECK_CURRENT_USER, FETCH_ACCEPTED_VOUCHER, PUBLISH_VOUCHER } from '../constants/actionTypes';
 
 // Action Admin
 export const getUsers = () => async (dispatch) => {
@@ -41,9 +41,9 @@ export const setVoucherStatus = (id, action) => async (dispatch) => {
 
 export const publishVoucher = (id, action) => async (dispatch) => {
     try {
-        console.log(id, action)
+        console.log(id)
         const { data } = await api.setVoucherPublish(id, action);
-        dispatch({ type: UPDATE, payload: data });
+        dispatch({ type: PUBLISH_VOUCHER, payload: data });
     } catch (error) {
         console.log(error.message)
     }

@@ -5,7 +5,7 @@ import { Grid, CircularProgress } from '@material-ui/core';
 import useStyles from './styles';
 const Vouchers = ({ setCurrentId }) => {
     const classes = useStyles();
-    const vouchers = useSelector((state) => state.vouchers);
+    const vouchers = useSelector((state) => state.vouchers.allVouchers);
 
     return !vouchers.length ? (
         <Grid container direction="column" alignItems="stretch">

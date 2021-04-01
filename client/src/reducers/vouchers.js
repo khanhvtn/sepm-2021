@@ -1,4 +1,4 @@
-import { CREATE, DELETE, UPDATE, FETCH_ALL, FETCH_ACCEPTED_VOUCHER } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL, FETCH_ACCEPTED_VOUCHER, PUBLISH_VOUCHER } from '../constants/actionTypes';
 
 
 const initialState = {
@@ -13,13 +13,18 @@ const voucherReducer = (vouchers = initialState, action) => {
         case FETCH_ACCEPTED_VOUCHER:
             return { ...vouchers, acceptedVouchers: action.payload };
         case CREATE:
-            return [...vouchers, action.payload];
+            return { ...vouchers, allVouchers: action.payload };
         case UPDATE:
-            return vouchers.map((voucher) =>
+            return vouchers.allVouchers.map((voucher) =>
+                voucher._id === action.payload._id ? action.payload : voucher
+            );
+        case PUBLISH_VOUCHER:
+            console.log(action.payload._id)
+            return vouchers.acceptedVouchers.map((voucher) =>
                 voucher._id === action.payload._id ? action.payload : voucher
             );
         case DELETE:
-            return vouchers.filter((voucher) => voucher._id !== action.payload);
+            return vouchers.allVouchers.filter((voucher) => voucher._id !== action.payload);
         default:
             return vouchers;
     }
