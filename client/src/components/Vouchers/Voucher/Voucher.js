@@ -12,39 +12,7 @@ const Voucher = ({ voucher, setCurrentId }) => {
     const dispatch = useDispatch();
 
     return (
-        // <Card className={classes.card}>
-        //     <CardMedia className={classes.media} image={voucher.image} />
-        //     <div className={classes.overlay}>
-        //         <Typography variant="h6">{voucher.name}</Typography>
-        //         <Typography variant="body2">
-        //             {moment(voucher.createdAt).fromNow()}
-        //         </Typography>
-        //     </div>
-        //     <div className={classes.overlay2}>
-        //         <Button
-        //             style={{ color: 'white' }}
-        //             size="small"
-        //             onClick={() => {}}
-        //         >
-        //             <MoreHoriz fontSize="default" />
-        //         </Button>
-        //     </div>
-        //     <div className={classes.details}>
-        //         <Typography variant="body2" color="textSecondary">
-        //             abc
-        //         </Typography>
-        //     </div>
-        //     <CardContent>
-        //         <Typography className={classes.title} variant="h5" gutterBottom>
-        //             {voucher.description}
-        //         </Typography>
-        //     </CardContent>
-        //     <CardActions className={classes.cardActions}>
-        //         <Button size="small" color="primary" onClick={() => {}}>
-        //             Buy
-        //         </Button>
-        //     </CardActions>
-        // </Card>
+        
         <Paper className={classes.paper}>
             <Grid container spacing={2}>
                 <Grid
@@ -67,7 +35,7 @@ const Voucher = ({ voucher, setCurrentId }) => {
                     <Grid item xs container direction="column" spacing={2}>
                         <Grid item xs>
                             <Typography gutterBottom variant="h6">
-                                Title: {voucher.name}
+                                Title: {voucher.title}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
                                 Desciption: {voucher.description}

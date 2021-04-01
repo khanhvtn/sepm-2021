@@ -39,4 +39,6 @@ export const deleteUser = (id) => API.delete(`/admin/users/${id}`)
 export const setVoucher = (id, action) => API.patch(`/admin/setVoucher/${id}`, action)
 export const signInAdmin = (formData) => API.post('/admin/signin', formData);
 export const checkCurrentAdmin = () => API.get(`/admin/checkCurrentAdmin`);
+export const fetchAcceptedVouchers = () => API.get('/admin/acceptedVouchers');
+export const setVoucherPublish = (id, action) => API.patch(`admin/publishVoucher/${id}`, action)
 

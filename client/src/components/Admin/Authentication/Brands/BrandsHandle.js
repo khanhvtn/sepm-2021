@@ -72,7 +72,7 @@ const BrandsHandle = () => {
 
     useEffect(() => {
         dispatch(getBrands());
-    }, [brands]);
+    }, []);
 
     return (
         <>

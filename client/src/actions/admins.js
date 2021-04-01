@@ -1,5 +1,5 @@
 import * as api from '../api';
-import { FETCH_ALL, DELETE, UPDATE, AUTH, CHECK_CURRENT_USER } from '../constants/actionTypes';
+import { FETCH_ALL, DELETE, UPDATE, AUTH, CHECK_CURRENT_USER, FETCH_ACCEPTED_VOUCHER } from '../constants/actionTypes';
 
 // Action Admin
 export const getUsers = () => async (dispatch) => {
@@ -20,6 +20,15 @@ export const deleteUser = (id) => async (dispatch) => {
     }
 }
 
+export const getAcceptedVoucher = () => async (dispatch) => {
+    try {
+        const { data } = await api.fetchAcceptedVouchers();
+        dispatch({ type: FETCH_ACCEPTED_VOUCHER, payload: data })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
 export const setVoucherStatus = (id, action) => async (dispatch) => {
     try {
         console.log(action)
@@ -27,6 +36,16 @@ export const setVoucherStatus = (id, action) => async (dispatch) => {
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {
         console.log(error.message);
+    }
+}
+
+export const publishVoucher = (id, action) => async (dispatch) => {
+    try {
+        console.log(id, action)
+        const { data } = await api.setVoucherPublish(id, action);
+        dispatch({ type: UPDATE, payload: data });
+    } catch (error) {
+        console.log(error.message)
     }
 }
 
@@ -40,7 +59,6 @@ export const signin = (formData, history, previousPath) => async (dispatch) => {
         Note:
             set action equal to 0 to set default tab when redirect to profile page.
          */
-        console.log(previousPath)
         previousPath
             ? history.push(`${previousPath}`, { action: 0 })
             : history.push('/dashboard/admin');
@@ -67,10 +85,11 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
             dispatch({ type: CHECK_CURRENT_USER, data: null });
         }
     } catch (error) {
-        const previousPath = history.location.pathname;
-        dispatch({ type: CHECK_CURRENT_USER, data: null });
-        previousPath === '/'
-            ? history.push('/dashboard/admin')
-            : history.push('/admin/login', { previousPath });
+        console.log(error.message)
+        // const previousPath = history.location.pathname;
+        // dispatch({ type: CHECK_CURRENT_USER, data: null });
+        // previousPath === '/'
+        //     ? history.push('/dashboard/admin')
+        //     : history.push('/admin/login', { previousPath });
     }
 };

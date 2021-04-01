@@ -30,6 +30,15 @@ export const deleteUser = async (req, res) => {
     }
 };
 
+export const getPublishedVoucher = async (req, res) => {
+    try {
+        const vouchers = await Voucher.find( { isAccepted: true });
+        res.status(200).json(vouchers)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const setVoucher = async (req, res) => {
     const { id: _id } = req.params;
     const { type } = req.body
@@ -37,7 +46,7 @@ export const setVoucher = async (req, res) => {
     const action = type === 'ACCEPT' ? true : false
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-        return res.status(404).send('No post with that id');
+        return res.status(404).send('No voucher with that id');
     }
     try {
         const updateMessage = await Voucher.findByIdAndUpdate(
@@ -50,6 +59,29 @@ export const setVoucher = async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 };
+
+export const publishVoucher = async (req, res) => {
+    const {id: _id} = req.params;
+    const { type } = req.body
+
+    const action = type === 'PUBLISH' ? true : false
+
+    console.log(action)
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('No voucher with that id');
+    }
+    try {
+        const updateMessage = await Voucher.findByIdAndUpdate(
+            _id,
+            { isPublished: action }
+        );
+
+        res.status(200).json(updateMessage);
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;

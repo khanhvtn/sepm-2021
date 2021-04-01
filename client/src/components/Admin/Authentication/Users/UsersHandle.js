@@ -75,7 +75,7 @@ const UsersHandle = () => {
 
     useEffect(() => {
         dispatch(getUsers());
-    }, [users]);
+    }, []);
 
 
 

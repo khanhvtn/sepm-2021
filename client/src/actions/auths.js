@@ -31,11 +31,12 @@ export const checkCurrentUser = (history) => async (dispatch) => {
             dispatch({ type: CHECK_CURRENT_USER, data: null });
         }
     } catch (error) {
-        const previousPath = history.location.pathname;
-        dispatch({ type: CHECK_CURRENT_USER, data: null });
-        previousPath === '/'
-            ? history.push('/')
-            : history.push('/login', { isSignup: false, previousPath });
+        console.log(error.message)
+        // const previousPath = history.location.pathname;
+        // dispatch({ type: CHECK_CURRENT_USER, data: null });
+        // previousPath === '/'
+        //     ? history.push('/')
+        //     : history.push('/login', { isSignup: false, previousPath });
     }
 };
 export const signup = (formData, history) => async (dispatch) => {

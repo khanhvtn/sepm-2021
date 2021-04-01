@@ -37,7 +37,7 @@ const VouchersHandle = () => {
 
     const [action, setAction] = useState('ACCEPT');
 
-    const vouchers = useSelector(state => state.vouchers)
+    const vouchers = useSelector(state => state.vouchers.allVouchers)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -82,7 +82,7 @@ const VouchersHandle = () => {
 
     useEffect(() => {
         dispatch(getVouchers());
-    }, [vouchers]);
+    }, []);
 
 
 
@@ -123,7 +123,7 @@ const VouchersHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {vouchers.length === 0 ? (<div className={classes.contentWrapper}>
+                    {vouchers && vouchers.length === 0 ? (<div className={classes.contentWrapper}>
                         <Typography color="textSecondary" align="center">
                             No vouchers for this project yet
                         </Typography>

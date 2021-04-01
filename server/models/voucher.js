@@ -44,6 +44,10 @@ const voucherSchema = mongoose.Schema(
         isAccepted: {
             type: Boolean,
             default: null
+        },
+        isPublished: {
+            type: Boolean,
+            default: false
         }
     },
     { timestamps: true }
