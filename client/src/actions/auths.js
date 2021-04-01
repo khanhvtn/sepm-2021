@@ -25,7 +25,6 @@ export const winGame = (newUpdateUser) => async (dispatch) => {
         const { data } = await api.userWinGame(newUpdateUser);
         dispatch({ type: USER_WIN_GAME, data });
     } catch (error) {
-        console.log(error.response);
         dispatch({ type: ERROR, payload: error.response.data });
     }
     dispatch({ type: USER_LOADING, payload: false });

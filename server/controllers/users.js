@@ -73,6 +73,7 @@ export const winGame = async (req, res) => {
             //create new user game information
             const createNewGame = await Game.create({
                 userId: mongoose.Types.ObjectId(userId),
+                attempts: 1,
                 expireDate: dateFNS.set(Date.now(), {
                     hours: 24,
                     minutes: 59,

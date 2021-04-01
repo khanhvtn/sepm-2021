@@ -21,6 +21,14 @@ function RPSGame() {
         newHousePick();
     }, [setMyPick]);
 
+    useEffect(()=>{
+        if(gameScore === 3){
+            console.log("Plsu 500 points")
+            //reset score
+            setGameScore(0)
+        }
+    }, [gameScore])
+
     return (
         <div className="wrapper">
             <Header score={gameScore} />

@@ -70,6 +70,7 @@ const Navbar = () => {
     };
     const handleGoToGameCenter = () => {
         history.push('/game-center');
+        handleMenuClose();
     };
 
     const isMenuOpen = Boolean(anchorEl);
