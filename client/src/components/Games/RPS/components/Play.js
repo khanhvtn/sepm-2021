@@ -169,7 +169,10 @@ function Play(props) {
                 <Link
                     className="play-again__button "
                     to="/game-center/rps-game"
-                    onClick={() => props.setHousePick()}
+                    onClick={() => {
+                        props.setHousePick()
+                        props.setIsWin(false)
+                    }}
                 >
                     Play Again
                 </Link>
@@ -199,7 +202,10 @@ function Play(props) {
                 <Link
                     className="play-again__button "
                     to="/game-center/rps-game"
-                    onClick={() => props.setHousePick()}
+                    onClick={() => {
+                        props.setHousePick()
+                        props.setIsWin(false)
+                    }}
                 >
                     Play Again
                 </Link>

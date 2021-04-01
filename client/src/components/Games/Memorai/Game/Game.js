@@ -9,6 +9,7 @@ import { Replay } from '@material-ui/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { winGame } from '../../../../actions/auths';
 import { CLEAR_ERROR } from '../../../../constants/actionTypes';
+import GameMessage from '../../GameMessage';
 
 function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -148,34 +149,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
             <Typography variant="h3" gutterBottom>
                 Memorai
             </Typography>
-            {!isWin ? (
-                ''
-            ) : auth.isLoading ? (
-                <CircularProgress />
-            ) : error?.redeem ? (
-                <Zoom
-                    in
-                    style={{
-                        transitionDelay: '500ms',
-                    }}
-                >
-                    <Typography variant="h5" color="secondary">
-                        {error.message}
-                    </Typography>
-                </Zoom>
-            ) : (
-                <Zoom
-                    in
-                    style={{
-                        transitionDelay: '500ms',
-                    }}
-                >
-                    <Typography variant="h5">
-                        Congratulation! You won the game and got 500 points
-                    </Typography>
-                </Zoom>
-            )}
-
+            <GameMessage isWin={isWin} />
             <div className="cards-container">
                 {cards.map((card) => (
                     <Card
