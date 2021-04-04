@@ -15,6 +15,7 @@ import BrandHome from './components/Brands/BrandHome/BrandHome';
 import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
 import Auth from './components/Auth/Auth';
 import UserProfile from './components/User/UserProfile';
+import Detail from './components/Detail/Detail'
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -60,6 +61,10 @@ const App = () => {
 
                         <Route exact path="/brand">
                             <BrandHome />
+                        </Route>
+
+                        <Route exact path="/detail">
+                            <Detail />
                         </Route>
                         <Route exact path="/login">
                             <Auth />
