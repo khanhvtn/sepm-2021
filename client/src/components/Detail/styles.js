@@ -6,6 +6,25 @@ export default makeStyles((theme) => ({
         borderRadius: '0 24px 24px 24px',
 
     },
+    root1:{
+        flexGrow: 1
+    },
+
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
+
+      paper1: {
+        
+        padding: theme.spacing(2),
+        margin: 'auto',
+        maxWidth: 700,
+        
+
+    
+      },
 
 
     detailWithMedia: {
@@ -72,6 +91,13 @@ export default makeStyles((theme) => ({
     getButton: {
         border: '2px solid',
         fontWeight: 'bold',
+        
+    },
+
+    proceedButton: {
+        border: '2px solid',
+        fontWeight: 'bold',
+        margin: theme.spacing(2)
     },
     cover: {
         width: '100%',
@@ -85,7 +111,36 @@ export default makeStyles((theme) => ({
         textAlign: "center",
         paddingTop: 10
         
-    }
+    },
+
+    checkout:{
+        padding: theme.spacing(2),
+        textAlign: 'center'
+    },
+    checkoutTitle:{
+        color: "#bc348f",
+        fontSize: 30,
+        margin: theme.spacing(2)
+        
+    },
+
+    form: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: '50ch',
+        },
+      },
+
+      image: {
+        width: 128,
+        height: 128,
+      },
+      img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+      },
 
     
 }))

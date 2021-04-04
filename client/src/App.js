@@ -16,6 +16,7 @@ import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
 import Auth from './components/Auth/Auth';
 import UserProfile from './components/User/UserProfile';
 import Detail from './components/Detail/Detail'
+import PurchaseProceed from './components/Detail/PurchaseProceed'
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -76,6 +77,11 @@ const App = () => {
                             exact
                             path="/user-profile"
                             component={UserProfile}
+                        />
+                        <PrivateRoute
+                            exact
+                            path="/proceed"
+                            component={PurchaseProceed}
                         />
                         {/* <Route exact path="/user-profile">
                             <UserProfile />
