@@ -183,7 +183,7 @@ const Navbar = () => {
                                     color="inherit"
                                     endIcon={<MonetizationOn />}
                                 >
-                                    {user.result.points}
+                                    {user.result.accountBalance}
                                 </Button>
                                 <IconButton
                                     edge="end"

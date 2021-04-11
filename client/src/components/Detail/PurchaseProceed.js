@@ -8,13 +8,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { createHistory, getHistories } from '../../actions/histories'
+import { updateUser } from '../../actions/auths';
+
+
+
 const PurchaseProceed = () => {
     const classes = useStyles();
     const authData = useSelector(state => state.auth.authData)
+    const userInfo = useSelector((state) => state.auth.authData?.result);
     const [user, setUser] = useState(authData)
     const [openDialog, setOpenDialog] = useState(false);
     const [openDialog1, setOpenDialog1] = useState(false);
-
+    const history = useHistory();
+    const dispatch = useDispatch();
     //Transaction Information Taken From User Data
     const [name, setName] = useState(user.result.name);
     const [email, setEmail] = useState(user.result.email);
@@ -28,11 +35,30 @@ const PurchaseProceed = () => {
     const handleOnSubmit = (e) => {
         e.preventDefault();
         const transactionDetail = {
-            "name": name,
+            "voucher": "604a340075d5e873aa863390",
+            "voucherCode": "123abc",
+            "email": email,
             "phone": phone,
-            "email": email
+            "user": user.result._id
         }
-        console.log(transactionDetail)
+
+        const voucherPrice = "250";
+        const cashReward = (parseInt(voucherPrice) * 3) / 100;
+
+        const accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
+
+
+        // const newUpdateAccountBalance = ({
+        //     name: user.result.name,
+        //     address: user.result.address,
+        //     phone: user.result.phone,
+        //     points: user.result.phoints,
+        //     accountBalance: newAccountBalance,
+        //     imageUrl: user.result.imageUrl,
+        // })
+        const newUpdateAccountBalance = { ...userInfo, accountBalance };
+        dispatch(updateUser(newUpdateAccountBalance))
+        dispatch(createHistory(transactionDetail, history))
     }
 
     const handleOpenDialog = () => {
@@ -72,7 +98,7 @@ const PurchaseProceed = () => {
                                 label="Name"
                                 variant="filled"
                                 color="secondary"
-                                onChange = {e => setName(e.target.value)}
+                                onChange={e => setName(e.target.value)}
                             />
 
                             <TextField
@@ -80,7 +106,7 @@ const PurchaseProceed = () => {
                                 label="Email"
                                 variant="filled"
                                 color="secondary"
-                                onChange = {e => setEmail(e.target.value)}
+                                onChange={e => setEmail(e.target.value)}
 
                             />
 
@@ -89,7 +115,7 @@ const PurchaseProceed = () => {
                                 label="Phone"
                                 variant="filled"
                                 color="secondary"
-                                onChange = {e => setPhone(e.target.value)}
+                                onChange={e => setPhone(e.target.value)}
 
                             />
 
@@ -112,7 +138,7 @@ const PurchaseProceed = () => {
                                     <DialogTitle id="alert-dialog-title">{"Proceed Via SMS"}</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText id="alert-dialog-description">
-                                            Voucher code will be sent via this mobile phone: {user.result.mobile}
+                                            Voucher code will be sent via this mobile phone: {phone}
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
@@ -141,7 +167,7 @@ const PurchaseProceed = () => {
                                     <DialogTitle id="alert-dialog-title">{"Proceed Via Email"}</DialogTitle>
                                     <DialogContent>
                                         <DialogContentText id="alert-dialog-description">
-                                            Voucher code will be sent via this Email: {user.result.email}
+                                            Voucher code will be sent via this Email: {email}
                                         </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>

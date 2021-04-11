@@ -30,3 +30,8 @@ export const createBrand = (newBrand) => axios.post('/brands', newBrand);
 export const updateBrand = (id, updateBrand) =>
     axios.patch(`${'/brands'}/${id}`, updateBrand);
 export const deleteBrand = (id) => axios.delete(`${'/brands'}/${id}`);
+
+//API for History
+export const fetchHistories = () => API.get('/histories');
+export const createHistory = (newHistory) => API.post('/histories', newHistory);
+export const deleteHistory = (id) => API.delete(`/histories/${id}`)
