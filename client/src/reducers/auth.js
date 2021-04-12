@@ -3,9 +3,10 @@ import {
     LOGOUT,
     CHECK_CURRENT_USER,
     UPDATE_USER,
+    IS_SUCCESS_PURCHASE
 } from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null }, action) => {
+const authReducer = (state = { authData: null, isSuccessPurchase : false}, action) => {
     switch (action.type) {
         case AUTH:
             //Save user token into local storage and update state
@@ -40,6 +41,11 @@ const authReducer = (state = { authData: null }, action) => {
                 localStorage.clear();
                 return { ...state, authData: action?.data };
             }
+            case IS_SUCCESS_PURCHASE:
+                return {
+                    ...state,
+                    isSuccessPurchase: action.payload
+                };
         default:
             return state;
     }

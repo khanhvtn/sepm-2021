@@ -142,5 +142,12 @@ export default makeStyles((theme) => ({
         maxHeight: '100%',
       },
 
+      oldPrice: {
+          textDecorationLine: "line-through"
+      },
+      newPrice: {
+        fontSize: 20
+      }
+
     
 }))

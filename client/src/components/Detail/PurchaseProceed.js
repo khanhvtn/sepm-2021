@@ -11,6 +11,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { createHistory, getHistories } from '../../actions/histories'
 import { updateUser } from '../../actions/auths';
 
+const initialState = {
+    vouchyPoint: 300
+};
+
+const newVouchyPoint = {
+    vouchyPoint: 0
+}
 
 
 const PurchaseProceed = () => {
@@ -20,6 +27,10 @@ const PurchaseProceed = () => {
     const [user, setUser] = useState(authData)
     const [openDialog, setOpenDialog] = useState(false);
     const [openDialog1, setOpenDialog1] = useState(false);
+    const [applyDiscount, setApplyDiscount] = useState(false);
+    const [state, setState] = useState(initialState);
+    const [newState, setNewState] = useState(newVouchyPoint);
+
     const history = useHistory();
     const dispatch = useDispatch();
     //Transaction Information Taken From User Data
@@ -42,23 +53,21 @@ const PurchaseProceed = () => {
             "user": user.result._id
         }
 
-        const voucherPrice = "250";
-        const cashReward = (parseInt(voucherPrice) * 3) / 100;
+        const voucherPrice = state.vouchyPoint;
+        const cashReward = (voucherPrice* 3) / 100;
+        var accountBalance = 0;
+        if(applyDiscount){
+            accountBalance = (parseInt(user.result.accountBalance)- state.vouchyPoint + cashReward).toString();
+        } else {
+            accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
 
-        const accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
+        }
 
 
-        // const newUpdateAccountBalance = ({
-        //     name: user.result.name,
-        //     address: user.result.address,
-        //     phone: user.result.phone,
-        //     points: user.result.phoints,
-        //     accountBalance: newAccountBalance,
-        //     imageUrl: user.result.imageUrl,
-        // })
-        const newUpdateAccountBalance = { ...userInfo, accountBalance };
-        dispatch(updateUser(newUpdateAccountBalance))
-        dispatch(createHistory(transactionDetail, history))
+       console.log(accountBalance);
+        // const newUpdateAccountBalance = { ...userInfo, accountBalance };
+        // dispatch(updateUser(newUpdateAccountBalance))
+        // dispatch(createHistory(transactionDetail, history))
     }
 
     const handleOpenDialog = () => {
@@ -76,6 +85,24 @@ const PurchaseProceed = () => {
     const handleCloseDialog1 = () => {
         setOpenDialog1(false)
     }
+
+    const handleApplyDiscountClick = () => {
+        if (parseInt(user.result.accountBalance) > 0) {
+            setApplyDiscount(!applyDiscount)
+            if (parseInt(user.result.accountBalance) < initialState.vouchyPoint) {
+                const count = initialState.vouchyPoint - parseInt(user.result.accountBalance)
+                setNewState({...newState, vouchyPoint: count})
+                console.log(newState.vouchyPoint)
+            } else {
+                setNewState({...newState, vouchyPoint: 0})
+
+            }
+
+           
+
+        }
+    }
+
 
     return (
         <Container component="main" className={classes.checkout}>
@@ -215,10 +242,24 @@ const PurchaseProceed = () => {
                                             ID: 1030114
                                         </Typography>
                                     </Grid>
+                                    <Grid item xl>
+                                        {applyDiscount ?
+                                            <Button variant="contained" color="secondary" onClick={handleApplyDiscountClick}>
+                                                Cancel
+                                            </Button>
+                                            : <Button variant="contained" color="secondary" onClick={handleApplyDiscountClick}>
+                                                Apply Cash
+                                                </Button>}
+                                    </Grid>
 
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="subtitle1">$19.00</Typography>
+                                    {applyDiscount ? <><Typography variant="subtitle1" className={classes.oldPrice}>${state.vouchyPoint}</Typography>
+                                        <Typography variant="subtitle2" color="secondary" className={classes.newPrice}> Pay for ${newState.vouchyPoint}</Typography></> :
+                                        <><Typography variant="subtitle1">${state.vouchyPoint}</Typography>
+                                        </>}
+
+
                                 </Grid>
                             </Grid>
                         </Grid>

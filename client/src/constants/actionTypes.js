@@ -9,3 +9,4 @@ export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
 export const CHECK_CURRENT_USER = 'CHECK_CURRENT_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const IS_SUCCESS_PURCHASE = "IS_SUCCESS_PURCHASE"

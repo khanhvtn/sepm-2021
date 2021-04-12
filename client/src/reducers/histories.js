@@ -11,7 +11,7 @@ const historyReducer = (histories = [], action) => {
                 history._id === action.payload._id ? action.payload : history
             );
         case DELETE:
-            return histories.filter((history) => voucher._id !== action.payload);
+            return histories.filter((history) => history._id !== action.payload);
         default:
             return histories;
     }
