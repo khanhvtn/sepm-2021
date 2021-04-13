@@ -64,10 +64,9 @@ const PurchaseProceed = () => {
         }
 
 
-       console.log(accountBalance);
-        // const newUpdateAccountBalance = { ...userInfo, accountBalance };
-        // dispatch(updateUser(newUpdateAccountBalance))
-        // dispatch(createHistory(transactionDetail, history))
+        const newUpdateAccountBalance = { ...userInfo, accountBalance };
+        dispatch(updateUser(newUpdateAccountBalance))
+        dispatch(createHistory(transactionDetail, history))
     }
 
     const handleOpenDialog = () => {
