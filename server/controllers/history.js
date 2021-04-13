@@ -1,11 +1,13 @@
 import History from '../models/history.js';
 import mongoose from 'mongoose';
-import {sendEmail} from './misc/mailer.js'
-import {html} from '../template/mail.js'
+import { sendEmail } from './misc/mailer.js'
+import { sendSMS } from './misc/sms.js'
+import { html } from '../template/mail.js'
+
 
 export const getHistories = async (req, res) => {
     try {
-        const histories = await History.find();
+        const histories = await History.find().populate('user').populate('voucher');
         res.status(200).json(histories)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -21,21 +23,30 @@ export const createHistory = async (req, res) => {
         await newHistory.save();
         res.status(200).json(newHistory);
 
-        //Create HTML format
-        // const html = `Voucher Code
-        // <br/>
-        // <b>Dear Customer!</b>
-        // <br/>
-        // Your voucher code is: ${history.voucherCode}
-        // <br/>
-        // Enjoy!
-        // `
-        
-        sendEmail(
-        'noreply@vouchy.com',
-        history.email,
-        "Voucher Code from Vouchy",
-        html(history.voucherCode))
+
+        if (history.option == "EMAIL") {
+            sendEmail(
+                'noreply@vouchy.com',
+                history.email,
+                "Voucher Code from Vouchy",
+                html(history.voucherCode))
+        } else {
+
+
+            var phone = history.phone;
+            var e164Format = phone.slice(1);
+            sendSMS.messages
+                .create({
+                    body: `Hello from Vouchy. Your voucher code is ${history.voucherCode}`,
+                    from: '+14158010061',
+                    to: `+84${e164Format}`
+                })
+                .then(message => console.log(message.sid))
+                .catch(err => console.log(err));
+
+        }
+
+
 
     } catch (error) {
         res.status(404).json({ message: error.message })
