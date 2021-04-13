@@ -29,6 +29,11 @@ const historySchema = mongoose.Schema(
             required: true
         },
 
+        option: {
+            type: String,
+            required: true
+        },
+
         date: {
             type: Date,
             default: Date.now

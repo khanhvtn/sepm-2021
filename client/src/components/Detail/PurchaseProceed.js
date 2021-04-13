@@ -19,6 +19,8 @@ const newVouchyPoint = {
     vouchyPoint: 0
 }
 
+const option = "";
+
 
 const PurchaseProceed = () => {
     const classes = useStyles();
@@ -30,6 +32,7 @@ const PurchaseProceed = () => {
     const [applyDiscount, setApplyDiscount] = useState(false);
     const [state, setState] = useState(initialState);
     const [newState, setNewState] = useState(newVouchyPoint);
+    const [optionState, setOptionState] = useState(option);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -50,26 +53,28 @@ const PurchaseProceed = () => {
             "voucherCode": "123abc",
             "email": email,
             "phone": phone,
+            "option": optionState,
             "user": user.result._id
         }
 
         const voucherPrice = state.vouchyPoint;
-        const cashReward = (voucherPrice* 3) / 100;
+        const cashReward = (voucherPrice * 3) / 100;
         var accountBalance = 0;
-        if(applyDiscount){
-            accountBalance = (parseInt(user.result.accountBalance)- state.vouchyPoint + cashReward).toString();
+        if (applyDiscount) {
+            accountBalance = (parseInt(user.result.accountBalance) - state.vouchyPoint + cashReward).toString();
         } else {
             accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
 
         }
 
-
+      
         const newUpdateAccountBalance = { ...userInfo, accountBalance };
         dispatch(updateUser(newUpdateAccountBalance))
         dispatch(createHistory(transactionDetail, history))
     }
 
     const handleOpenDialog = () => {
+        setOptionState("SMS")
         setOpenDialog(true)
     }
 
@@ -78,6 +83,7 @@ const PurchaseProceed = () => {
     }
 
     const handleOpenDialog1 = () => {
+        setOptionState("EMAIL")
         setOpenDialog1(true)
     }
 
@@ -90,14 +96,14 @@ const PurchaseProceed = () => {
             setApplyDiscount(!applyDiscount)
             if (parseInt(user.result.accountBalance) < initialState.vouchyPoint) {
                 const count = initialState.vouchyPoint - parseInt(user.result.accountBalance)
-                setNewState({...newState, vouchyPoint: count})
+                setNewState({ ...newState, vouchyPoint: count })
                 console.log(newState.vouchyPoint)
             } else {
-                setNewState({...newState, vouchyPoint: 0})
+                setNewState({ ...newState, vouchyPoint: 0 })
 
             }
 
-           
+
 
         }
     }
