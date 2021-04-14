@@ -29,7 +29,7 @@ export const createHistory = async (req, res) => {
                 'noreply@vouchy.com',
                 history.email,
                 "Voucher Code from Vouchy",
-                html(history.voucherCode))
+                html(history.voucherCode, history.date))
         } else {
 
 

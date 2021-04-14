@@ -1,4 +1,4 @@
-export const html = (code) => {
+export const html = (code,date) => {
   return (
     `
   <!doctype html>
@@ -353,6 +353,8 @@ export const html = (code) => {
                         <td>
                           <p>Hi there from Vouchy,</p>
                           <p>Thank for purchasing our voucher.</p>
+                          <p>Date: ${date}</p>
+
                           <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                             <tbody>
                               <tr>
