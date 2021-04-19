@@ -12,6 +12,6 @@ const router = express.Router();
 router.get('/', getVouchers);
 router.post('/', auth, createVoucher);
 router.patch('/:id', auth, updateVoucher);
-router.delete('/:id', auth, deleteVoucher);
+router.delete('/:id', deleteVoucher);
 
 export default router;

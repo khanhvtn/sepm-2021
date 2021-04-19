@@ -8,7 +8,8 @@ import {
     InputBase,
     Button,
     Avatar,
-    Link
+    Link,
+    Typography
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -172,6 +173,14 @@ const Navbar = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
+
+                    <div>
+                        <Link>
+                        <Typography></Typography>
+                        </Link>
+                        
+                    </div>
+                
                 {/* </Toolbar>
             </AppBar> */}
 
