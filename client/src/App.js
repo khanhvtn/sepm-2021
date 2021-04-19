@@ -17,6 +17,7 @@ import Auth from './components/Auth/Auth';
 import UserProfile from './components/User/UserProfile';
 import Detail from './components/Detail/Detail'
 import PurchaseProceed from './components/Detail/PurchaseProceed'
+import VoucherList from './components/VoucherList/VoucherList'
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -62,6 +63,10 @@ const App = () => {
 
                         <Route exact path="/brand">
                             <BrandHome />
+                        </Route>
+
+                        <Route exact path="/vouchers/category/:cat">
+                            <VoucherList />
                         </Route>
 
                         <Route exact path="/detail">

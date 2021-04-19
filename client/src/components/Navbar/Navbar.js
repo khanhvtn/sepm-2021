@@ -9,7 +9,8 @@ import {
     Button,
     Avatar,
     Link,
-    Typography
+    Typography,
+    
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -31,6 +32,8 @@ const Navbar = () => {
     const authData = useSelector((state) => state.auth.authData);
     const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorElCat, setAnchorElCat] = useState(null);
+
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
         null
     );
@@ -65,18 +68,33 @@ const Navbar = () => {
         handleMenuClose();
     };
 
+    //handle go to cat
+    const handleGoToCat = (type) => {
+        history.push(`/vouchers/category/${type}`)
+        handleMenuCatClose();
+    }
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileUnAuthMoreAnchorEl = Boolean(mobileUnAuthMoreAnchorEl);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const handleCategoryMenuOpen = (event) => {
+        setAnchorElCat(event.currentTarget)
+    }
+
     const handleMobileUnAuthMenuOpen = (event) => {
         setMobileUnAuthMoreAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleMenuCatClose = () => {
+        setAnchorElCat(null);
     };
 
     const handleMobileUnAuthMenuClose = () => {
@@ -127,6 +145,22 @@ const Navbar = () => {
         </Menu>
     );
 
+    const renderMenuCategory = (
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorElCat}
+            keepMounted
+            open={Boolean(anchorElCat)}
+            onClose={handleMenuCatClose}
+        >
+            <MenuItem onClick={() => handleGoToCat('food&beverage')}>Food and Beverage</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('beauty')}>Beauty</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('travel')}>Travel</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('all')}>See All</MenuItem>
+
+        </Menu>
+    )
+
     const mobileUnAuthMenuId = 'mobile-unauth-menu-id';
     const renderMobileUnAuthMenu = (
         <Menu
@@ -175,13 +209,14 @@ const Navbar = () => {
                     </div>
 
                     <div>
-                        <Link>
-                        <Typography></Typography>
-                        </Link>
-                        
+
+                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleCategoryMenuOpen}>
+                            Category
+                        </Button>
+                        {renderMenuCategory}
                     </div>
-                
-                {/* </Toolbar>
+
+                    {/* </Toolbar>
             </AppBar> */}
 
                     <div className={classes.grow} />

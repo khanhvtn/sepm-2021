@@ -37,6 +37,50 @@ export const updateVoucher = async (req, res) => {
 
     res.json(updateMessage);
 };
+
+export const getVouchersByCategory = async (req, res) => {
+    const catRequest = req.params.cat;
+    
+    if (catRequest === "food&beverage"){
+        try {
+            const vouchers = await Voucher.find({ category: "Food and Beverage" })
+            res.status(200).json(vouchers)
+        } catch (error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+
+    if (catRequest === "travel"){
+        try {
+            const vouchers = await Voucher.find({ category: "Travel" })
+            res.status(200).json(vouchers)
+        } catch (error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+
+    if (catRequest === "beauty"){
+        try {
+            const vouchers = await Voucher.find({ category: "Beauty" })
+            res.status(200).json(vouchers)
+        } catch (error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+
+    if (catRequest === "all"){
+        try {
+            const vouchers = await Voucher.find()
+            res.status(200).json(vouchers)
+        } catch (error) {
+            res.status(404).json({ message: error.message });
+        }
+    }
+    
+
+
+}
+
 export const deleteVoucher = async (req, res) => {
     const { id: _id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(_id)) {

@@ -1,5 +1,5 @@
 import * as api from '../api';
-import { CREATE, DELETE, UPDATE, FETCH_ALL } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL, FETCH_BY_CATEGORY } from '../constants/actionTypes';
 
 //Action Voucher
 export const getVouchers = () => async (dispatch) => {
@@ -10,6 +10,16 @@ export const getVouchers = () => async (dispatch) => {
         console.log(error.message);
     }
 };
+
+export const getVouchersByCategory = () => async(dispatch) => {
+    try {
+        const {data} = await api.fetchVouchersByCategory();
+        dispatch({ type: FETCH_BY_CATEGORY, payload: data });
+    } catch (error) {
+        console.log(error.message);
+
+    }
+}
 
 export const createVoucher = (newVoucher) => async (dispatch) => {
     try {

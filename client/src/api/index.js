@@ -12,6 +12,8 @@ API.interceptors.request.use((req) => {
 
 // API for Voucher
 export const fetchVouchers = () => API.get('/vouchers');
+export const fetchVouchersByCategory = () => API.get(`/vouchers/category/${cat}`);
+
 export const createVoucher = (newVoucher) => API.post('/vouchers', newVoucher);
 export const updateVoucher = (id, updateVoucher) =>
     API.patch(`${'/vouchers'}/${id}`, updateVoucher);
