@@ -35,7 +35,10 @@ const Detail = () => {
     }
 
     const handleGoToProceed = () => {
-        history.push('/proceed')
+        history.push({
+            pathname: `/proceed/${voucher._id}`,
+            state: {voucher: voucher}
+        })
     }
 
     useEffect(() => {
@@ -71,7 +74,7 @@ const Detail = () => {
                             Closes in:
                     </Typography>
 
-                        <CountDownTimeClock />
+                        <CountDownTimeClock time={voucher.expiredDate} />
                     </CardContent>
 
 

@@ -85,7 +85,7 @@ const App = () => {
                         />
                         <PrivateRoute
                             exact
-                            path="/proceed"
+                            path="/proceed/:id"
                             component={PurchaseProceed}
                         />
                         {/* <Route exact path="/user-profile">

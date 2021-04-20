@@ -5,6 +5,7 @@ export default makeStyles((theme) => ({
         display: 'flex',
         borderRadius: '0 24px 24px 24px',
         flexDirection: 'column',
+        cursor: "pointer"
     },
     details: {
         display: 'flex',

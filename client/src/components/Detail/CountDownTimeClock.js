@@ -28,16 +28,17 @@ const getTimeDays = (time) => (time / daySeconds) | 0;
 
 
 
-const CountDownTimeClock = () => {
+const CountDownTimeClock = ({time}) => {
     const classes = useStyles();
     const stratTime = Date.now() / 1000; // use UNIX timestamp in seconds
-    const endTime = stratTime + 243248; // use UNIX timestamp in seconds
-
+    const endTime1 = new Date(time) // use UNIX timestamp in seconds
+    const endTime = endTime1.getTime() / 1000;
     const remainingTime = endTime - stratTime;
     const days = Math.ceil(remainingTime / daySeconds);
     const daysDuration = days * daySeconds;
     return (
         <div className={classes.clock}>
+            
 
             <CountdownCircleTimer
                 {...timerProps}

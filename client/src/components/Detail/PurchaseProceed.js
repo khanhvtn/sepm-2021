@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles'
 import { Grid, TextField, Typography, Container, Paper, ButtonBase, Button } from '@material-ui/core'
@@ -11,9 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { createHistory, getHistories } from '../../actions/histories'
 import { updateUser } from '../../actions/auths';
 
-const initialState = {
-    vouchyPoint: 300
-};
+
 
 const newVouchyPoint = {
     vouchyPoint: 0
@@ -30,9 +28,10 @@ const PurchaseProceed = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [openDialog1, setOpenDialog1] = useState(false);
     const [applyDiscount, setApplyDiscount] = useState(false);
-    const [state, setState] = useState(initialState);
     const [newState, setNewState] = useState(newVouchyPoint);
     const [optionState, setOptionState] = useState(option);
+    const location = useLocation();
+    const voucher = location.state.voucher;
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -46,6 +45,8 @@ const PurchaseProceed = () => {
         setUser(authData)
     }, [authData])
 
+ 
+
     const handleOnSubmit = (e) => {
         e.preventDefault();
         const transactionDetail = {
@@ -57,11 +58,11 @@ const PurchaseProceed = () => {
             "user": user.result._id
         }
 
-        const voucherPrice = state.vouchyPoint;
+        const voucherPrice = parseInt(voucher.price);
         const cashReward = (voucherPrice * 3) / 100;
         var accountBalance = 0;
         if (applyDiscount) {
-            accountBalance = (parseInt(user.result.accountBalance) - state.vouchyPoint + cashReward).toString();
+            accountBalance = (parseInt(user.result.accountBalance) - voucher.price + cashReward).toString();
         } else {
             accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
 
@@ -94,8 +95,8 @@ const PurchaseProceed = () => {
     const handleApplyDiscountClick = () => {
         if (parseInt(user.result.accountBalance) > 0) {
             setApplyDiscount(!applyDiscount)
-            if (parseInt(user.result.accountBalance) < initialState.vouchyPoint) {
-                const count = initialState.vouchyPoint - parseInt(user.result.accountBalance)
+            if (parseInt(user.result.accountBalance) < parseInt(voucher.price)) {
+                const count = parseInt(voucher.price) - parseInt(user.result.accountBalance)
                 setNewState({ ...newState, vouchyPoint: count })
                 console.log(newState.vouchyPoint)
             } else {
@@ -230,22 +231,20 @@ const PurchaseProceed = () => {
                         <Grid container>
                             <Grid item>
                                 <ButtonBase className={classes.image}>
-                                    <img className={classes.img} src="https://source.unsplash.com/featured/?macbook"
-                                        title="Live from space album cover" />
+                                    <img className={classes.img} src={voucher.image}
+                                        title={voucher.title} />
                                 </ButtonBase>
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
                                     <Grid item xs>
                                         <Typography gutterBottom variant="h5">
-                                            Sumo BBQ
+                                            {voucher.title}
                                         </Typography>
                                         <Typography variant="body2" gutterBottom>
-                                            50% OFF from 13:00PM
+                                            {voucher.description}
                                         </Typography>
-                                        <Typography variant="body2" color="textSecondary">
-                                            ID: 1030114
-                                        </Typography>
+                                        
                                     </Grid>
                                     <Grid item xl>
                                         {applyDiscount ?
@@ -259,9 +258,9 @@ const PurchaseProceed = () => {
 
                                 </Grid>
                                 <Grid item>
-                                    {applyDiscount ? <><Typography variant="subtitle1" className={classes.oldPrice}>${state.vouchyPoint}</Typography>
+                                    {applyDiscount ? <><Typography variant="subtitle1" className={classes.oldPrice}>${voucher.price}</Typography>
                                         <Typography variant="subtitle2" color="secondary" className={classes.newPrice}> Pay for ${newState.vouchyPoint}</Typography></> :
-                                        <><Typography variant="subtitle1">${state.vouchyPoint}</Typography>
+                                        <><Typography variant="subtitle1">${voucher.price}</Typography>
                                         </>}
 
 
