@@ -4,6 +4,8 @@ export default makeStyles((theme) => ({
     root: {
         display: 'flex',
         borderRadius: '0 24px 24px 24px',
+        flexDirection: 'column',
+
 
     },
     root1:{
@@ -94,14 +96,19 @@ export default makeStyles((theme) => ({
         
     },
 
+    branding: {
+        paddingLeft: theme.spacing(3),
+        paddingTop: theme.spacing(3),
+    },
+
     proceedButton: {
         border: '2px solid',
         fontWeight: 'bold',
         margin: theme.spacing(2)
     },
     cover: {
-        width: '100%',
-        height: '0',
+        width: "100%",
+        height: 10,
         paddingTop: '56.25%', // 16:9,
     },
 

@@ -70,7 +70,10 @@ const Navbar = () => {
 
     //handle go to cat
     const handleGoToCat = (type) => {
-        history.push(`/vouchers/category/${type}`)
+        history.push({
+            pathname:`/vouchers/category/${type}`,
+            state: {category: type}
+        })
         handleMenuCatClose();
     }
 

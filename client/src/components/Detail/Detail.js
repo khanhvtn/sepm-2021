@@ -13,7 +13,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 
 
@@ -23,6 +23,8 @@ const Detail = () => {
     const [user, setUser] = useState(authData)
     const [openDialog, setOpenDialog] = useState(false);
     const history = useHistory();
+    const location = useLocation();
+    const voucher = location.state.voucher;
 
     const handleClickOpenDialog = () => {
         setOpenDialog(true)
@@ -43,22 +45,26 @@ const Detail = () => {
         <>
             <Card className={classes.root}>
                 <div className={classes.detailWithMedia}>
-                    <CardActions className={classes.brand}>
-                        <Link href="/brand">
-                            <Avatar className={classes.logo} alt='logo' src='https://source.unsplash.com/featured/?macbook' />
+                <CardActions className={classes.branding}>
+                        <Link href="#">
+                            <Typography>{voucher.brand}</Typography>
                         </Link>
-                        <Typography className={classes.title} component="h6" variant="h6">
-                            Sumo BBQ
-                        </Typography>
                     </CardActions>
                     <CardContent className={classes.content}>
                         <Typography className={classes.title} component="h5" variant="h5">
-                            Easter Hunt Day 4 Giveaway
+                        {voucher.title}
+
+                    </Typography>
+                    </CardContent>
+                    <CardContent className={classes.content}>
+                        <Typography className={classes.title} component="h6" variant="h6">
+                        {voucher.description}
+
                     </Typography>
                     </CardContent>
                     <CardContent className={classes.desc}>
                         <Typography variant="body1" className={classes.voucherDesc}>
-                            Enter today's give away to earn $100 SumoBBQ Voucher
+                        Pay for {voucher.price}$ to get {voucher.percentage}% discount
                     </Typography>
 
                         <Typography variant="h5" component="h5" className={classes.voucherDesc1}>
@@ -114,10 +120,10 @@ const Detail = () => {
 
                     <CardContent className={classes.desc}>
                         <Typography variant="body2" className={classes.voucherDesc}>
-                            Start Date: 03/04/2021 1:00:00PM
+                            Start Date: {voucher.startedDate}
                     </Typography>
                         <Typography variant="body2" className={classes.voucherDesc}>
-                            End Date: 03/04/2021 1:00:00PM
+                            End Date: {voucher.expiredDate}
                     </Typography>
                     </CardContent>
 
@@ -125,8 +131,8 @@ const Detail = () => {
                 </div>
                 <CardMedia
                     className={classes.cover}
-                    image="https://source.unsplash.com/featured/?macbook"
-                    title="Live from space album cover"
+                    image={voucher.image}
+                    title={voucher.title}
                 />
             </Card>
         </>
