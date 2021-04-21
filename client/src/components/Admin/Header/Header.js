@@ -27,14 +27,14 @@ function Header(props) {
     const classes = useStyles()
     const dispatch = useDispatch();
     const history = useHistory();
-    const authData = useSelector((state) => state.auth.authData);
-    const [user, setUser] = useState(authData);
+    const { adminData } = useSelector((state) => state.auth);
+    const [user, setUser] = useState(adminData);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
     useEffect(() => {
-        setUser(authData);
-    }, [authData]);
+        setUser(adminData);
+    }, [adminData]);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);

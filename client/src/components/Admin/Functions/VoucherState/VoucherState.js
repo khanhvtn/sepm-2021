@@ -23,7 +23,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@material-ui/core';
 import { getAcceptedVoucher, publishVoucher } from '../../../../actions/admins';
-import { getVouchers } from '../../../../actions/vouchers';
 
 
 const ThreeDotMenu = ({ data }) => {
@@ -81,6 +80,7 @@ const VoucherState = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [open, setOpen] = useState(false);
@@ -108,8 +108,10 @@ const VoucherState = () => {
 
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getAcceptedVoucher())
-    }, [vouchers]);
+        setLoading(false)
+    }, [dispatch]);
 
 
     return (
@@ -148,19 +150,21 @@ const VoucherState = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {vouchers && vouchers.length === 0 ? (<div className={classes.contentWrapper}>
-                        <Typography color="textSecondary" align="center">
-                            No sharable voucher for this project yet
-                        </Typography>
-                    </div>) : null
-                    }
-                    {!vouchers.length
-                        ?
+
+                    {loading &&
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
+                    }
+                    {vouchers.length === 0
+                        ?
+                        <div className={classes.contentWrapper}>
+                            <Typography color="textSecondary" align="center">
+                                No sharable voucher for this project yet
+                            </Typography>
+                        </div>
                         :
                         <Paper className={classes.root}>
                             <TableContainer className={classes.container}>

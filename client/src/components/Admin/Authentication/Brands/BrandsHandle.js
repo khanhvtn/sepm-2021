@@ -31,6 +31,7 @@ const BrandsHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -71,7 +72,9 @@ const BrandsHandle = () => {
     }
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getBrands());
+        setLoading(false)
     }, []);
 
     return (
@@ -111,19 +114,21 @@ const BrandsHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {brands.length === 0 ? (<div className={classes.contentWrapper}>
-                        <Typography color="textSecondary" align="center">
-                            No brands for this project yet
-                        </Typography>
-                    </div>) : null
-                    }
-                    {!brands.length
-                        ?
+
+                    {loading &&
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
+                    }
+                    {brands.length === 0
+                        ?
+                        <div className={classes.contentWrapper}>
+                            <Typography color="textSecondary" align="center">
+                                No brands for this project yet
+                            </Typography>
+                        </div>
                         :
                         <Paper className={classes.root}>
                             <TableContainer className={classes.container}>

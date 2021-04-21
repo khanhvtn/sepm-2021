@@ -32,6 +32,7 @@ const UsersHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -74,7 +75,9 @@ const UsersHandle = () => {
     }
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getUsers());
+        setLoading(false)
     }, []);
 
 
@@ -117,19 +120,20 @@ const UsersHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {users.length === 0 ? (<div className={classes.contentWrapper}>
-                        <Typography color="textSecondary" align="center">
-                            No users for this project yet
-                        </Typography>
-                    </div>) : null
-                    }
-                    {!users.length
-                        ?
+                    {loading &&
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
+                    }
+                    {users.length === 0
+                        ?
+                        <div className={classes.contentWrapper}>
+                            <Typography color="textSecondary" align="center">
+                                No users for this project yet
+                            </Typography>
+                        </div>
                         :
                         <Paper className={classes.root}>
                             <TableContainer className={classes.container}>

@@ -1,30 +1,51 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Redirect, useHistory } from 'react-router-dom';
+import { checkCurrentAdmin } from '../actions/admins';
 
 const AdminPrivateRoute = ({ component: Component, ...rest }) => {
-    const { authData } = useSelector((state) => state.auth);
-    console.log(authData)
+    const [loading, setLoading] = useState(false);
 
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                authData ? (
-                    <Component {...props} />
-                ) : (
-                        <Redirect
-                            to={{
-                                pathname: '/admin/login',
-                                state: {
-                                    previousPath: props.location.pathname,
-                                },
-                            }}
-                        />
-                    )
-            }
-        />
-    );
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const { adminData } = useSelector((state) => state.auth);
+    
+    useEffect(() => {
+        setLoading(true)
+        dispatch(checkCurrentAdmin(history))
+        setLoading(false)
+    }, [dispatch]);
+    
+    if (loading) {
+        return (
+            <div>
+                <CircularProgress />
+            </div>
+        )
+    } else {
+        return (
+            <Route
+                {...rest}
+                render={(props) =>
+                    adminData ? (
+                        <Component {...props} />
+                    ) : (
+                            <Redirect
+                                to={{
+                                    pathname: '/admin/login',
+                                    state: {
+                                        isSignup: false,
+                                        previousPath: props.location.pathname,
+                                    },
+                                }}
+                            />
+                        )
+                }
+            />
+        );
+    }
 };
 
 export default AdminPrivateRoute;

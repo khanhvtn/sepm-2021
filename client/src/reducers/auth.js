@@ -1,13 +1,20 @@
 import {
-    AUTH,
+    AUTH_USER,
+    AUTH_ADMIN,
     LOGOUT,
     CHECK_CURRENT_USER,
+    CHECK_CURRENT_ADMIN,
     UPDATE_USER,
 } from '../constants/actionTypes';
 
-const authReducer = (state = { authData: null }, action) => {
+const initialState = {
+    authData: null,
+    adminData: null,
+}
+
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case AUTH:
+        case AUTH_USER:
             //Save user token into local storage and update state
             localStorage.setItem(
                 'userProfile',
@@ -16,6 +23,15 @@ const authReducer = (state = { authData: null }, action) => {
                 })
             );
             return { ...state, authData: action?.data };
+        case AUTH_ADMIN:
+            //Save user token into local storage and update state
+            localStorage.setItem(
+                'admin',
+                JSON.stringify({
+                    token: action?.data.token,
+                })
+            );
+            return { ...state, adminData: action?.data };
         case LOGOUT:
             //clear local storage and update state to null
             localStorage.clear();
@@ -27,6 +43,7 @@ const authReducer = (state = { authData: null }, action) => {
             };
         case CHECK_CURRENT_USER:
             //Save user token into local storage and update new information for state
+            console.log(action?.data)
             if (action?.data) {
                 localStorage.setItem(
                     'userProfile',
@@ -34,11 +51,28 @@ const authReducer = (state = { authData: null }, action) => {
                         token: action?.data.token,
                     })
                 );
+                console.log("Update auth data", action?.data)
                 return { ...state, authData: action?.data };
             } else {
                 //clear local storage and update state to null
-                localStorage.clear();
+                //localStorage.clear();
                 return { ...state, authData: action?.data };
+            }
+
+        case CHECK_CURRENT_ADMIN:
+            //Save user token into local storage and update new information for state
+            if (action?.data) {
+                localStorage.setItem(
+                    'admin',
+                    JSON.stringify({
+                        token: action?.data.token,
+                    })
+                );
+                return { ...state, adminData: action?.data };
+            } else {
+                //clear local storage and update state to null
+                //localStorage.clear();
+                return { ...state, adminData: action?.data };
             }
         default:
             return state;

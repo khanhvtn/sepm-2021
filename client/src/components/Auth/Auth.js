@@ -31,8 +31,6 @@ const Auth = () => {
     const location = useLocation();
     const { isSignup, previousPath } = { ...location.state };
 
-    console.log(isSignup)
-
     //useEffect
     useEffect(() => {
         setFormData(initialFormData);

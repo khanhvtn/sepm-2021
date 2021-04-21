@@ -1,5 +1,12 @@
 import * as api from '../api';
-import { FETCH_ALL, DELETE, UPDATE, AUTH, CHECK_CURRENT_USER, FETCH_ACCEPTED_VOUCHER, PUBLISH_VOUCHER } from '../constants/actionTypes';
+import { 
+    FETCH_ALL, 
+    DELETE, UPDATE, 
+    AUTH_ADMIN, 
+    CHECK_CURRENT_ADMIN, 
+    FETCH_ACCEPTED_VOUCHER, 
+    PUBLISH_VOUCHER 
+} from '../constants/actionTypes';
 
 // Action Admin
 export const getUsers = () => async (dispatch) => {
@@ -52,7 +59,7 @@ export const publishVoucher = (id, action) => async (dispatch) => {
 export const signin = (formData, history, previousPath) => async (dispatch) => {
     try {
         const { data } = await api.signInAdmin(formData);
-        dispatch({ type: AUTH, data });
+        dispatch({ type: AUTH_ADMIN, data });
         /* 
         If previous path exists, then redirect to previous path.
         If not, redirect to home page.
@@ -68,21 +75,23 @@ export const signin = (formData, history, previousPath) => async (dispatch) => {
 };
 
 export const checkCurrentAdmin = (history) => async (dispatch) => {
-    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+    const admin = JSON.parse(localStorage.getItem('admin'));
+    console.log(admin)
     try {
         /*Check user profile in local storage to get user token.
         Then, sen request to the server to check the token.
         If the token is valid, then update user data.
         If not set state null and redirec to homepage
          */
-        if (userProfile) {
+        if (admin) {
             const { data } = await api.checkCurrentAdmin();
+            console.log(data)
             dispatch({
-                type: CHECK_CURRENT_USER,
-                data: { result: data.result, token: userProfile.token },
+                type: CHECK_CURRENT_ADMIN,
+                data: { result: data.result, token: admin.token },
             });
         } else {
-            dispatch({ type: CHECK_CURRENT_USER, data: null });
+            dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
         }
     } catch (error) {
         console.log(error.message)

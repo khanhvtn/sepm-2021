@@ -27,9 +27,8 @@ const App = () => {
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(checkCurrentAdmin(history))
         dispatch(checkCurrentUser(history));
-    }, []);
+    }, [dispatch]);
 
     return (
         <Router>

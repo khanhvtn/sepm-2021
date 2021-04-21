@@ -51,7 +51,8 @@ export const setVoucher = async (req, res) => {
     try {
         const updateMessage = await Voucher.findByIdAndUpdate(
             _id,
-            { isAccepted: action }
+            { isAccepted: action },
+            { new : true }
         );
 
         res.status(200).json(updateMessage);
@@ -66,17 +67,16 @@ export const publishVoucher = async (req, res) => {
 
     const action = type === 'PUBLISH' ? true : false
 
-    console.log(req.params)
-
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('No voucher with that id');
     }
     try {
         const updateMessage = await Voucher.findByIdAndUpdate(
             _id,
-            { isPublished: action }
-        );q
-
+            { isPublished: action },
+            { new: true }
+        );
+        console.log(updateMessage)
         res.status(200).json(updateMessage);
     } catch (error) {
         res.status(400).json({ message: error.message })

@@ -33,7 +33,7 @@ const VouchersHandle = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const [action, setAction] = useState('ACCEPT');
 
@@ -67,9 +67,6 @@ const VouchersHandle = () => {
         setOpen(false);
     };
 
-    const handleDeleteUser = (id) => {
-        setAnchorEl(null)
-    }
 
     const acceptVoucher = (id) => {
         dispatch(setVoucherStatus(id, { type: action }))
@@ -81,8 +78,10 @@ const VouchersHandle = () => {
 
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getVouchers());
-    }, []);
+        setLoading(false)
+    }, [dispatch]);
 
 
 
@@ -123,19 +122,20 @@ const VouchersHandle = () => {
                             </Grid> 
                         </Toolbar>
                     </AppBar>
-                    {vouchers && vouchers.length === 0 ? (<div className={classes.contentWrapper}>
-                        <Typography color="textSecondary" align="center">
-                            No vouchers for this project yet
-                        </Typography>
-                    </div>) : null
-                    }
-                    {!vouchers.length
-                        ?
+                    {loading &&
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
+                    }
+                    {vouchers.length === 0
+                        ?
+                        <div className={classes.contentWrapper}>
+                            <Typography color="textSecondary" align="center">
+                                No vouchers for this project yet
+                            </Typography>
+                        </div>
                         :
                         <Paper className={classes.root}>
                             <TableContainer className={classes.container}>

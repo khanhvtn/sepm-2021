@@ -15,14 +15,17 @@ const voucherReducer = (vouchers = initialState, action) => {
         case CREATE:
             return { ...vouchers, allVouchers: action.payload };
         case UPDATE:
-            return vouchers.allVouchers.map((voucher) =>
-                voucher._id === action.payload._id ? action.payload : voucher
-            );
+            return {
+                ...vouchers, allVouchers: vouchers.acceptedVouchers.map((voucher) =>
+                    voucher._id === action.payload._id ? action.payload : voucher
+                )
+            };
         case PUBLISH_VOUCHER:
-            console.log(action.payload._id)
-            return vouchers.acceptedVouchers.map((voucher) =>
-                voucher._id === action.payload._id ? action.payload : voucher
-            );
+            return {
+                ...vouchers, acceptedVouchers: vouchers.acceptedVouchers.map((voucher) =>
+                    voucher._id === action.payload._id ? action.payload : voucher
+                )
+            };
         case DELETE:
             return vouchers.allVouchers.filter((voucher) => voucher._id !== action.payload);
         default:

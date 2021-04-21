@@ -1,8 +1,8 @@
 import * as api from '../api';
 import {
-    AUTH,
+    AUTH_USER,
     CHECK_CURRENT_USER,
-    UPDATE_USER,
+    UPDATE_USER
 } from '../constants/actionTypes';
 
 export const updateUser = (newUpdateUser) => async (dispatch) => {
@@ -23,6 +23,7 @@ export const checkCurrentUser = (history) => async (dispatch) => {
          */
         if (userProfile) {
             const { data } = await api.checkCurrentUser();
+            console.log(data)
             dispatch({
                 type: CHECK_CURRENT_USER,
                 data: { result: data.result, token: userProfile.token },
@@ -42,7 +43,7 @@ export const checkCurrentUser = (history) => async (dispatch) => {
 export const signup = (formData, history) => async (dispatch) => {
     try {
         const { data } = await api.signUp(formData);
-        dispatch({ type: AUTH, data });
+        dispatch({ type: AUTH_USER, data });
         history.push('/');
     } catch (error) {
         console.log(error);
@@ -51,7 +52,7 @@ export const signup = (formData, history) => async (dispatch) => {
 export const signin = (formData, history, previousPath) => async (dispatch) => {
     try {
         const { data } = await api.signIn(formData);
-        dispatch({ type: AUTH, data });
+        dispatch({ type: AUTH_USER, data });
         /* 
         If previous path exists, then redirect to previous path.
         If not, redirect to home page.
