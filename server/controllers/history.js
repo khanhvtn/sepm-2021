@@ -22,57 +22,121 @@ export const getHistories = async (req, res) => {
 export const createHistory = async (req, res) => {
     // const history = req.body;
     const codes = await Code.find({ voucher: req.body.voucher, isSold: false })
-    const code = codes[0];
-    const voucher = await Voucher.findById(req.body.voucher)
-    const newHistory = new History({
-        user: req.body.user,
-        voucherCode: code.code,
-        voucher: req.body.voucher,
-        email: req.body.email,
-        phone: req.body.phone,
-        option: req.body.option
-    });
-    try {
-        await newHistory.save();
+    if (codes.length === 1) {
+        const code = codes[0];
+        const voucher = await Voucher.findById(req.body.voucher)
+        const newHistory = new History({
+            user: req.body.user,
+            voucherCode: code.code,
+            voucher: req.body.voucher,
+            email: req.body.email,
+            phone: req.body.phone,
+            option: req.body.option
+        });
+        try {
+            await newHistory.save();
 
-        await Code.findByIdAndUpdate(
-            code._id,
-            { $set: { 'isSold': true } },
+            await Code.findByIdAndUpdate(
+                code._id,
+                { $set: { 'isSold': true } },
 
-            { new: true }
+                { new: true }
 
-        )
+            )
 
-        res.status(200).json({newHistory});
+            await Voucher.findByIdAndUpdate(
+                code.voucher,
+                { $set: { 'isAvailable': false, 'isActive': false } },
+                { new: true }
 
+            )
 
-
-        if (newHistory.option == "EMAIL") {
-            sendEmail(
-                'noreply@vouchy.com',
-                newHistory.email,
-                "Voucher Code from Vouchy",
-                html(code, voucher , newHistory.date))
-        } else {
+            res.status(200).json({ newHistory });
 
 
-            var phone = newHistory.phone;
-            var e164Format = phone.slice(1);
-            sendSMS.messages
-                .create({
-                    body: `Hello from Vouchy. Your voucher code is ${newHistory.voucherCode}`,
-                    from: '+14158010061',
-                    to: `+84${e164Format}`
-                })
-                .then(message => console.log(message.sid))
-                .catch(err => console.log(err));
 
+            if (newHistory.option == "EMAIL") {
+                sendEmail(
+                    'noreply@vouchy.com',
+                    newHistory.email,
+                    "Voucher Code from Vouchy",
+                    html(code, voucher, newHistory.date))
+            } else {
+
+
+                var phone = newHistory.phone;
+                var e164Format = phone.slice(1);
+                sendSMS.messages
+                    .create({
+                        body: `Hello from Vouchy. Your voucher code is ${newHistory.voucherCode}`,
+                        from: '+14158010061',
+                        to: `+84${e164Format}`
+                    })
+                    .then(message => console.log(message.sid))
+                    .catch(err => console.log(err));
+
+            }
+
+
+
+        } catch (error) {
+            res.status(404).json({ message: error.message })
         }
 
+    } if (codes.length > 1) {
+        const code = codes[0];
+        const voucher = await Voucher.findById(req.body.voucher)
+        const newHistory = new History({
+            user: req.body.user,
+            voucherCode: code.code,
+            voucher: req.body.voucher,
+            email: req.body.email,
+            phone: req.body.phone,
+            option: req.body.option
+        });
+        try {
+            await newHistory.save();
+
+            await Code.findByIdAndUpdate(
+                code._id,
+                { $set: { 'isSold': true } },
+
+                { new: true }
+
+            )
 
 
-    } catch (error) {
-        res.status(404).json({ message: error.message })
+            res.status(200).json({ newHistory });
+
+
+
+            if (newHistory.option == "EMAIL") {
+                sendEmail(
+                    'noreply@vouchy.com',
+                    newHistory.email,
+                    "Voucher Code from Vouchy",
+                    html(code, voucher, newHistory.date))
+            } else {
+
+
+                var phone = newHistory.phone;
+                var e164Format = phone.slice(1);
+                sendSMS.messages
+                    .create({
+                        body: `Hello from Vouchy. Your voucher code is ${newHistory.voucherCode}`,
+                        from: '+14158010061',
+                        to: `+84${e164Format}`
+                    })
+                    .then(message => console.log(message.sid))
+                    .catch(err => console.log(err));
+
+            }
+
+
+
+        } catch (error) {
+            res.status(404).json({ message: error.message })
+        }
     }
 }
 

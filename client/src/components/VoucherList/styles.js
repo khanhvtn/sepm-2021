@@ -12,6 +12,10 @@ export default makeStyles((theme) => ({
         flexDirection: 'column',
         width: '100%',
     },
+
+    vouchers: {
+        color: "#f50057"
+    },
     branding: {
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(3),

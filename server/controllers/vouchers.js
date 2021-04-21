@@ -1,4 +1,5 @@
 import Voucher from '../models/voucher.js';
+import Code from '../models/code.js';
 import mongoose from 'mongoose';
 
 export const getVouchers = async (req, res) => {
@@ -43,7 +44,7 @@ export const getVouchersByCategory = async (req, res) => {
     
     if (catRequest === "food&beverage"){
         try {
-            const vouchers = await Voucher.find({ category: "Food and Beverage" })
+            const vouchers = await Voucher.find({ category: "Food and Beverage", isActive: true, isAvailable: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -52,7 +53,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "travel"){
         try {
-            const vouchers = await Voucher.find({ category: "Travel" })
+            const vouchers = await Voucher.find({ category: "Travel", isActive: true, isAvailable: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -61,7 +62,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "beauty"){
         try {
-            const vouchers = await Voucher.find({ category: "Beauty" })
+            const vouchers = await Voucher.find({ category: "Beauty", isActive: true, isAvailable: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -70,7 +71,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "all"){
         try {
-            const vouchers = await Voucher.find()
+            const vouchers = await Voucher.find({isActive: true, isAvailable: true})
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });

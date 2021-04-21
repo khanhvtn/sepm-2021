@@ -1,4 +1,5 @@
 import Code from '../models/code.js'
+import Voucher from '../models/voucher.js'
 import mongoose from 'mongoose';
 
 
@@ -18,6 +19,12 @@ export const createCode = async(req, res) => {
     const newCode = new Code(code);
     try {
         await newCode.save();
+        await Voucher.findByIdAndUpdate(
+            code.voucher,
+            { $set: { 'isAvailable': true, 'isActive': true } },
+            { new: true }
+
+        )
         res.status(200).json(newCode);
 
 

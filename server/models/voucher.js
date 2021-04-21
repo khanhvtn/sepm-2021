@@ -41,6 +41,20 @@ const voucherSchema = mongoose.Schema(
             type: Date,
             required: [true, 'Expired Date can not be blanked.'],
         },
+
+        isActive: {
+            type: Boolean,
+            default: false,
+            required: true
+
+        },
+
+        isAvailable: {
+            type: Boolean,
+            default: false,
+            required: true
+
+        }
     },
     { timestamps: true }
 );

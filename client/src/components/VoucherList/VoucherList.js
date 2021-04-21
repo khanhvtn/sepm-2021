@@ -26,6 +26,9 @@ const VoucherList = (props) => {
         fetchVouchers();
     }, [cat]);
 
+ 
+
+
     
    
 
@@ -40,7 +43,7 @@ const VoucherList = (props) => {
     ) : (
         <Grid item xs={12} md={12}>
             <Grid container justify="center" spacing={2}>
-                {vouchers.map((voucher) => (
+                {vouchers.filter(voucher => new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now() ).map((voucher) => (
                     <Grid
                         xs={12}
                         sm={4}
