@@ -50,8 +50,7 @@ const PurchaseProceed = () => {
     const handleOnSubmit = (e) => {
         e.preventDefault();
         const transactionDetail = {
-            "voucher": "604a340075d5e873aa863390",
-            "voucherCode": "123abc",
+            "voucher": voucher._id,
             "email": email,
             "phone": phone,
             "option": optionState,

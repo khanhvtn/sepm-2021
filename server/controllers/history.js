@@ -1,4 +1,5 @@
 import History from '../models/history.js';
+import Code from '../models/code.js'
 import mongoose from 'mongoose';
 import { sendEmail } from './misc/mailer.js'
 import { sendSMS } from './misc/sms.js'
@@ -7,7 +8,8 @@ import { html } from '../template/mail.js'
 
 export const getHistories = async (req, res) => {
     try {
-        const histories = await History.find().populate('user').populate('voucher');
+        const histories = await History.find()
+        // .populate('user').populate('voucher');
         res.status(200).json(histories)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -17,27 +19,46 @@ export const getHistories = async (req, res) => {
 
 
 export const createHistory = async (req, res) => {
-    const history = req.body;
-    const newHistory = new History(history);
+    // const history = req.body;
+    const codes = await Code.find({ voucher: req.body.voucher, isSold: false })
+    const code = codes[0];
+    const newHistory = new History({
+        user: req.body.user,
+        voucherCode: code.code,
+        voucher: req.body.voucher,
+        email: req.body.email,
+        phone: req.body.phone,
+        option: req.body.option
+    });
     try {
         await newHistory.save();
-        res.status(200).json(newHistory);
+
+        await Code.findByIdAndUpdate(
+            code._id,
+            { $set: { 'isSold': true } },
+
+            { new: true }
+
+        )
+
+        res.status(200).json({newHistory});
 
 
-        if (history.option == "EMAIL") {
+
+        if (newHistory.option == "EMAIL") {
             sendEmail(
                 'noreply@vouchy.com',
-                history.email,
+                newHistory.email,
                 "Voucher Code from Vouchy",
-                html(history.voucherCode, history.date))
+                html(newHistory.voucherCode, newHistory.date))
         } else {
 
 
-            var phone = history.phone;
+            var phone = newHistory.phone;
             var e164Format = phone.slice(1);
             sendSMS.messages
                 .create({
-                    body: `Hello from Vouchy. Your voucher code is ${history.voucherCode}`,
+                    body: `Hello from Vouchy. Your voucher code is ${newHistory.voucherCode}`,
                     from: '+14158010061',
                     to: `+84${e164Format}`
                 })

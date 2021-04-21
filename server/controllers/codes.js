@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 
 export const getCodes = async (req, res) => {
     try {
-        const codes = await Code.find().populate('voucher');
+        const codes = await Code.find();
+        // .populate('voucher');
         res.status(200).json(codes);
     } catch (error) {
         res.status(404).json({ message: error.message })
