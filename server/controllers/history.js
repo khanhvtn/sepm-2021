@@ -1,5 +1,6 @@
 import History from '../models/history.js';
 import Code from '../models/code.js'
+import Voucher from '../models/voucher.js'
 import mongoose from 'mongoose';
 import { sendEmail } from './misc/mailer.js'
 import { sendSMS } from './misc/sms.js'
@@ -22,6 +23,7 @@ export const createHistory = async (req, res) => {
     // const history = req.body;
     const codes = await Code.find({ voucher: req.body.voucher, isSold: false })
     const code = codes[0];
+    const voucher = await Voucher.findById(req.body.voucher)
     const newHistory = new History({
         user: req.body.user,
         voucherCode: code.code,
@@ -50,7 +52,7 @@ export const createHistory = async (req, res) => {
                 'noreply@vouchy.com',
                 newHistory.email,
                 "Voucher Code from Vouchy",
-                html(newHistory.voucherCode, newHistory.date))
+                html(code, voucher , newHistory.date))
         } else {
 
 

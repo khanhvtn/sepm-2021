@@ -1,411 +1,223 @@
-export const html = (code,date) => {
+export const html = (code, voucher, date) => {
   return (
     `
-  <!doctype html>
-  <html>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+     
     <head>
-      <meta name="viewport" content="width=device-width" />
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>Simple Transactional Email</title>
-      <style>
-        /* -------------------------------------
-            GLOBAL RESETS
-        ------------------------------------- */
-        
-        /*All the styling goes here*/
-        
-        img {
-          border: none;
-          -ms-interpolation-mode: bicubic;
-          max-width: 100%; 
-        }
-  
-        body {
-          background-color: #f6f6f6;
-          font-family: sans-serif;
-          -webkit-font-smoothing: antialiased;
-          font-size: 14px;
-          line-height: 1.4;
-          margin: 0;
-          padding: 0;
-          -ms-text-size-adjust: 100%;
-          -webkit-text-size-adjust: 100%; 
-        }
-  
-        table {
-          border-collapse: separate;
-          mso-table-lspace: 0pt;
-          mso-table-rspace: 0pt;
-          width: 100%; }
-          table td {
-            font-family: sans-serif;
-            font-size: 14px;
-            vertical-align: top; 
-        }
-  
-        /* -------------------------------------
-            BODY & CONTAINER
-        ------------------------------------- */
-  
-        .body {
-          background-color: #f6f6f6;
-          width: 100%; 
-        }
-  
-        /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
-        .container {
-          display: block;
-          margin: 0 auto !important;
-          /* makes it centered */
-          max-width: 580px;
-          padding: 10px;
-          width: 580px; 
-        }
-  
-        /* This should also be a block element, so that it will fill 100% of the .container */
-        .content {
-          box-sizing: border-box;
-          display: block;
-          margin: 0 auto;
-          max-width: 580px;
-          padding: 10px; 
-        }
-  
-        /* -------------------------------------
-            HEADER, FOOTER, MAIN
-        ------------------------------------- */
-        .main {
-          background: #ffffff;
-          border-radius: 3px;
-          width: 100%; 
-        }
-  
-        .wrapper {
-          box-sizing: border-box;
-          padding: 20px; 
-        }
-  
-        .content-block {
-          padding-bottom: 10px;
-          padding-top: 10px;
-        }
-  
-        .footer {
-          clear: both;
-          margin-top: 10px;
-          text-align: center;
-          width: 100%; 
-        }
-          .footer td,
-          .footer p,
-          .footer span,
-          .footer a {
-            color: #999999;
-            font-size: 12px;
-            text-align: center; 
-        }
-  
-        /* -------------------------------------
-            TYPOGRAPHY
-        ------------------------------------- */
-        h1,
-        h2,
-        h3,
-        h4 {
-          color: #000000;
-          font-family: sans-serif;
-          font-weight: 400;
-          line-height: 1.4;
-          margin: 0;
-          margin-bottom: 30px; 
-        }
-  
-        h1 {
-          font-size: 35px;
-          font-weight: 300;
-          text-align: center;
-          text-transform: capitalize; 
-        }
-  
-        p,
-        ul,
-        ol {
-          font-family: sans-serif;
-          font-size: 14px;
-          font-weight: normal;
-          margin: 0;
-          margin-bottom: 15px; 
-        }
-          p li,
-          ul li,
-          ol li {
-            list-style-position: inside;
-            margin-left: 5px; 
-        }
-  
-        a {
-          color: #3498db;
-          text-decoration: underline; 
-        }
-  
-        /* -------------------------------------
-            BUTTONS
-        ------------------------------------- */
-        .btn {
-          box-sizing: border-box;
-          width: 100%; }
-          .btn > tbody > tr > td {
-            padding-bottom: 15px; }
-          .btn table {
-            width: auto; 
-        }
-          .btn table td {
-            background-color: #ffffff;
-            border-radius: 5px;
-            text-align: center; 
-        }
-          .btn a {
-            background-color: #ffffff;
-            border: solid 1px #3498db;
-            border-radius: 5px;
-            box-sizing: border-box;
-            color: #FC46AA;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-            padding: 12px 25px;
-            text-decoration: none;
-            text-transform: capitalize; 
-        }
-  
-        .btn-primary table td {
-          background-color: #FC46AA; 
-        }
-  
-        .btn-primary a {
-          background-color: #FC46AA;
-          border-color: #FC46AA;
-          color: #ffffff; 
-        }
-  
-        /* -------------------------------------
-            OTHER STYLES THAT MIGHT BE USEFUL
-        ------------------------------------- */
-        .last {
-          margin-bottom: 0; 
-        }
-  
-        .first {
-          margin-top: 0; 
-        }
-  
-        .align-center {
-          text-align: center; 
-        }
-  
-        .align-right {
-          text-align: right; 
-        }
-  
-        .align-left {
-          text-align: left; 
-        }
-  
-        .clear {
-          clear: both; 
-        }
-  
-        .mt0 {
-          margin-top: 0; 
-        }
-  
-        .mb0 {
-          margin-bottom: 0; 
-        }
-  
-        .preheader {
-          color: transparent;
-          display: none;
-          height: 0;
-          max-height: 0;
-          max-width: 0;
-          opacity: 0;
-          overflow: hidden;
-          mso-hide: all;
-          visibility: hidden;
-          width: 0; 
-        }
-  
-        .powered-by a {
-          text-decoration: none; 
-        }
-  
-        hr {
-          border: 0;
-          border-bottom: 1px solid #f6f6f6;
-          margin: 20px 0; 
-        }
-  
-        /* -------------------------------------
-            RESPONSIVE AND MOBILE FRIENDLY STYLES
-        ------------------------------------- */
-        @media only screen and (max-width: 620px) {
-          table[class=body] h1 {
-            font-size: 28px !important;
-            margin-bottom: 10px !important; 
-          }
-          table[class=body] p,
-          table[class=body] ul,
-          table[class=body] ol,
-          table[class=body] td,
-          table[class=body] span,
-          table[class=body] a {
-            font-size: 16px !important; 
-          }
-          table[class=body] .wrapper,
-          table[class=body] .article {
-            padding: 10px !important; 
-          }
-          table[class=body] .content {
-            padding: 0 !important; 
-          }
-          table[class=body] .container {
-            padding: 0 !important;
-            width: 100% !important; 
-          }
-          table[class=body] .main {
-            border-left-width: 0 !important;
-            border-radius: 0 !important;
-            border-right-width: 0 !important; 
-          }
-          table[class=body] .btn table {
-            width: 100% !important; 
-          }
-          table[class=body] .btn a {
-            width: 100% !important; 
-          }
-          table[class=body] .img-responsive {
-            height: auto !important;
-            max-width: 100% !important;
-            width: auto !important; 
-          }
-        }
-  
-        /* -------------------------------------
-            PRESERVE THESE STYLES IN THE HEAD
-        ------------------------------------- */
-        @media all {
-          .ExternalClass {
-            width: 100%; 
-          }
-          .ExternalClass,
-          .ExternalClass p,
-          .ExternalClass span,
-          .ExternalClass font,
-          .ExternalClass td,
-          .ExternalClass div {
-            line-height: 100%; 
-          }
-          .apple-link a {
-            color: inherit !important;
-            font-family: inherit !important;
-            font-size: inherit !important;
-            font-weight: inherit !important;
-            line-height: inherit !important;
-            text-decoration: none !important; 
-          }
-          #MessageViewBody a {
-            color: inherit;
-            text-decoration: none;
-            font-size: inherit;
-            font-family: inherit;
-            font-weight: inherit;
-            line-height: inherit;
-          }
-          .btn-primary table td:hover {
-            background-color: #FC46AA !important; 
-          }
-          .btn-primary a:hover {
-            background-color: #FC46AA !important;
-            border-color: #FC46AA !important; 
-          } 
-        }
-  
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>A Simple Responsive HTML Email</title>
+      <style type="text/css">
+      body {margin: 0; padding: 0; min-width: 100%!important;}
+      img {height: auto;}
+      .content {width: 100%; max-width: 600px;}
+      .grad-back {background: rgba(52, 9, 82, 0.2);
+                  background: linear-gradient(90deg, rgba(131,58,180,0.6) 21%, rgba(253,29,29,0.6) 61%, rgba(252,176,69,0.6) 89%);}
+      .header {padding: 40px 30px 20px 30px;}
+      .innerpadding {padding: 30px 30px 30px 30px;}
+      .borderbottom {border-bottom: 1px solid #f2eeed;}
+      .subhead {font-size: 20px; color: #ffffff; font-family: sans-serif; letter-spacing: 10px;}
+      .h1, .h2, .bodycopy {color: #153643; font-family: sans-serif;}
+      .h1 {font-size: 33px; line-height: 38px; font-weight: bold;}
+      .h2 {padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;}
+      .bodycopy {font-size: 16px; line-height: 22px;}
+      .button {text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px; }
+      .button a {color: #ffffff; text-decoration: none; }
+      .footer {padding: 20px 30px 15px 30px;}
+      .footercopy {font-family: sans-serif; font-size: 14px; color: #ffffff;}
+      .footercopy a {color: #ffffff; text-decoration: underline;}
+    
+      @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
+      body[yahoo] .hide {display: none!important;}
+      body[yahoo] .buttonwrapper {background-color: transparent!important;}
+      body[yahoo] .button {padding: 0px!important; border-radius: 8px;}
+      body[yahoo] .button a {background-color: #e55573; padding: 15px 15px 13px!important; border-radius: 8px;}
+      body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; background: #2f3942; border-radius: 8px; text-decoration: none!important; font-weight: bold;}
+      }
+    
+      /*@media only screen and (min-device-width: 601px) {
+        .content {width: 600px !important;}
+        .col425 {width: 425px!important;}
+        .col380 {width: 380px!important;}
+        }*/
+    
       </style>
     </head>
-    <body class="">
-      <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
-        <tr>
-          <td>&nbsp;</td>
-          <td class="container">
-            <div class="content">
-  
-              <!-- START CENTERED WHITE CONTAINER -->
-              <table role="presentation" class="main">
-  
-                <!-- START MAIN CONTENT AREA -->
+    
+    <body yahoo bgcolor="#f6f8f1">
+    <table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+        <!--[if (gte mso 9)|(IE)]>
+          <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+        <![endif]-->     
+        <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td class="grad-back" class="header">
+              <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
                 <tr>
-                  <td class="wrapper">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                  <td height="70" style="padding: 0 20px 20px 0;">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/vouchy.png?alt=media&token=67f4c3bc-f58a-430b-afeb-b568b0a30d14" width="80" height="90" alt="">
+                  </td>
+                </tr>
+              </table>
+              <!--[if (gte mso 9)|(IE)]>
+                <table width="425" align="left" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td>
+              <![endif]-->
+              <table class="col425" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">  
+                <tr>
+                  <td height="70">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td>
-                          <p>Hi there from Vouchy,</p>
-                          <p>Thank for purchasing our voucher.</p>
-                          <p>Date: ${date}</p>
-
-                          <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                            <tbody>
-                              <tr>
-                                <td align="left">
-                                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                    <tbody>
-                                      <tr>
-                                        <td> <a href="#" target="_blank">Voucher code: ${code}</a> </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-
-                          <p>Good luck! Hope it works.</p>
+                        <td class="subhead" style="padding: 0 0 0 3px;">
+                          HELLO
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="h1" style="padding: 5px 0 0 0;">
+                          <span style="color: white"> Thanks for purchasing</span>
                         </td>
                       </tr>
                     </table>
                   </td>
                 </tr>
-  
-              <!-- END MAIN CONTENT AREA -->
               </table>
-              <!-- END CENTERED WHITE CONTAINER -->
-  
-              <!-- START FOOTER -->
-              <div class="footer">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <td class="content-block">
-                      <span class="apple-link">RMIT University Vietnam</span>
+              <!--[if (gte mso 9)|(IE)]>
                     </td>
                   </tr>
+              </table>
+              <![endif]-->
+            </td>
+          </tr>
+          <tr>
+            <td class="innerpadding borderbottom">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="h2">
+                    ${voucher.title}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bodycopy">
+                  ${voucher.brand}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="bodycopy">
+                  ${date}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td class="innerpadding borderbottom">
+              <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
+                <tr>
+                  <td height="115" style="padding: 0 20px 20px 0;">
+                    <img class="fix" src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/icon.png?alt=media&token=5f30c38a-9980-4361-91ef-66f45528b9c2" width="115" height="115" border="0" alt="" />
+                  </td>
+                </tr>
+              </table>
+              <!--[if (gte mso 9)|(IE)]>
+                <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
                   <tr>
-                    <td class="content-block powered-by">
-                      Powered by <a href="http://htmlemail.io">Vouchy</a>.
+                    <td>
+              <![endif]-->
+              <table class="col380" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 380px;">  
+                <tr>
+                  <td>
+                    <span class="h2">${voucher.description}</span>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td class="bodycopy">
+                        Price: ${voucher.price}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 20px 0 0 0;">
+                          <table class="buttonwrapper" bgcolor="#e55573" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td class="button round-button"  height="45">
+                                <a href="#">Code: ${code.code}</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+              <!--[if (gte mso 9)|(IE)]>
                     </td>
                   </tr>
-                </table>
-              </div>
-              <!-- END FOOTER -->
-  
-            </div>
-          </td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
+              </table>
+              <![endif]-->
+            </td>
+          </tr>
+          <tr>
+            <td class="innerpadding borderbottom">
+              <img class="fix" src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/abcdx.png?alt=media&token=c9f73d13-4401-429e-b9f8-62305238f92a" width="100%" border="0" alt="" />
+            </td>
+          </tr>
+          <tr>
+            <td class="innerpadding bodycopy">
+              Thank you for purchasing our vouchers! We wish you have a good day
+            </td>
+          </tr>
+          <tr>
+            <td class="footer; grad-back" >
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center" class="footercopy">
+                    &reg; Vouchy - RMIT University Vietnam<br/>
+                    <a href="#" class="unsubscribe"><font color="#ffffff">Unsubscribe</font></a> 
+                    <span class="hide">Group 2</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding: 20px 0 0 0;">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                          <a href="http://www.instagram.com/">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/instagram.png?alt=media&token=3946d862-9508-49df-9d6a-6f111d4d9a18" width="37" height="37" alt="Facebook" border="0" />
+                          </a>
+                        </td>
+                        <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                          <a href="http://www.twitter.com/">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/twitter.png?alt=media&token=5b91e4fd-e4d3-4126-9bb4-d92b7a4dbd5f" width="37" height="37" alt="Twitter" border="0" />
+                          </a>
+                        </td>
+                        <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                          <a href="http://www.facebook.com/">
+                            <img src="https://firebasestorage.googleapis.com/v0/b/vouchy-3122b.appspot.com/o/facebook.png?alt=media&token=2150b2ee-0d1f-48d4-8834-69b1c2eab83e" width="37" height="37" alt="Facebook" border="0" />
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <!--[if (gte mso 9)|(IE)]>
+              </td>
+            </tr>
+        </table>
+        <![endif]-->
+        </td>
+      </tr>
+    </table>
+    
     </body>
-  </html>
+    </html>
  
         `
   )
