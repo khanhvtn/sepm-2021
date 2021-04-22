@@ -102,9 +102,6 @@ const PurchaseProceed = () => {
                 setNewState({ ...newState, vouchyPoint: 0 })
 
             }
-
-
-
         }
     }
 

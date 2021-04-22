@@ -19,17 +19,19 @@ import {
     MonetizationOn,
     AccountBalanceWallet,
     ExitToApp,
+    SportsEsports,
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { CLEAR_ERROR } from '../../constants/actionTypes';
 
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const authData = useSelector((state) => state.auth.authData);
+    const { authData, isUserChecking } = useSelector((state) => state.auth);
     const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorElCat, setAnchorElCat] = useState(null);
@@ -45,6 +47,9 @@ const Navbar = () => {
     //Logout
     const logout = () => {
         dispatch({
+            type: CLEAR_ERROR,
+        });
+        dispatch({
             type: 'LOGOUT',
         });
         history.push('/');
@@ -55,8 +60,8 @@ const Navbar = () => {
     //handle to go to register page
     const handleGoToAuth = (type) => {
         type === 'register'
-            ? history.push('/register', { isSignup: true })
-            : history.push('/login', { isSignup: false });
+            ? history.push('/register')
+            : history.push('/login');
     };
 
     //handle to go to user profile
@@ -65,6 +70,10 @@ const Navbar = () => {
         history.push('/user-profile', {
             action,
         });
+        handleMenuClose();
+    };
+    const handleGoToGameCenter = () => {
+        history.push('/game-center');
         handleMenuClose();
     };
 
@@ -115,6 +124,15 @@ const Navbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+            <MenuItem
+                className={classes.btnGameCenter}
+                onClick={handleGoToGameCenter}
+            >
+                <IconButton aria-label="game center" color="inherit">
+                    <SportsEsports />
+                </IconButton>
+                <p>Game Center</p>
+            </MenuItem>
             <MenuItem onClick={() => handleGoToProfile('changecoin')}>
                 <IconButton aria-label="change coin" color="inherit">
                     <MonetizationOn />
@@ -175,10 +193,18 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            <MenuItem onClick={() => handleGoToAuth('register')}>
-                Register
-            </MenuItem>
-            <MenuItem onClick={() => handleGoToAuth('login')}>Login</MenuItem>
+            {isUserChecking ? (
+                ''
+            ) : (
+                <div>
+                    <MenuItem onClick={() => handleGoToAuth('register')}>
+                        Register
+                    </MenuItem>
+                    <MenuItem onClick={() => handleGoToAuth('login')}>
+                        Login
+                    </MenuItem>
+                </div>
+            )}
         </Menu>
     );
     return (
@@ -212,7 +238,6 @@ const Navbar = () => {
                     </div>
 
                     <div>
-
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleCategoryMenuOpen}>
                             Category
                         </Button>
@@ -226,6 +251,13 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <div className={classes.sectionDesktop}>
+                                <Button
+                                    color="inherit"
+                                    endIcon={<SportsEsports />}
+                                    onClick={handleGoToGameCenter}
+                                >
+                                    Game Center
+                                </Button>
                                 <Button
                                     color="inherit"
                                     endIcon={<MonetizationOn />}
@@ -266,22 +298,32 @@ const Navbar = () => {
                     ) : (
                         <>
                             <div className={classes.sectionDesktopUnAuth}>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="outlined"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('register')}
-                                >
-                                    Register
-                                </Button>
-                                <Button
-                                    className={classes.btnAuth}
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={() => handleGoToAuth('login')}
-                                >
-                                    Login
-                                </Button>
+                                {isUserChecking ? (
+                                    ''
+                                ) : (
+                                    <div>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="outlined"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('register')
+                                            }
+                                        >
+                                            Register
+                                        </Button>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('login')
+                                            }
+                                        >
+                                            Login
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                             <div className={classes.sectionMobileUnAuth}>
                                 <IconButton

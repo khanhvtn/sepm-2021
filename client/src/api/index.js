@@ -25,6 +25,8 @@ export const signUp = (formData) => API.post('/user/signup', formData);
 export const checkCurrentUser = () => API.get(`/user/checkCurrentUser`);
 export const updateUser = (newUser) =>
     API.patch(`/user/${newUser._id}`, newUser);
+export const userWinGame = (newUpdateUser) =>
+    API.post(`/user/wingame`, newUpdateUser);
 
 // API for Brand
 export const fetchBrands = () => axios.get('/brands');

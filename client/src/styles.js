@@ -10,6 +10,6 @@ export default makeStyles(() => ({
     mainContainer: {
         minHeight: '100vh',
         margin: '30px auto',
-        padding: '16px',
+        paddingTop: '16px',
     },
 }));

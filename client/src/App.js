@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '@material-ui/core';
+import { Container, CircularProgress, Grid } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
@@ -21,6 +21,10 @@ import VoucherList from './components/VoucherList/VoucherList'
 import { checkCurrentUser } from './actions/auths';
 import { useHistory } from 'react-router-dom';
 import PrivateRoute from './Routes/PrivateRoute';
+import Memorai from './components/Games/Memorai/Memorai';
+import GameCenter from './components/Games/GameCenter';
+import { useSelector } from 'react-redux';
+import RPSGame from './components/Games/RPS/RPSGame';
 
 const theme = createMuiTheme({
     typography: {
@@ -32,6 +36,7 @@ const App = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const { auth } = useSelector((state) => state);
 
     useEffect(() => {
         dispatch(checkCurrentUser(history));
@@ -47,58 +52,87 @@ const App = () => {
                     maxWidth="lg"
                     disableGutters
                 >
-                    <Switch>
-                        <Route exact path="/">
-                            <Home />
-                        </Route>
-                        <Route exact path="/create-voucher">
-                            <CreateVoucher
-                                currentId={currentId}
-                                setCurrentId={setCurrentId}
+                    {auth.isUserChecking ? (
+                        <Grid container justify="center" alignItems="center">
+                            <CircularProgress
+                                style={{
+                                    height: '100%',
+                                }}
                             />
-                        </Route>
-                        <Route exact path="/create-brand">
-                            <CreateBrand />
-                        </Route>
+                        </Grid>
+                    ) : (
+                        <Switch>
+                            <Route exact path="/">
+                                <Home />
+                            </Route>
+                            <Route exact path="/create-voucher">
+                                <CreateVoucher
+                                    currentId={currentId}
+                                    setCurrentId={setCurrentId}
+                                />
+                            </Route>
+                            <Route exact path="/create-brand">
+                                <CreateBrand />
+                            </Route>
 
-                        <Route exact path="/brand">
-                            <BrandHome />
-                        </Route>
+                            <Route exact path="/brand">
+                                <BrandHome />
+                            </Route>
 
-                        <Route exact path="/vouchers/category/:cat">
-                            <VoucherList />
-                        </Route>
+                            <Route exact path="/login">
+                                <Auth isSignup={false} />
+                            </Route>
 
-                        <Route exact path="/detail/:id">
-                            <Detail />
-                        </Route>
-                        <Route exact path="/login">
-                            <Auth />
-                        </Route>
-                        <Route exact path="/register">
-                            <Auth />
-                        </Route>
-                        <PrivateRoute
-                            exact
-                            path="/user-profile"
-                            component={UserProfile}
-                        />
-                        <PrivateRoute
-                            exact
-                            path="/proceed/:id"
-                            component={PurchaseProceed}
-                        />
-                        {/* <Route exact path="/user-profile">
-                            <UserProfile />
-                        </Route> */}
-                        <Route>
-                            <Error />
-                        </Route>
-                    </Switch>
+                            <Route exact path="/register">
+                                <Auth isSignup={true} />
+                            </Route>
+
+                            <PrivateRoute
+                                exact
+                                path="/game-center"
+                                component={GameCenter}
+                            />
+
+                            <PrivateRoute
+                                exact
+                                path="/game-center/memorai"
+                                component={Memorai}
+                            />
+
+                            <PrivateRoute
+                                path="/game-center/rps-game"
+                                component={RPSGame}
+                            />
+
+                            <Route exact path="/vouchers/category/:cat">
+                                <VoucherList />
+                            </Route>
+
+                            <PrivateRoute
+                                exact
+                                path="/user-profile"
+                                component={UserProfile}
+                            />
+
+                            <Route exact path="/detail/:id">
+                                <Detail />
+                            </Route>
+
+                            <PrivateRoute
+                                exact
+                                path="/proceed/:id"
+                                component={PurchaseProceed}
+                            />
+
+                            <Route>
+                                <Error />
+                            </Route>
+                        </Switch>
+                    )}
                 </Container>
                 <Footer />
             </div>
-        </ThemeProvider>
+        </ThemeProvider >
     );
 };
 

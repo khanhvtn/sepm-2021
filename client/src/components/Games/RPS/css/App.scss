@@ -1,0 +1,23 @@
+@import '_variables';
+@import '_header';
+@import '_scorebox';
+@import '_home';
+@import '_play';
+@import '_footer';
+@import '_modal';
+
+.wrapper {
+    border-radius: 10px;
+    letter-spacing: 1px;
+    text-align: center;
+    box-sizing: border-box;
+    color: white;
+    background: inherit;
+    display: flex;
+    flex-direction: column;
+    min-height: 800px;
+    width: 100%;
+    align-items: center;
+    padding: 0 20px;
+    background: $background-gradient;
+}
