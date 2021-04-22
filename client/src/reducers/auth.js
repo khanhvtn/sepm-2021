@@ -43,7 +43,6 @@ const authReducer = (state = initialState, action) => {
             };
         case CHECK_CURRENT_USER:
             //Save user token into local storage and update new information for state
-            console.log(action?.data)
             if (action?.data) {
                 localStorage.setItem(
                     'userProfile',
@@ -51,7 +50,6 @@ const authReducer = (state = initialState, action) => {
                         token: action?.data.token,
                     })
                 );
-                console.log("Update auth data", action?.data)
                 return { ...state, authData: action?.data };
             } else {
                 //clear local storage and update state to null

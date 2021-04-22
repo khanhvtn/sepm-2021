@@ -117,6 +117,7 @@ export const signin = async (req, res) => {
 
 export const checkCurrentAdmin = async (req, res) => {
     const { userId } = req;
+
     try {
         const existingAdmin = await Admin.findById(userId);
         if (existingAdmin) {

@@ -76,7 +76,6 @@ export const signin = (formData, history, previousPath) => async (dispatch) => {
 
 export const checkCurrentAdmin = (history) => async (dispatch) => {
     const admin = JSON.parse(localStorage.getItem('admin'));
-    console.log(admin)
     try {
         /*Check user profile in local storage to get user token.
         Then, sen request to the server to check the token.
@@ -85,7 +84,6 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
          */
         if (admin) {
             const { data } = await api.checkCurrentAdmin();
-            console.log(data)
             dispatch({
                 type: CHECK_CURRENT_ADMIN,
                 data: { result: data.result, token: admin.token },

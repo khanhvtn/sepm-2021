@@ -16,6 +16,7 @@ import {
     MonetizationOn,
     AccountBalanceWallet,
     ExitToApp,
+    SportsEsports,
 } from '@material-ui/icons';
 import logo from '../../images/Logo.png';
 import useStyles from './styles';
@@ -60,6 +61,12 @@ const Navbar = () => {
         history.push('/user-profile', {
             action,
         });
+        handleMenuClose();
+    };
+
+    //handle to go to user profile
+    const handleGoToShareLink = () => {
+        history.push('/share-link');
         handleMenuClose();
     };
 
@@ -178,6 +185,18 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <div className={classes.sectionDesktop}>
+                                <Button
+                                    color="inherit"
+                                    onClick={handleGoToShareLink}
+                                >
+                                    Share Link
+                                </Button>
+                                <Button
+                                    color="inherit"
+                                    endIcon={<SportsEsports />}
+                                >
+                                    Game Center
+                                </Button>
                                 <Button
                                     color="inherit"
                                     endIcon={<MonetizationOn />}

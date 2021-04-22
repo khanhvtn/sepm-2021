@@ -21,13 +21,17 @@ import PrivateRoute from './Routes/PrivateRoute';
 import AdminPrivateRoute from './Routes/AdminPrivateRoute'
 import { checkCurrentAdmin } from './actions/admins';
 import BlankLayout from './components/Layout/Blank/BlankLayout';
+import GetLink from './components/GetLink/GetLink';
 
 const App = () => {
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
 
     useEffect(() => {
+        setLoading(true)
         dispatch(checkCurrentUser(history));
+        setLoading(false)
     }, [dispatch]);
 
     return (
@@ -64,9 +68,14 @@ const App = () => {
                             <Route path='/login' component={Auth} />
                             <Route path='/register' component={Auth} />
                             <PrivateRoute
-                                exact
                                 path="/user-profile"
                                 component={UserProfile}
+                                
+                            />
+                            <PrivateRoute
+                                path="/share-link"
+                                component={GetLink}
+                                loading={loading}
                             />
                             <Route path='/brand' component={BrandHome} />
                             <Route path='/create-voucher' component={CreateVoucher} />

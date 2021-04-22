@@ -23,7 +23,6 @@ export const checkCurrentUser = (history) => async (dispatch) => {
          */
         if (userProfile) {
             const { data } = await api.checkCurrentUser();
-            console.log(data)
             dispatch({
                 type: CHECK_CURRENT_USER,
                 data: { result: data.result, token: userProfile.token },

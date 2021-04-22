@@ -10,6 +10,14 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+API.interceptors.request.use((req) => {
+    if (localStorage.getItem('admin')) {
+        const token = JSON.parse(localStorage.getItem('admin')).token;
+        req.headers.Authorization = `Bearer ${token}`;
+    }
+    return req;
+});
+
 // API for Voucher
 export const fetchVouchers = () => API.get('/vouchers');
 export const createVoucher = (newVoucher) => API.post('/vouchers', newVoucher);

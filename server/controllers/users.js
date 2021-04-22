@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 export const checkCurrentUser = async (req, res) => {
     const { userId } = req;
-    console.log(userId)
 
     try {
         const existingUser = await User.findById(userId);

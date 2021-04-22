@@ -1,5 +1,6 @@
 import express from 'express';
 import { getUsers, setVoucher, deleteUser, signin, checkCurrentAdmin, createAdmin, publishVoucher, getPublishedVoucher } from '../controllers/admins.js';
+import auth from '../middlewares/auth.js';
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.get('/users', getUsers);
 router.get('/acceptedVouchers', getPublishedVoucher)
 router.delete('/users/:id', deleteUser);
 router.post('/signin', signin)
-router.get('/checkCurrentAdmin', checkCurrentAdmin);
+router.get('/checkCurrentAdmin', auth, checkCurrentAdmin);
 router.post('/', createAdmin)
 
 

@@ -6,20 +6,9 @@ import { checkCurrentUser } from '../actions/auths';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const [loading, setLoading] = useState(false);
 
-    const dispatch = useDispatch();
-    const history = useHistory();
-    
-    const { authData } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        setLoading(true)
-        dispatch(checkCurrentUser(history));
-        setLoading(false)
-    }, [dispatch]);
-
-
+    const authData  = useSelector((state) => state.auth);
+    const { loading } = rest
 
     if (loading) {
         return (
