@@ -6,14 +6,11 @@ import { checkCurrentAdmin } from '../actions/admins';
 
 const AdminPrivateRoute = ({ component: Component, ...rest }) => {
     const [loading, setLoading] = useState(false);
-    const isMount = useIsMount();
 
     const dispatch = useDispatch();
     const history = useHistory();
 
     const { adminData } = useSelector((state) => state.auth);
-    const state = useSelector((state) => state.auth)
-
 
     useEffect(() => {
         setLoading(true)

@@ -38,5 +38,5 @@ export default makeStyles((theme) => ({
     },
     divider: {
         marginTop: theme.spacing(2),
-    },
+    }
 }));
