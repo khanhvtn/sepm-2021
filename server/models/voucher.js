@@ -48,6 +48,18 @@ const voucherSchema = mongoose.Schema(
         isPublished: {
             type: Boolean,
             default: false
+        },
+        isActive: {
+            type: Boolean,
+            default: false,
+            required: true
+
+        },
+        isAvailable: {
+            type: Boolean,
+            default: false,
+            required: true
+
         }
     },
     { timestamps: true }

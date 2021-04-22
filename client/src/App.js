@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Container, CircularProgress, Grid } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
@@ -8,6 +10,9 @@ import Error from './components/Error/Error';
 import BrandHome from './components/Brands/BrandHome/BrandHome'
 import CreateBrand from './components/Brands/CreateBrand/CreateBrand';
 import Auth from './components/Auth/Auth';
+import Detail from './components/Detail/Detail'
+import PurchaseProceed from './components/Detail/PurchaseProceed'
+import VoucherList from './components/VoucherList/VoucherList'
 import { checkCurrentUser } from './actions/auths';
 import AdminHome from './components/Admin/AdminHome'
 import AdminLogin from './components/Admin/Login/AdminLogin';
@@ -19,14 +24,18 @@ import Functions from './components/Admin/Functions/Functions';
 import UserProfile from './components/User/UserProfile';
 import PrivateRoute from './Routes/PrivateRoute';
 import AdminPrivateRoute from './Routes/AdminPrivateRoute'
-import { checkCurrentAdmin } from './actions/admins';
 import BlankLayout from './components/Layout/Blank/BlankLayout';
 import GetLink from './components/GetLink/GetLink';
+import Memorai from './components/Games/Memorai/Memorai';
+import GameCenter from './components/Games/GameCenter';
+import { useSelector } from 'react-redux';
+import RPSGame from './components/Games/RPS/RPSGame';
 
 const App = () => {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
+    const { auth } = useSelector((state) => state);
 
     useEffect(() => {
         setLoading(true)
@@ -64,22 +73,62 @@ const App = () => {
                 <Route>
                     <UserLayout>
                         <Switch>
-                            <Route path='/' component={Home} exact />
-                            <Route path='/login' component={Auth} />
-                            <Route path='/register' component={Auth} />
+                            <Route exact path="/" component={Home} />
+
+                            <Route exact path="/share-link" component={GetLink} />
+
+                            {/* Testing */}
+                            <Route exact path="/create-voucher" component={CreateVoucher} />
+                            <Route exact path="/create-brand" component={CreateBrand} />
+                            {/* End Testing */}
+
+                            <Route exact path="/brand">
+                                <BrandHome />
+                            </Route>
+
+                            <Route exact path="/login">
+                                <Auth isSignup={false} />
+                            </Route>
+
+                            <Route exact path="/register">
+                                <Auth isSignup={true} />
+                            </Route>
+
                             <PrivateRoute
+                                exact
+                                path="/game-center"
+                                component={GameCenter}
+                            />
+
+                            <PrivateRoute
+                                exact
+                                path="/game-center/memorai"
+                                component={Memorai}
+                            />
+
+                            <PrivateRoute
+                                path="/game-center/rps-game"
+                                component={RPSGame}
+                            />
+
+                            <Route exact path="/vouchers/category/:cat">
+                                <VoucherList />
+                            </Route>
+
+                            <PrivateRoute
+                                exact
                                 path="/user-profile"
                                 component={UserProfile}
-                                
                             />
+
+                            <Route exact path="/detail/:id" component={Detail} />
+
                             <PrivateRoute
-                                path="/share-link"
-                                component={GetLink}
-                                loading={loading}
+                                exact
+                                path="/proceed/:id"
+                                component={PurchaseProceed}
                             />
-                            <Route path='/brand' component={BrandHome} />
-                            <Route path='/create-voucher' component={CreateVoucher} />
-                            <Route path='/create-brand' component={CreateBrand} />
+
                             <Route component={Error} />
                         </Switch>
                     </UserLayout>

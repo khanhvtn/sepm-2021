@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import useStyles from './styles';
-
+import { useDispatch, useSelector } from 'react-redux'
 import Carousel from 'react-material-ui-carousel';
 import Banner from '../Banner/Banner';
 import Brand from '../Brands/Brand/Brand';
+import { Alert } from '@material-ui/lab';
+
 import {
     Typography,
     Grid,
     GridList,
     GridListTile,
+    Snackbar
 } from '@material-ui/core';
 import { Link } from 'react-router-dom'
+import { IS_SUCCESS_PURCHASE } from '../../constants/actionTypes';
+
+const initialState = {
+    isAlertSuccess: false
+}
 
 const Home = () => {
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [width, setWidth] = useState(window.innerWidth);
     const breakpoint = 768;
-
+    const { auth } = useSelector(state => state);
+    const [state, setState] = useState(initialState);
     useEffect(() => {
         const handleResizeWindow = () => setWidth(window.innerWidth);
         // subscribe to window resize event "onComponentDidMount"
@@ -27,8 +37,28 @@ const Home = () => {
         };
     }, []);
 
+    useEffect(() => {
+        setState((prevState) => ({ ...prevState, isAlertSuccess: auth.isSuccessPurchase }))
+    }, [auth.isSuccessPurchase])
+
+    const handleClose = () => {
+        setState((prevState) => ({ ...prevState, isAlertSuccess: false }))
+        //set isSuccessPurchase == false
+        dispatch({ type: IS_SUCCESS_PURCHASE, payload: false })
+    }
+
+    console.log(auth)
+
+
     return (
         <>
+
+            {state.isAlertSuccess ?
+                <Snackbar open={state.isAlertSuccess} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        Purchase Successful. Your Current Account Balance Is {auth.authData.result.accountBalance}
+                    </Alert>
+                </Snackbar> : ""}
             <Carousel navButtonsAlwaysInvisible={true}>
                 {[0, 1, 2].map((value) => {
                     return <Banner key={value} isBanner={true} item />;

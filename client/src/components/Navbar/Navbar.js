@@ -7,7 +7,9 @@ import {
     Toolbar,
     InputBase,
     Button,
-    Avatar
+    Avatar,
+    Typography,
+    
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -22,14 +24,17 @@ import logo from '../../images/Logo.png';
 import useStyles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
+import { CLEAR_ERROR } from '../../constants/actionTypes';
 
 const Navbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const authData = useSelector((state) => state.auth.authData);
+    const { authData, isUserChecking } = useSelector((state) => state.auth);
     const [user, setUser] = useState(authData);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorElCat, setAnchorElCat] = useState(null);
+
     const [mobileUnAuthMoreAnchorEl, setMobileUnAuthMoreAnchorEl] = useState(
         null
     );
@@ -41,6 +46,9 @@ const Navbar = () => {
     //Logout
     const logout = () => {
         dispatch({
+            type: CLEAR_ERROR,
+        });
+        dispatch({
             type: 'LOGOUT',
         });
         history.push('/');
@@ -51,8 +59,8 @@ const Navbar = () => {
     //handle to go to register page
     const handleGoToAuth = (type) => {
         type === 'register'
-            ? history.push('/register', { isSignup: true })
-            : history.push('/login', { isSignup: false });
+            ? history.push('/register')
+            : history.push('/login');
     };
 
     //handle to go to user profile
@@ -63,6 +71,19 @@ const Navbar = () => {
         });
         handleMenuClose();
     };
+    const handleGoToGameCenter = () => {
+        history.push('/game-center');
+        handleMenuClose();
+    };
+
+    //handle go to cat
+    const handleGoToCat = (type) => {
+        history.push({
+            pathname:`/vouchers/category/${type}`,
+            state: {category: type}
+        })
+        handleMenuCatClose();
+    }
 
     //handle to go to user profile
     const handleGoToShareLink = () => {
@@ -76,12 +97,21 @@ const Navbar = () => {
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const handleCategoryMenuOpen = (event) => {
+        setAnchorElCat(event.currentTarget)
+    }
+
     const handleMobileUnAuthMenuOpen = (event) => {
         setMobileUnAuthMoreAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleMenuCatClose = () => {
+        setAnchorElCat(null);
     };
 
     const handleMobileUnAuthMenuClose = () => {
@@ -99,6 +129,15 @@ const Navbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+            <MenuItem
+                className={classes.btnGameCenter}
+                onClick={handleGoToGameCenter}
+            >
+                <IconButton aria-label="game center" color="inherit">
+                    <SportsEsports />
+                </IconButton>
+                <p>Game Center</p>
+            </MenuItem>
             <MenuItem onClick={() => handleGoToProfile('changecoin')}>
                 <IconButton aria-label="change coin" color="inherit">
                     <MonetizationOn />
@@ -132,6 +171,22 @@ const Navbar = () => {
         </Menu>
     );
 
+    const renderMenuCategory = (
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorElCat}
+            keepMounted
+            open={Boolean(anchorElCat)}
+            onClose={handleMenuCatClose}
+        >
+            <MenuItem onClick={() => handleGoToCat('food&beverage')}>Food and Beverage</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('beauty')}>Beauty</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('travel')}>Travel</MenuItem>
+            <MenuItem onClick={() => handleGoToCat('all')}>See All</MenuItem>
+
+        </Menu>
+    )
+
     const mobileUnAuthMenuId = 'mobile-unauth-menu-id';
     const renderMobileUnAuthMenu = (
         <Menu
@@ -143,10 +198,18 @@ const Navbar = () => {
             open={isMobileUnAuthMoreAnchorEl}
             onClose={handleMobileUnAuthMenuClose}
         >
-            <MenuItem onClick={() => handleGoToAuth('register')}>
-                Register
-            </MenuItem>
-            <MenuItem onClick={() => handleGoToAuth('login')}>Login</MenuItem>
+            {isUserChecking ? (
+                ''
+            ) : (
+                <div>
+                    <MenuItem onClick={() => handleGoToAuth('register')}>
+                        Register
+                    </MenuItem>
+                    <MenuItem onClick={() => handleGoToAuth('login')}>
+                        Login
+                    </MenuItem>
+                </div>
+            )}
         </Menu>
     );
     return (
@@ -178,6 +241,14 @@ const Navbar = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
+
+                    <div>
+                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleCategoryMenuOpen}>
+                            Category
+                        </Button>
+                        {renderMenuCategory}
+                    </div>
+
                     {/* </Toolbar>
             </AppBar> */}
 
@@ -194,6 +265,7 @@ const Navbar = () => {
                                 <Button
                                     color="inherit"
                                     endIcon={<SportsEsports />}
+                                    onClick={handleGoToGameCenter}
                                 >
                                     Game Center
                                 </Button>
@@ -201,7 +273,7 @@ const Navbar = () => {
                                     color="inherit"
                                     endIcon={<MonetizationOn />}
                                 >
-                                    {user.result.points}
+                                    {user.result.accountBalance}
                                 </Button>
                                 <IconButton
                                     edge="end"
@@ -235,38 +307,48 @@ const Navbar = () => {
                             </div>
                         </>
                     ) : (
-                            <>
-                                <div className={classes.sectionDesktopUnAuth}>
-                                    <Button
-                                        className={classes.btnAuth}
-                                        variant="outlined"
-                                        color="secondary"
-                                        onClick={() => handleGoToAuth('register')}
-                                    >
-                                        Register
-                                </Button>
-                                    <Button
-                                        className={classes.btnAuth}
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => handleGoToAuth('login')}
-                                    >
-                                        Login
-                                </Button>
-                                </div>
-                                <div className={classes.sectionMobileUnAuth}>
-                                    <IconButton
-                                        aria-label="show more"
-                                        aria-controls={mobileUnAuthMenuId}
-                                        aria-haspopup="true"
-                                        onClick={handleMobileUnAuthMenuOpen}
-                                        color="inherit"
-                                    >
-                                        <MenuIcon />
-                                    </IconButton>
-                                </div>
-                            </>
-                        )}
+                        <>
+                            <div className={classes.sectionDesktopUnAuth}>
+                                {isUserChecking ? (
+                                    ''
+                                ) : (
+                                    <div>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="outlined"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('register')
+                                            }
+                                        >
+                                            Register
+                                        </Button>
+                                        <Button
+                                            className={classes.btnAuth}
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() =>
+                                                handleGoToAuth('login')
+                                            }
+                                        >
+                                            Login
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+                            <div className={classes.sectionMobileUnAuth}>
+                                <IconButton
+                                    aria-label="show more"
+                                    aria-controls={mobileUnAuthMenuId}
+                                    aria-haspopup="true"
+                                    onClick={handleMobileUnAuthMenuOpen}
+                                    color="inherit"
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                            </div>
+                        </>
+                    )}
                 </Toolbar>
             </AppBar>
             {renderMenu}
