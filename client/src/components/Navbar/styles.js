@@ -2,18 +2,16 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 import { pink } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
-    
     title: {
         flexGrow: 1,
         display: 'none',
         marginTop: 5,
-        textAlign:'center',
+        textAlign: 'center',
     },
 
     grow: {
         flexGrow: 1,
     },
-
 
     appBar: {
         padding: '5px 20px',
@@ -69,13 +67,13 @@ export default makeStyles((theme) => ({
     },
     sectionDesktop: {
         display: 'none',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'flex',
         },
     },
     sectionMobile: {
         display: 'flex',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'none',
         },
     },
@@ -93,6 +91,12 @@ export default makeStyles((theme) => ({
     },
     btnAuth: {
         marginLeft: '10px',
+    },
+    btnGameCenter: {
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+        },
     },
     avatar: {
         color: theme.palette.getContrastText(pink[400]),

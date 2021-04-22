@@ -1,8 +1,10 @@
-import { CREATE, DELETE, UPDATE, FETCH_ALL } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL, FETCH_BY_CATEGORY } from '../constants/actionTypes';
 
 const voucherReducer = (vouchers = [], action) => {
     switch (action.type) {
         case FETCH_ALL:
+            return action.payload;
+        case FETCH_BY_CATEGORY:
             return action.payload;
         case CREATE:
             return [...vouchers, action.payload];

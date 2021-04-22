@@ -67,7 +67,7 @@ const Voucher = ({ voucher, setCurrentId }) => {
                     <Grid item xs container direction="column" spacing={2}>
                         <Grid item xs>
                             <Typography gutterBottom variant="h6">
-                                Title: {voucher.name}
+                                Title: {voucher.title}
                             </Typography>
                             <Typography variant="body1" gutterBottom>
                                 Desciption: {voucher.description}
