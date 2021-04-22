@@ -89,7 +89,7 @@ export const signin = async (req, res) => {
         const existingAdmin = await Admin.findOne({ email });
         //response error if user doesn't exist.
         if (!existingAdmin) {
-            return res.status(404).json({ message: "Admmin doesn't exist" });
+            return res.status(404).json({ message: "Admin doesn't exist" });
         }
 
         const isPasswordCorrect = await bcrypt.compare(
