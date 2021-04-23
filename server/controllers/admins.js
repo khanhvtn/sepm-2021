@@ -32,7 +32,7 @@ export const deleteUser = async (req, res) => {
 
 export const getPublishedVoucher = async (req, res) => {
     try {
-        const vouchers = await Voucher.find( { isAccepted: true });
+        const vouchers = await Voucher.find( { isActive: true });
         res.status(200).json(vouchers)
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -51,7 +51,7 @@ export const setVoucher = async (req, res) => {
     try {
         const updateMessage = await Voucher.findByIdAndUpdate(
             _id,
-            { isAccepted: action },
+            { isActive: action },
             { new : true }
         );
 
