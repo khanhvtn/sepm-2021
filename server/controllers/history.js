@@ -46,7 +46,7 @@ export const createHistory = async (req, res) => {
 
             await Voucher.findByIdAndUpdate(
                 code.voucher,
-                { $set: { 'isAvailable': false, 'isActive': false } },
+                { $set: { 'isAvailable': false} },
                 { new: true }
 
             )

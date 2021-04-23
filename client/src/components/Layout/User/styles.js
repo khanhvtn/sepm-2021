@@ -14,6 +14,6 @@ export default makeStyles(() => ({
         minHeight: '100vh',
         margin: '30px auto',
         padding: '16px',
-        maxWidth: '900px',
+       
     },
 }));
