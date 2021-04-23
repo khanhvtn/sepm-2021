@@ -21,7 +21,7 @@ export const createCode = async(req, res) => {
         await newCode.save();
         await Voucher.findByIdAndUpdate(
             code.voucher,
-            { $set: { 'isAvailable': true, 'isActive': true } },
+            { $set: { 'isAvailable': true } },
             { new: true }
 
         )

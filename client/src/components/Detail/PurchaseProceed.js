@@ -61,13 +61,12 @@ const PurchaseProceed = () => {
         const cashReward = (voucherPrice * 3) / 100;
         var accountBalance = 0;
         if (applyDiscount) {
-            accountBalance = (parseInt(user.result.accountBalance) - voucher.price + cashReward).toString();
+            accountBalance = (parseFloat(user.result.accountBalance) - voucher.price  + cashReward).toFixed(2);
         } else {
-            accountBalance = (parseInt(user.result.accountBalance) + cashReward).toString();
+            accountBalance = (parseFloat(user.result.accountBalance) + cashReward).toFixed(2);
 
         }
 
-      
         const newUpdateAccountBalance = { ...userInfo, accountBalance };
         dispatch(updateUser(newUpdateAccountBalance))
         dispatch(createHistory(transactionDetail, history))

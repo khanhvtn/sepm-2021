@@ -13,6 +13,7 @@ const VoucherList = (props) => {
     const [vouchers, setVouchers] = useState([]);
     const [loading, setLoading] = useState(true);
     const cat = location.state.category;
+    
     const fetchVouchers = async () => {
         const results = await axios.get(`/api/vouchers/category/${cat}`)
         setVouchers(results.data)
