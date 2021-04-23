@@ -27,6 +27,7 @@ const Home = () => {
     const breakpoint = 768;
     const { auth } = useSelector(state => state);
     const [state, setState] = useState(initialState);
+
     useEffect(() => {
         const handleResizeWindow = () => setWidth(window.innerWidth);
         // subscribe to window resize event "onComponentDidMount"
@@ -47,7 +48,7 @@ const Home = () => {
         dispatch({ type: IS_SUCCESS_PURCHASE, payload: false })
     }
 
-    console.log(auth)
+    //console.log(auth)
 
 
     return (

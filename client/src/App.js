@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Container, CircularProgress, Grid } from '@material-ui/core';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
@@ -30,17 +28,15 @@ import Memorai from './components/Games/Memorai/Memorai';
 import GameCenter from './components/Games/GameCenter';
 import { useSelector } from 'react-redux';
 import RPSGame from './components/Games/RPS/RPSGame';
+import { checkCurrentAdmin } from './actions/admins';
 
 const App = () => {
-    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const { auth } = useSelector((state) => state);
 
     useEffect(() => {
-        setLoading(true)
         dispatch(checkCurrentUser(history));
-        setLoading(false)
     }, [dispatch]);
 
     return (
@@ -49,7 +45,7 @@ const App = () => {
                 <Route path='/admin/:path?' exact>
                     <BlankLayout>
                         <Switch>
-                            <Route path='/admin/login' component={AdminLogin} exact />
+                            <Route path='/admin/login' component={AdminLogin} />
                             <Route component={Error} />
                         </Switch>
                     </BlankLayout>
@@ -74,17 +70,12 @@ const App = () => {
                     <UserLayout>
                         <Switch>
                             <Route exact path="/" component={Home} />
-
                             <Route exact path="/share-link" component={GetLink} />
-
                             {/* Testing */}
                             <Route exact path="/create-voucher" component={CreateVoucher} />
                             <Route exact path="/create-brand" component={CreateBrand} />
                             {/* End Testing */}
-
-                            <Route exact path="/brand">
-                                <BrandHome />
-                            </Route>
+                            <Route exact path="/brand" component={BrandHome} />
 
                             <Route exact path="/login">
                                 <Auth isSignup={false} />

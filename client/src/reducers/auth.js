@@ -8,14 +8,16 @@ import {
     USER_LOADING,
     IS_USER_CHECKING,
     USER_WIN_GAME,
-    IS_SUCCESS_PURCHASE
+    IS_SUCCESS_PURCHASE,
+    IS_ADMIN_CHECKING
 } from '../constants/actionTypes';
 
 const initialState = {
     authData: null,
     adminData: null,
     isSuccessPurchase: false,
-    isUserChecking: true, 
+    isUserChecking: true,
+    isAdminChecking: true,
     isLoading: false
 }
 
@@ -58,6 +60,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isUserChecking: action.payload,
+            };
+        case IS_ADMIN_CHECKING:
+            return {
+                ...state,
+                isAdminChecking: action.payload,
             };
         case CHECK_CURRENT_USER:
             //Save user token into local storage and update new information for state

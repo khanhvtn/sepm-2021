@@ -5,7 +5,9 @@ import {
     AUTH_ADMIN, 
     CHECK_CURRENT_ADMIN, 
     FETCH_ACCEPTED_VOUCHER, 
-    PUBLISH_VOUCHER 
+    PUBLISH_VOUCHER,
+    USER_LOADING,
+    IS_ADMIN_CHECKING
 } from '../constants/actionTypes';
 
 // Action Admin
@@ -58,8 +60,10 @@ export const publishVoucher = (id, action) => async (dispatch) => {
 
 export const signin = (formData, history, previousPath) => async (dispatch) => {
     try {
+        dispatch({ type: USER_LOADING, payload: true });
         const { data } = await api.signInAdmin(formData);
         dispatch({ type: AUTH_ADMIN, data });
+        dispatch({ type: USER_LOADING, payload: false });
         /* 
         If previous path exists, then redirect to previous path.
         If not, redirect to home page.
@@ -70,6 +74,7 @@ export const signin = (formData, history, previousPath) => async (dispatch) => {
             ? history.push(`${previousPath}`, { action: 0 })
             : history.push('/dashboard/admin');
     } catch (error) {
+        dispatch({ type: USER_LOADING, payload: false });
         console.log(error);
     }
 };
@@ -83,18 +88,34 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
         If not set state null and redirec to homepage
          */
         if (admin) {
+            dispatch({
+                type: IS_ADMIN_CHECKING,
+                payload: true,
+            });
             const { data } = await api.checkCurrentAdmin();
             dispatch({
                 type: CHECK_CURRENT_ADMIN,
                 data: { result: data.result, token: admin.token },
             });
+            dispatch({
+                type: IS_ADMIN_CHECKING,
+                payload: false,
+            });
         } else {
             dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
+            dispatch({
+                type: IS_ADMIN_CHECKING,
+                payload: false,
+            });
         }
     } catch (error) {
         console.log(error.message)
         // const previousPath = history.location.pathname;
-        // dispatch({ type: CHECK_CURRENT_USER, data: null });
+        // dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
+        // dispatch({
+        //     type: IS_USER_CHECKING,
+        //     payload: false,
+        // });
         // previousPath === '/'
         //     ? history.push('/dashboard/admin')
         //     : history.push('/admin/login', { previousPath });

@@ -5,26 +5,22 @@ import { Route, Redirect, useHistory } from 'react-router-dom';
 import { checkCurrentAdmin } from '../actions/admins';
 
 const AdminPrivateRoute = ({ component: Component, ...rest }) => {
-    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const { adminData } = useSelector((state) => state.auth);
+    const { auth } = useSelector((state) => state);
 
     useEffect(() => {
-        setLoading(true)
         dispatch(checkCurrentAdmin(history))
-        setLoading(false)
-    }, [dispatch, adminData]);
+    }, []);
 
     return (
         <>
-            { loading ? <CircularProgress /> :
+            {auth.isAdminChecking ? <CircularProgress /> :
                 <Route
                     {...rest}
                     render={(props) =>
-                        adminData ? (
+                        auth.adminData ? (
                             <Component {...props} />
                         ) :
                             (

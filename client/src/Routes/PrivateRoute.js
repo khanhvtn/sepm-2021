@@ -1,42 +1,42 @@
 import { CircularProgress } from '@material-ui/core';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Redirect, useHistory } from 'react-router-dom';
+import { checkCurrentUser } from '../api';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-    const authData  = useSelector((state) => state.auth);
-    const { loading } = rest
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { auth } = useSelector((state) => state);
 
-    if (loading) {
-        return (
-            <div>
-                <CircularProgress />
-            </div>
-        )
-    } else {
-        return (
-            <Route
-                {...rest}
-                render={(props) =>
-                    authData ? (
-                        <Component {...props} />
-                    ) : (
-                            <Redirect
-                                to={{
-                                    pathname: '/login',
-                                    state: {
-                                        isSignup: false,
-                                        previousPath: props.location.pathname,
-                                    },
-                                }}
-                            />
-                        )
-                }
-            />
-        );
-    }
+    return (
+        <>
+            {auth.isUserChecking ? <CircularProgress /> :
+                <Route
+                    {...rest}
+                    render={(props) =>
+                        auth.authData ? (
+                            <Component {...props} />
+                        ) :
+                            (
+                                <Redirect
+                                    to={{
+                                        pathname: '/login',
+                                        state: {
+                                            isSignup: false,
+                                            previousPath: props.location.pathname,
+                                        },
+                                    }}
+                                />
+                            )
+                    }
+                />
+            }
+        </>
+    );
+
 };
 
 export default PrivateRoute;

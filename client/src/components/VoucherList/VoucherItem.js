@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import {useHistory} from 'react-router-dom'
-
+import React from 'react';
 
 const VoucherItem = ({ voucher }) => {
     const classes = useStyles();
