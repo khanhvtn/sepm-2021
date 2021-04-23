@@ -7,7 +7,9 @@ import {
     FETCH_ACCEPTED_VOUCHER, 
     PUBLISH_VOUCHER,
     USER_PENDING,
-    IS_ADMIN_CHECKING
+    IS_ADMIN_CHECKING,
+    USER_LOADING,
+    VOUCHER_PENDING
 } from '../constants/actionTypes';
 
 // Action Admin
@@ -33,8 +35,10 @@ export const deleteUser = (id) => async (dispatch) => {
 
 export const getAcceptedVoucher = () => async (dispatch) => {
     try {
+        dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.fetchAcceptedVouchers();
         dispatch({ type: FETCH_ACCEPTED_VOUCHER, payload: data })
+        dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)
     }

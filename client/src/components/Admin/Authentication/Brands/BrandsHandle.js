@@ -31,13 +31,12 @@ const BrandsHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
-    const brands = useSelector(state => state.brands)
+    const { brands } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -72,10 +71,8 @@ const BrandsHandle = () => {
     }
 
     useEffect(() => {
-        setLoading(true)
         dispatch(getBrands());
-        setLoading(false)
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
@@ -115,79 +112,78 @@ const BrandsHandle = () => {
                         </Toolbar>
                     </AppBar>
 
-                    {loading &&
+                    {brands.isLoading ?
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
-                    }
-                    {brands.length === 0
-                        ?
-                        <div className={classes.contentWrapper}>
-                            <Typography color="textSecondary" align="center">
-                                No brands for this project yet
-                            </Typography>
-                        </div>
                         :
-                        <Paper className={classes.root}>
-                            <TableContainer className={classes.container}>
-                                <Table aria-label="sticky table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell key='identifier'> Identifier </TableCell>
-                                            <TableCell key='brand'> Brand </TableCell>
-                                            <TableCell key='category'> Category </TableCell>
-                                            <TableCell key='createdAt'> Created </TableCell>
-                                            <TableCell key='brand-uid'> Brand UID </TableCell>
-                                            <TableCell key='setting' />
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {brands.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((brand) => (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={brand._id}>
-                                                <TableCell key='email' align='left'>{brand.email}</TableCell>
-                                                <TableCell key='name' align='left'>{brand.name}</TableCell>
-                                                <TableCell key='category' align='left'>{brand.category}</TableCell>
-                                                <TableCell key='createdAt' align='left'>{moment(brand.createdAt).fromNow()}</TableCell>
-                                                <TableCell key='bid' align='left'>{brand._id}</TableCell>
-                                                <TableCell key='setting' align='right'>
-                                                    <IconButton
-                                                        aria-label="more"
-                                                        aria-controls="long-menu"
-                                                        aria-haspopup="true"
-                                                        onClick={handleClick}
-                                                    >
-                                                        <MoreVertIcon />
-                                                    </IconButton>
-                                                    <Menu
-                                                        id="simple-menu"
-                                                        anchorEl={anchorEl}
-                                                        keepMounted
-                                                        open={Boolean(anchorEl)}
-                                                        onClose={handleClose}
-                                                    >
-                                                        <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
-                                                        <MenuItem onClick={() => handleDeleteBrand(brand._id)}>
-                                                            Delete
-                                                        </MenuItem>
-                                                    </Menu>
-                                                </TableCell>
+                        brands.brands.length === 0 ?
+                            <div className={classes.contentWrapper}>
+                                <Typography color="textSecondary" align="center">
+                                    No brands for this project yet
+                                </Typography>
+                            </div>
+                            :
+                            <Paper className={classes.root}>
+                                <TableContainer className={classes.container}>
+                                    <Table aria-label="sticky table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell key='identifier'> Identifier </TableCell>
+                                                <TableCell key='brand'> Brand </TableCell>
+                                                <TableCell key='category'> Category </TableCell>
+                                                <TableCell key='createdAt'> Created </TableCell>
+                                                <TableCell key='brand-uid'> Brand UID </TableCell>
+                                                <TableCell key='setting' />
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <TablePagination
-                                rowsPerPageOptions={[10, 25, 100]}
-                                component="div"
-                                count={brands.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                            />
-                        </Paper>
+                                        </TableHead>
+                                        <TableBody>
+                                            {brands.brands.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((brand) => (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={brand._id}>
+                                                    <TableCell key='email' align='left'>{brand.email}</TableCell>
+                                                    <TableCell key='name' align='left'>{brand.name}</TableCell>
+                                                    <TableCell key='category' align='left'>{brand.category}</TableCell>
+                                                    <TableCell key='createdAt' align='left'>{moment(brand.createdAt).fromNow()}</TableCell>
+                                                    <TableCell key='bid' align='left'>{brand._id}</TableCell>
+                                                    <TableCell key='setting' align='right'>
+                                                        <IconButton
+                                                            aria-label="more"
+                                                            aria-controls="long-menu"
+                                                            aria-haspopup="true"
+                                                            onClick={handleClick}
+                                                        >
+                                                            <MoreVertIcon />
+                                                        </IconButton>
+                                                        <Menu
+                                                            id="simple-menu"
+                                                            anchorEl={anchorEl}
+                                                            keepMounted
+                                                            open={Boolean(anchorEl)}
+                                                            onClose={handleClose}
+                                                        >
+                                                            <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
+                                                            <MenuItem onClick={() => handleDeleteBrand(brand._id)}>
+                                                                Delete
+                                                        </MenuItem>
+                                                        </Menu>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <TablePagination
+                                    rowsPerPageOptions={[10, 25, 100]}
+                                    component="div"
+                                    count={brands.brands.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                />
+                            </Paper>
                     }
                 </Paper>
             </div>

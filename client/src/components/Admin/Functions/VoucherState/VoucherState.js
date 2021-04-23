@@ -80,14 +80,13 @@ const VoucherState = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [open, setOpen] = useState(false);
 
 
 
-    const vouchers = useSelector(state => state.vouchers.acceptedVouchers)
+    const { vouchers } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -108,9 +107,7 @@ const VoucherState = () => {
 
 
     useEffect(() => {
-        setLoading(true)
         dispatch(getAcceptedVoucher())
-        setLoading(false)
     }, [dispatch]);
 
 
@@ -151,60 +148,60 @@ const VoucherState = () => {
                         </Toolbar>
                     </AppBar>
 
-                    {loading &&
+                    {vouchers.isLoading ?
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
-                    }
-                    {vouchers.length === 0
-                        ?
-                        <div className={classes.contentWrapper}>
-                            <Typography color="textSecondary" align="center">
-                                No sharable voucher for this project yet
-                            </Typography>
-                        </div>
                         :
-                        <Paper className={classes.root}>
-                            <TableContainer className={classes.container}>
-                                <Table aria-label="sticky table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell key='brand-name'>Brand </TableCell>
-                                            <TableCell key='title'> Title </TableCell>
-                                            <TableCell key='price'> Price </TableCell>
-                                            <TableCell key='voucher-id'> VID </TableCell>
-                                            <TableCell key='voucher-status'> Status </TableCell>
-                                            <TableCell key='setting' />
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {vouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
-                                            <TableRow hover role="checkbox" key={voucher.title}>
-                                                <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
-                                                <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
-                                                <TableCell key='name' align='left'>{voucher.price}</TableCell>
-                                                <TableCell key='_id' align='left'>{voucher._id}</TableCell>
-                                                <TableCell key='status' align='left'>{voucher.isPublished ? 'Published' : 'Unpublished'}</TableCell>
-                                                <TableCell key='setting' align='center'>
-                                                    <ThreeDotMenu data={voucher._id} />
-                                                </TableCell>
+                        vouchers.acceptedVouchers.length === 0
+                            ?
+                            <div className={classes.contentWrapper}>
+                                <Typography color="textSecondary" align="center">
+                                    No sharable voucher for this project yet
+                            </Typography>
+                            </div>
+                            :
+                            <Paper className={classes.root}>
+                                <TableContainer className={classes.container}>
+                                    <Table aria-label="sticky table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell key='brand-name'>Brand </TableCell>
+                                                <TableCell key='title'> Title </TableCell>
+                                                <TableCell key='price'> Price </TableCell>
+                                                <TableCell key='voucher-id'> VID </TableCell>
+                                                <TableCell key='voucher-status'> Status </TableCell>
+                                                <TableCell key='setting' />
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <TablePagination
-                                rowsPerPageOptions={[10, 25, 100]}
-                                component="div"
-                                count={vouchers.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onChangePage={handleChangePage}
-                                onChangeRowsPerPage={handleChangeRowsPerPage}
-                            />
-                        </Paper>
+                                        </TableHead>
+                                        <TableBody>
+                                            {vouchers.acceptedVouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
+                                                <TableRow hover role="checkbox" key={voucher.title}>
+                                                    <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
+                                                    <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
+                                                    <TableCell key='name' align='left'>{voucher.price}</TableCell>
+                                                    <TableCell key='_id' align='left'>{voucher._id}</TableCell>
+                                                    <TableCell key='status' align='left'>{voucher.isPublished ? 'Published' : 'Unpublished'}</TableCell>
+                                                    <TableCell key='setting' align='center'>
+                                                        <ThreeDotMenu data={voucher._id} />
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <TablePagination
+                                    rowsPerPageOptions={[10, 25, 100]}
+                                    component="div"
+                                    count={vouchers.acceptedVouchers.length}
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    onChangePage={handleChangePage}
+                                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                                />
+                            </Paper>
                     }
                 </Paper>
             </div>

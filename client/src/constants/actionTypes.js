@@ -1,7 +1,7 @@
 //Voucher Actions
 export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_BY_CATEGORY = 'FETCH_BY_CATEGORY';
-
+export const VOUCHER_PENDING = "VOUCHER_PENDING";
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
 export const DELETE = 'DELETE';
@@ -27,3 +27,6 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 // Admin Actions
 export const USER_PENDING = "USER_PENDING";
+
+// Brand Actions
+export const BRAND_PENDING = "BRAND_PENDING"

@@ -1,19 +1,26 @@
-import { CREATE, DELETE, UPDATE, FETCH_ALL } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL, BRAND_PENDING } from '../constants/actionTypes';
 
-const brandReducer = (brands = [], action) => {
+const initialState = {
+    brands: [],
+    isLoading: false
+}
+
+const brandReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_ALL:
-            return action.payload;
+            return { ...state, brands: action.payload };
+        case BRAND_PENDING:
+            return { ...state, isLoading: action.payload }
         case CREATE:
-            return [...brands, action.payload];
+            return [...state, action.payload];
         case UPDATE:
-            return brands.map((brand) =>
+            return state.map((brand) =>
                 brand._id === action.payload._id ? action.payload : brand
             );
         case DELETE:
-            return brands.filter((brand) => brand._id !== action.payload);
+            return state.filter((brand) => brand._id !== action.payload);
         default:
-            return brands;
+            return state;
     }
 };
 export default brandReducer;

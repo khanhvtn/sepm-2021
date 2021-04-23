@@ -75,10 +75,7 @@ const UsersHandle = () => {
 
     useEffect(() => {
         dispatch(getUsers());
-    }, []);
-
-    console.log(users)
-
+    }, [dispatch]);
 
     return (
         <>
@@ -181,7 +178,7 @@ const UsersHandle = () => {
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 15]}
                                         component="div"
-                                        count={users.length}
+                                        count={users.users.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         onChangePage={handleChangePage}

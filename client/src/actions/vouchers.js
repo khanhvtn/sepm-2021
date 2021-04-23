@@ -1,11 +1,20 @@
 import * as api from '../api';
-import { CREATE, DELETE, UPDATE, FETCH_ALL, FETCH_BY_CATEGORY } from '../constants/actionTypes';
+import { 
+    CREATE, 
+    DELETE, 
+    UPDATE, 
+    FETCH_ALL, 
+    FETCH_BY_CATEGORY,
+    VOUCHER_PENDING
+} from '../constants/actionTypes';
 
 //Action Voucher
 export const getVouchers = () => async (dispatch) => {
     try {
+        dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.fetchVouchers();
         dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message);
     }

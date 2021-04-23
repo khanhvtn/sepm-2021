@@ -33,11 +33,10 @@ const VouchersHandle = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
 
     const [action, setAction] = useState('ACCEPT');
 
-    const vouchers = useSelector(state => state.vouchers.allVouchers)
+    const { vouchers } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -78,9 +77,7 @@ const VouchersHandle = () => {
 
 
     useEffect(() => {
-        setLoading(true)
         dispatch(getVouchers());
-        setLoading(false)
     }, [dispatch]);
 
 
@@ -119,82 +116,82 @@ const VouchersHandle = () => {
                                         </IconButton>
                                     </Tooltip>
                                 </Grid>
-                            </Grid> 
+                            </Grid>
                         </Toolbar>
                     </AppBar>
-                    {loading &&
+                    {vouchers.isLoading ?
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
-                    }
-                    {vouchers.length === 0
-                        ?
-                        <div className={classes.contentWrapper}>
-                            <Typography color="textSecondary" align="center">
-                                No vouchers for this project yet
-                            </Typography>
-                        </div>
                         :
-                        <Paper className={classes.root}>
-                            <TableContainer className={classes.container}>
-                                <Table aria-label="sticky table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell key='brand-name'>Brand </TableCell>
-                                            <TableCell key='title'> Title </TableCell>
-                                            <TableCell key='price'> Price </TableCell>
-                                            <TableCell key='voucher-id'> VID </TableCell>
-                                            <TableCell key='setting' />
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {vouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={voucher._id}>
-                                                <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
-                                                <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
-                                                <TableCell key='name' align='left'>{voucher.price}</TableCell>
-                                                <TableCell key='_id' align='left'>{voucher._id}</TableCell>
-                                                <TableCell key='setting' align='center'>
-                                                    {voucher.isActive === true && <DoneIcon color='primary' />}
-                                                    {voucher.isActive === false && <CloseIcon color='secondary' />}
-
-                                                    {voucher.isActive === null ?
-                                                        <>
-                                                            <Button
-                                                                className={classes.pd5}
-                                                                variant="contained"
-                                                                onClick={() => acceptVoucher(voucher._id)}
-                                                                color="primary">
-                                                                Accept
-                                                            </Button>
-                                                            <Button
-                                                                className={classes.pd5}
-                                                                variant="contained"
-                                                                onClick={() => declineVoucher(voucher._id)}
-                                                                color="secondary">
-                                                                Decline
-                                                            </Button>
-                                                        </>
-                                                        : null
-                                                    }
-                                                </TableCell>
+                        vouchers.allVouchers.length === 0
+                            ?
+                            <div className={classes.contentWrapper}>
+                                <Typography color="textSecondary" align="center">
+                                    No vouchers for this project yet
+                            </Typography>
+                            </div>
+                            :
+                            <Paper className={classes.root}>
+                                <TableContainer className={classes.container}>
+                                    <Table aria-label="sticky table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell key='brand-name'>Brand </TableCell>
+                                                <TableCell key='title'> Title </TableCell>
+                                                <TableCell key='price'> Price </TableCell>
+                                                <TableCell key='voucher-id'> VID </TableCell>
+                                                <TableCell key='setting' />
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 15]}
-                                    component="div"
-                                    count={vouchers.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    onChangePage={handleChangePage}
-                                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                                />
-                            </TableContainer>
-                        </Paper>
+                                        </TableHead>
+                                        <TableBody>
+                                            {vouchers.allVouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={voucher._id}>
+                                                    <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
+                                                    <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
+                                                    <TableCell key='name' align='left'>{voucher.price}</TableCell>
+                                                    <TableCell key='_id' align='left'>{voucher._id}</TableCell>
+                                                    <TableCell key='setting' align='center'>
+                                                        {voucher.isActive === true && <DoneIcon color='primary' />}
+                                                        {voucher.isActive === false && <CloseIcon color='secondary' />}
+
+                                                        {voucher.isActive === null ?
+                                                            <>
+                                                                <Button
+                                                                    className={classes.pd5}
+                                                                    variant="contained"
+                                                                    onClick={() => acceptVoucher(voucher._id)}
+                                                                    color="primary">
+                                                                    Accept
+                                                            </Button>
+                                                                <Button
+                                                                    className={classes.pd5}
+                                                                    variant="contained"
+                                                                    onClick={() => declineVoucher(voucher._id)}
+                                                                    color="secondary">
+                                                                    Decline
+                                                            </Button>
+                                                            </>
+                                                            : null
+                                                        }
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 15]}
+                                        component="div"
+                                        count={vouchers.allVouchers.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onChangePage={handleChangePage}
+                                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    />
+                                </TableContainer>
+                            </Paper>
                     }
                 </Paper>
             </div>
