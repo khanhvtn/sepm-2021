@@ -9,7 +9,8 @@ import {
     USER_PENDING,
     IS_ADMIN_CHECKING,
     USER_LOADING,
-    VOUCHER_PENDING
+    VOUCHER_PENDING,
+    FETCH_PUBLISHED_VOUCHER
 } from '../constants/actionTypes';
 
 // Action Admin
@@ -38,6 +39,17 @@ export const getAcceptedVoucher = () => async (dispatch) => {
         dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.fetchAcceptedVouchers();
         dispatch({ type: FETCH_ACCEPTED_VOUCHER, payload: data })
+        dispatch({ type: VOUCHER_PENDING, payload: false });
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const getPublishedVoucher = () => async (dispatch) => {
+    try {
+        dispatch({ type: VOUCHER_PENDING, payload: true });
+        const { data } = await api.fetchPublishedVouchers();
+        dispatch({ type: FETCH_PUBLISHED_VOUCHER, payload: data })
         dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)

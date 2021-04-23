@@ -19,9 +19,8 @@ export default makeStyles(() => ({
 
     vouchers: {
         fontWeight: 'bold',
-        fontSize: '1.25rem',
         marginTop: 32,
-        marginBottom: 12,
+        marginBottom: 32,
         lineHeight: 1
     },
 
@@ -36,5 +35,12 @@ export default makeStyles(() => ({
         transform: 'translateZ(0)',
         paddingBottom: 10
 
+    },
+    contentWrapper: {
+        marginTop: "25%",
+        margin: '40px 16px',
+    },
+    progressWrapper: {
+        marginTop: "25%",
     },
 }));

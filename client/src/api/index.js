@@ -52,6 +52,7 @@ export const setVoucher = (id, action) => API.patch(`/admin/setVoucher/${id}`, a
 export const signInAdmin = (formData) => API.post('/admin/signin', formData);
 export const checkCurrentAdmin = () => API.get(`/admin/checkCurrentAdmin`);
 export const fetchAcceptedVouchers = () => API.get('/admin/acceptedVouchers');
+export const fetchPublishedVouchers = () => API.get('/admin/publishedVouchers');
 export const setVoucherPublish = (id, action) => API.patch(`admin/publishVoucher/${id}`, action)
 
 //API for History

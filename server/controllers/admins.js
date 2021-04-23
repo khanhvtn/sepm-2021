@@ -30,9 +30,18 @@ export const deleteUser = async (req, res) => {
     }
 };
 
-export const getPublishedVoucher = async (req, res) => {
+export const getActiveVoucher = async (req, res) => {
     try {
         const vouchers = await Voucher.find( { isActive: true });
+        res.status(200).json(vouchers)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getPublishedVoucher = async (req, res) => {
+    try {
+        const vouchers = await Voucher.find( { isPublished: true });
         res.status(200).json(vouchers)
     } catch (error) {
         res.status(500).json({ message: error.message });
