@@ -26,11 +26,6 @@ const categories = [
     },
 ];
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
-
-
 function Navigator(props) {
     const location = useLocation();
     const { ...other } = props;
@@ -55,7 +50,9 @@ function Navigator(props) {
                         classes={{
                             primary: classes.itemPrimary,
                         }}>
-                        Dashboard
+                        <Link to="/dashboard/admin">
+                            Dashboard
+                        </Link>
                     </ListItemText>
                 </ListItem>
                 {categories.map(({ id, children }) => (

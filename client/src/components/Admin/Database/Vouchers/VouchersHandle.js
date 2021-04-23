@@ -131,7 +131,7 @@ const VouchersHandle = () => {
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No vouchers for this project yet
-                            </Typography>
+                                </Typography>
                             </div>
                             :
                             <Paper className={classes.root}>

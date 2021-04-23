@@ -126,7 +126,7 @@ const UsersHandle = () => {
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No users for this project yet
-                                    </Typography>
+                                </Typography>
                             </div>
                             :
                             <Paper className={classes.root}>

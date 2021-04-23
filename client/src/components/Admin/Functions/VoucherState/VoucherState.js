@@ -160,7 +160,7 @@ const VoucherState = () => {
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No sharable voucher for this project yet
-                            </Typography>
+                                </Typography>
                             </div>
                             :
                             <Paper className={classes.root}>
