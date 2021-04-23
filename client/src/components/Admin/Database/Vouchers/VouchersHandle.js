@@ -157,10 +157,10 @@ const VouchersHandle = () => {
                                                 <TableCell key='name' align='left'>{voucher.price}</TableCell>
                                                 <TableCell key='_id' align='left'>{voucher._id}</TableCell>
                                                 <TableCell key='setting' align='center'>
-                                                    {voucher.isAccepted === true && <DoneIcon color='primary' />}
-                                                    {voucher.isAccepted === false && <CloseIcon color='secondary' />}
+                                                    {voucher.isActive === true && <DoneIcon color='primary' />}
+                                                    {voucher.isActive === false && <CloseIcon color='secondary' />}
 
-                                                    {voucher.isAccepted === null ?
+                                                    {voucher.isActive === null ?
                                                         <>
                                                             <Button
                                                                 className={classes.pd5}
