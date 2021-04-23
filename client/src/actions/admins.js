@@ -6,15 +6,17 @@ import {
     CHECK_CURRENT_ADMIN, 
     FETCH_ACCEPTED_VOUCHER, 
     PUBLISH_VOUCHER,
-    USER_LOADING,
+    USER_PENDING,
     IS_ADMIN_CHECKING
 } from '../constants/actionTypes';
 
 // Action Admin
 export const getUsers = () => async (dispatch) => {
     try {
+        dispatch({ type: USER_PENDING, payload: true });
         const { data } = await api.fetchUsers();
         dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: USER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)
     }

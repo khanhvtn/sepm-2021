@@ -32,13 +32,12 @@ const UsersHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
-    const users = useSelector(state => state.users)
+    const { users } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -75,11 +74,10 @@ const UsersHandle = () => {
     }
 
     useEffect(() => {
-        setLoading(true)
         dispatch(getUsers());
-        setLoading(false)
     }, []);
 
+    console.log(users)
 
 
     return (
@@ -120,77 +118,77 @@ const UsersHandle = () => {
                             </Grid>
                         </Toolbar>
                     </AppBar>
-                    {loading &&
+                    {users.isLoading ?
                         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
                             <Grid item style={{ textAlign: 'center' }}>
                                 <CircularProgress variant="indeterminate" />
                             </Grid>
                         </Grid>
-                    }
-                    {users.length === 0
-                        ?
-                        <div className={classes.contentWrapper}>
-                            <Typography color="textSecondary" align="center">
-                                No users for this project yet
-                            </Typography>
-                        </div>
                         :
-                        <Paper className={classes.root}>
-                            <TableContainer className={classes.container}>
-                                <Table aria-label="sticky table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell key='identifier'>Identifier </TableCell>
-                                            <TableCell key='created'> Created </TableCell>
-                                            <TableCell key='signed-in'> Signed In </TableCell>
-                                            <TableCell key='user-uid'> User UID </TableCell>
-                                            <TableCell key='setting' />
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
-                                            <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
-                                                <TableCell key='email' align='left'>{user.email}</TableCell>
-                                                <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
-                                                <TableCell key='name' align='left'>{user.name}</TableCell>
-                                                <TableCell key='_id' align='left'>{user._id}</TableCell>
-                                                <TableCell key='setting' align='right'>
-                                                    <IconButton
-                                                        aria-label="more"
-                                                        aria-controls="long-menu"
-                                                        aria-haspopup="true"
-                                                        onClick={handleClick}
-                                                    >
-                                                        <MoreVertIcon />
-                                                    </IconButton>
-                                                    <Menu
-                                                        id="simple-menu"
-                                                        anchorEl={anchorEl}
-                                                        keepMounted
-                                                        open={Boolean(anchorEl)}
-                                                        onClose={handleClose}
-                                                    >
-                                                        <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
-                                                        <MenuItem onClick={() => handleDeleteUser(user._id)}>
-                                                            Delete
-                                                        </MenuItem>
-                                                    </Menu>
-                                                </TableCell>
+                        users.users.length === 0 ?
+                            <div className={classes.contentWrapper}>
+                                <Typography color="textSecondary" align="center">
+                                    No users for this project yet
+                                    </Typography>
+                            </div>
+                            :
+                            <Paper className={classes.root}>
+                                <TableContainer className={classes.container}>
+                                    <Table aria-label="sticky table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell key='identifier'>Identifier </TableCell>
+                                                <TableCell key='created'> Created </TableCell>
+                                                <TableCell key='signed-in'> Signed In </TableCell>
+                                                <TableCell key='user-uid'> User UID </TableCell>
+                                                <TableCell key='setting' />
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 15]}
-                                    component="div"
-                                    count={users.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    onChangePage={handleChangePage}
-                                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                                />
-                            </TableContainer>
-                        </Paper>
+                                        </TableHead>
+                                        <TableBody>
+
+                                            {users.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
+                                                <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
+                                                    <TableCell key='email' align='left'>{user.email}</TableCell>
+                                                    <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
+                                                    <TableCell key='name' align='left'>{user.name}</TableCell>
+                                                    <TableCell key='_id' align='left'>{user._id}</TableCell>
+                                                    <TableCell key='setting' align='right'>
+                                                        <IconButton
+                                                            aria-label="more"
+                                                            aria-controls="long-menu"
+                                                            aria-haspopup="true"
+                                                            onClick={handleClick}
+                                                        >
+                                                            <MoreVertIcon />
+                                                        </IconButton>
+                                                        <Menu
+                                                            id="simple-menu"
+                                                            anchorEl={anchorEl}
+                                                            keepMounted
+                                                            open={Boolean(anchorEl)}
+                                                            onClose={handleClose}
+                                                        >
+                                                            <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
+                                                            <MenuItem onClick={() => handleDeleteUser(user._id)}>
+                                                                Delete
+                                                        </MenuItem>
+                                                        </Menu>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 15]}
+                                        component="div"
+                                        count={users.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onChangePage={handleChangePage}
+                                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                                    />
+                                </TableContainer>
+                            </Paper>
                     }
                 </Paper>
             </div>

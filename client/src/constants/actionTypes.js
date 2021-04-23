@@ -24,3 +24,6 @@ export const USER_WIN_GAME = 'USER_WIN_GAME';
 //Auth Error actions
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+
+// Admin Actions
+export const USER_PENDING = "USER_PENDING";
