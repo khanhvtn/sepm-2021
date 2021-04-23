@@ -103,7 +103,14 @@ const PurchaseProceed = () => {
             }
         }
     }
+ const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
 
+    
+    });
+
+    const priceVND = formatter.format(voucher.price)
 
     return (
         <Container component="main" className={classes.checkout}>
@@ -253,9 +260,9 @@ const PurchaseProceed = () => {
 
                                 </Grid>
                                 <Grid item>
-                                    {applyDiscount ? <><Typography variant="subtitle1" className={classes.oldPrice}>${voucher.price}</Typography>
-                                        <Typography variant="subtitle2" color="secondary" className={classes.newPrice}> Pay for ${newState.vouchyPoint}</Typography></> :
-                                        <><Typography variant="subtitle1">${voucher.price}</Typography>
+                                    {applyDiscount ? <><Typography variant="subtitle1" className={classes.oldPrice}>{formatter.format(voucher.price)}</Typography>
+                                        <Typography variant="subtitle2" color="secondary" className={classes.newPrice}> Pay for {formatter.format(newState.vouchyPoint)}</Typography></> :
+                                        <><Typography variant="subtitle1">{formatter.format(voucher.price)}</Typography>
                                         </>}
 
 
