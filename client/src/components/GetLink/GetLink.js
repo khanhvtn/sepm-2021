@@ -16,8 +16,6 @@ const GetLink = () => {
         dispatch(getPublishedVoucher())
     }, [])
 
-    console.log(vouchers)
-
     return (
         <>
             { vouchers.isLoading ?

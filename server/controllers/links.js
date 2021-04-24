@@ -5,7 +5,10 @@ import User from '../models/user.js';
 
 export const createLink = async (req, res) => {
     const { voucherId } = req.body;
-    const { userId } = req.body
+    const { userId } = req;
+
+    console.log("VoucherId: ", voucherId)
+    console.log("UserId: ", userId)
 
     const newLink = new Link({
         userId: mongoose.Types.ObjectId(userId),
@@ -14,7 +17,7 @@ export const createLink = async (req, res) => {
 
     try {
         await newLink.save();
-        res.status(200).json({ linkId: newLink._id })
+        res.status(200).json(newLink._id)
 
     } catch (error) {
         res.status(404).json({ message: error.message })

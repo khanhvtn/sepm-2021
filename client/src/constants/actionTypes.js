@@ -19,7 +19,7 @@ export const IS_USER_CHECKING = 'IS_USER_CHECKING';
 export const IS_ADMIN_CHECKING = 'IS_ADMIN_CHECKING';
 export const USER_LOADING = 'USER_LOADING';
 export const UPDATE_USER = 'UPDATE_USER';
-export const IS_SUCCESS_PURCHASE = "IS_SUCCESS_PURCHASE"
+export const IS_SUCCESS_PURCHASE = "IS_SUCCESS_PURCHASE";
 export const USER_WIN_GAME = 'USER_WIN_GAME';
 
 //Auth Error actions
@@ -30,4 +30,8 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const USER_PENDING = "USER_PENDING";
 
 // Brand Actions
-export const BRAND_PENDING = "BRAND_PENDING"
+export const BRAND_PENDING = "BRAND_PENDING";
+
+// Link Actions
+export const LINK_PENDING = "LINK_PENDING";
+export const CREATE_LINK = "CREATE_LINK";

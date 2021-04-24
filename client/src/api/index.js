@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { id } from 'date-fns/locale';
 
 const API = axios.create({ baseURL: 'http://localhost:5000/api' });
 
@@ -59,3 +60,7 @@ export const setVoucherPublish = (id, action) => API.patch(`admin/publishVoucher
 export const fetchHistories = () => API.get('/histories');
 export const createHistory = (newHistory) => API.post('/histories', newHistory);
 export const deleteHistory = (id) => API.delete(`/histories/${id}`)
+
+// API for Link
+export const createShareLink = (voucherId) => API.post('/links', voucherId);
+export const accessLink = (id) => API.post(`/links/${id}`);

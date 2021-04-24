@@ -24,5 +24,5 @@ export default makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         width: 400
-    }
+    },
 }))

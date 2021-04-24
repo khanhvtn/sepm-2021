@@ -26,7 +26,7 @@ const PublishVoucher = ({ voucher }) => {
 
     return (
         <>
-            <GetLinkDialog handleClose={handleClose} open={open} />
+            { open && <GetLinkDialog handleClose={handleClose} open={open} voucherId={voucher._id} />}
             <Card className={classes.root} onClick={() => handleClickOpen(voucher)}>
                 <div className={classes.details}>
                     <CardActions className={classes.branding}>
