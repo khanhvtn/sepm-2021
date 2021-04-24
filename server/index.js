@@ -8,6 +8,7 @@ import userRoutes from './routes/users.js';
 import adminRoutes from './routes/admins.js';
 import historyRoutes from './routes/history.js'
 import codeRoutes from './routes/codes.js'
+import linkRoutes from './routes/links.js'
 import dotenv from 'dotenv';
 
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes)
 app.use('/api/histories', historyRoutes)
 app.use('/api/codes', codeRoutes)
+app.use('/api/links', linkRoutes)
 
 //Database connection
 const CONNECTION_URL = process.env.CONNECTION_URL_HOST;
