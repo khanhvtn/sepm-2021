@@ -57,6 +57,8 @@ const PublishVoucherDetail = () => {
         currency: 'VND',
     });
 
+    console.log(links)
+
     return (
         <>
             { links.isLoading ?

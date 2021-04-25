@@ -41,6 +41,9 @@ export const accessLink = async (req, res) => {
             const authorId = checkAvailableLink.userId;
             const fetchVoucher = await Voucher.findById({ _id: checkAvailableLink.voucherId })
 
+            if (fetchVoucher.expiredDate > Date.now() || fetchVoucher.startedDate < Date.now()) {
+                res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
+            }
 
             if (userId === authorId) {
                 res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher cannot update point' })
