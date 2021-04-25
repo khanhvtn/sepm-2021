@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { CREATE, DELETE, UPDATE, FETCH_ALL, IS_SUCCESS_PURCHASE } from '../constants/actionTypes';
+import { CREATE_HISTORY, DELETE, UPDATE, FETCH_ALL, IS_SUCCESS_PURCHASE } from '../constants/actionTypes';
 
 export const getHistories = () => async (dispatch) => {
     try {
@@ -14,15 +14,15 @@ export const getHistories = () => async (dispatch) => {
 export const createHistory = (newHistory, history) => async (dispatch) => {
     try {
         const { data } = await api.createHistory(newHistory);
-        dispatch({ type: CREATE, payload: data })
+        dispatch({ type: CREATE_HISTORY, payload: data });
         //If purchase is successful, set isPurchaseSuccess = true
         dispatch({
-            type: IS_SUCCESS_PURCHASE
-            , payload: true
-        })
+            type: IS_SUCCESS_PURCHASE, 
+            payload: true
+        });
         history.push('/')
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
     }
 }
 
