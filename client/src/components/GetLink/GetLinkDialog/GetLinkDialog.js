@@ -16,7 +16,6 @@ const GetLinkDialog = ({ open, handleClose, voucherId }) => {
     const dispatch = useDispatch();
     const { links } = useSelector((state) => state)
 
-    const [urlShareLink, setUrlShareLink] = useState()
     const [copySuccess, setCopySuccess] = useState(false)
 
     useEffect(() => {

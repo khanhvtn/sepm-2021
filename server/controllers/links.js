@@ -41,27 +41,29 @@ export const accessLink = async (req, res) => {
             const authorId = checkAvailableLink.userId;
             const fetchVoucher = await Voucher.findById({ _id: checkAvailableLink.voucherId })
 
-            if (fetchVoucher.expiredDate > Date.now() || fetchVoucher.startedDate < Date.now()) {
-                res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
-            }
 
             if (userId === authorId) {
                 res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher cannot update point' })
             }
 
-            // Query Author of the share link to get the current point to update
-            const currentAuthor = await User.findById({ _id: authorId })
-            const updatePoint = `${parseInt(currentAuthor.points) + 100}`
+            if (fetchVoucher.expiredDate > Date.now() || fetchVoucher.startedDate < Date.now()) {
+                res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
+            } else {
 
-            // Update point
-            await User.findByIdAndUpdate(
-                authorId,
-                {
-                    points: updatePoint
-                }
-            );
+                // Query Author of the share link to get the current point to update
+                const currentAuthor = await User.findById({ _id: authorId })
+                const updatePoint = `${parseInt(currentAuthor.points) + 100}`
 
-            res.status(200).json({ voucher: fetchVoucher, expiredLink: false, message: 'Update point success!' })
+                // Update point
+                await User.findByIdAndUpdate(
+                    authorId,
+                    {
+                        points: updatePoint
+                    }
+                );
+
+                res.status(200).json({ voucher: fetchVoucher, expiredLink: false, message: 'Update point success!' })
+            }
 
         } else {
             res.status(200).json({ expiredLink: true })

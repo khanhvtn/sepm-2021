@@ -9,7 +9,6 @@ import GetLinkDialog from '../GetLinkDialog/GetLinkDialog';
 
 const PublishVoucher = ({ voucher }) => {
     const classes = useStyles();
-    const history = useHistory();
 
     const [open, setOpen] = useState(false);
 
