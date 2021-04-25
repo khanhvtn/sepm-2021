@@ -52,6 +52,11 @@ const PublishVoucherDetail = () => {
 
     }, [authData])
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+
     return (
         <>
             { links.isLoading ?
@@ -87,7 +92,7 @@ const PublishVoucherDetail = () => {
                                 </CardContent>
                                 <CardContent className={classes.desc}>
                                     <Typography variant="body1" className={classes.voucherDesc}>
-                                        Pay for {links.publishVoucher.voucher.price}$ to get {links.publishVoucher.voucher.percentage}% discount
+                                        Pay for {formatter.format(links.publishVoucher.voucher.price)}$ to get {links.publishVoucher.voucher.percentage}% discount
                                 </Typography>
 
                                     <Typography variant="h5" component="h5" className={classes.voucherDesc1}>
@@ -109,7 +114,7 @@ const PublishVoucherDetail = () => {
                                         <>
                                             <Button className={classes.getButton} variant="outlined" color="primary" onClick={handleClickOpenDialog}>
                                                 Get Now
-                                    </Button>
+                                            </Button>
                                             <Dialog
                                                 open={openDialog}
                                                 onClose={handleClickCloseDialog}

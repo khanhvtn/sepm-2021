@@ -44,6 +44,13 @@ const Detail = () => {
     useEffect(() => {
         setUser(authData)
     }, [authData])
+
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+
+    const priceVND = formatter.format(voucher.price)
     return (
         <>
             <Card className={classes.root}>
@@ -67,7 +74,7 @@ const Detail = () => {
                     </CardContent>
                     <CardContent className={classes.desc}>
                         <Typography variant="body1" className={classes.voucherDesc}>
-                            Pay for {voucher.price}$ to get {voucher.percentage}% discount
+                            Pay for {priceVND} to get {voucher.percentage}% discount
                     </Typography>
 
                         <Typography variant="h5" component="h5" className={classes.voucherDesc1}>

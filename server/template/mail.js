@@ -1,3 +1,10 @@
+
+const formatter = new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND',
+
+
+});
 export const html = (code, voucher, date) => {
   return (
     `
@@ -135,7 +142,7 @@ export const html = (code, voucher, date) => {
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td class="bodycopy">
-                        Price: ${voucher.price}
+                        Price: ${formatter.format(voucher.price)}
                         </td>
                       </tr>
                       <tr>
