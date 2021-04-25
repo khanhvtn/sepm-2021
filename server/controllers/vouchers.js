@@ -44,7 +44,7 @@ export const getVouchersByCategory = async (req, res) => {
     
     if (catRequest === "food&beverage"){
         try {
-            const vouchers = await Voucher.find({ category: "Food and Beverage", isActive: true, isAvailable: true })
+            const vouchers = await Voucher.find({ category: "Food and Beverage", isActive: true, isAvailable: true, isPublished: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -53,7 +53,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "travel"){
         try {
-            const vouchers = await Voucher.find({ category: "Travel", isActive: true, isAvailable: true })
+            const vouchers = await Voucher.find({ category: "Travel", isActive: true, isAvailable: true, isPublished: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -62,7 +62,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "beauty"){
         try {
-            const vouchers = await Voucher.find({ category: "Beauty", isActive: true, isAvailable: true })
+            const vouchers = await Voucher.find({ category: "Beauty", isActive: true, isAvailable: true, isPublished: true })
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -71,7 +71,7 @@ export const getVouchersByCategory = async (req, res) => {
 
     if (catRequest === "all"){
         try {
-            const vouchers = await Voucher.find({isActive: true, isAvailable: true})
+            const vouchers = await Voucher.find({isActive: true, isAvailable: true, isPublished: true})
             res.status(200).json(vouchers)
         } catch (error) {
             res.status(404).json({ message: error.message });
