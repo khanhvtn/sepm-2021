@@ -15,7 +15,7 @@ const timerProps = {
 const renderTime = (dimension, time) => {
     return (
         <div className="time-wrapper">
-            <div className="time" style={{fontSize:16}}>{time}</div>
+            <div className="time" style={{ fontSize: 16 }}>{time}</div>
             <div>{dimension}</div>
         </div>
     );
@@ -28,7 +28,7 @@ const getTimeDays = (time) => (time / daySeconds) | 0;
 
 
 
-const CountDownTimeClock = ({time}) => {
+const CountDownTimeClock = ({ time }) => {
     const classes = useStyles();
     const stratTime = Date.now() / 1000; // use UNIX timestamp in seconds
     const endTime1 = new Date(time) // use UNIX timestamp in seconds
@@ -38,7 +38,7 @@ const CountDownTimeClock = ({time}) => {
     const daysDuration = days * daySeconds;
     return (
         <div className={classes.clock}>
-            
+
 
             <CountdownCircleTimer
                 {...timerProps}
@@ -50,7 +50,7 @@ const CountDownTimeClock = ({time}) => {
                     renderTime("days", getTimeDays(daysDuration - elapsedTime))
                 }
             </CountdownCircleTimer>
-            
+
             <CountdownCircleTimer
                 {...timerProps}
                 colors={[["#2f5ade"]]}

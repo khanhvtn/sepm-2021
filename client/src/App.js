@@ -29,6 +29,7 @@ import GameCenter from './components/Games/GameCenter';
 import { useSelector } from 'react-redux';
 import RPSGame from './components/Games/RPS/RPSGame';
 import { checkCurrentAdmin } from './actions/admins';
+import PublishVoucherDetail from './components/GetLink/PublishVoucherDetail/PublishVoucherDetail';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -70,7 +71,8 @@ const App = () => {
                     <UserLayout>
                         <Switch>
                             <Route exact path="/" component={Home} />
-                            <Route exact path="/share-link" component={GetLink} />
+                            <PrivateRoute exact path="/share-link" component={GetLink} />
+                            <Route exact path="/voucher/share/:id" component={PublishVoucherDetail} />
                             {/* Testing */}
                             <Route exact path="/create-voucher" component={CreateVoucher} />
                             <Route exact path="/create-brand" component={CreateBrand} />

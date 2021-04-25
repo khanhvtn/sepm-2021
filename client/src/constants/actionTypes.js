@@ -35,3 +35,4 @@ export const BRAND_PENDING = "BRAND_PENDING";
 // Link Actions
 export const LINK_PENDING = "LINK_PENDING";
 export const CREATE_LINK = "CREATE_LINK";
+export const ACCESS_LINK = "ACCESS_LINK";

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Link from '../models/link.js';
 import User from '../models/user.js';
+import Voucher from '../models/voucher.js';
 
 
 export const createLink = async (req, res) => {
@@ -26,7 +27,7 @@ export const createLink = async (req, res) => {
 
 export const accessLink = async (req, res) => {
     const { id: _id } = req.params;
-    const { userId } = req.body;
+    const { userId } = req;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('Failed Id');
@@ -38,9 +39,11 @@ export const accessLink = async (req, res) => {
 
         if (checkAvailableLink) {
             const authorId = checkAvailableLink.userId;
+            const fetchVoucher = await Voucher.findById({ _id: checkAvailableLink.voucherId })
+
 
             if (userId === authorId) {
-                res.status(200).json({ authorAccess: true })
+                res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher cannot update point' })
             }
 
             // Query Author of the share link to get the current point to update
@@ -55,7 +58,7 @@ export const accessLink = async (req, res) => {
                 }
             );
 
-            res.status(200).json({ expiredLink: false, message: 'Update point success!' })
+            res.status(200).json({ voucher: fetchVoucher, expiredLink: false, message: 'Update point success!' })
 
         } else {
             res.status(200).json({ expiredLink: true })

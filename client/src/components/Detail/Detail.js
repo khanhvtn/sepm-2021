@@ -37,7 +37,7 @@ const Detail = () => {
     const handleGoToProceed = () => {
         history.push({
             pathname: `/proceed/${voucher._id}`,
-            state: {voucher: voucher}
+            state: { voucher: voucher }
         })
     }
 
@@ -48,26 +48,26 @@ const Detail = () => {
         <>
             <Card className={classes.root}>
                 <div className={classes.detailWithMedia}>
-                <CardActions className={classes.branding}>
+                    <CardActions className={classes.branding}>
                         <Link href="#">
                             <Typography>{voucher.brand}</Typography>
                         </Link>
                     </CardActions>
                     <CardContent className={classes.content}>
                         <Typography className={classes.title} component="h5" variant="h5">
-                        {voucher.title}
+                            {voucher.title}
 
-                    </Typography>
+                        </Typography>
                     </CardContent>
                     <CardContent className={classes.content}>
                         <Typography className={classes.title} component="h6" variant="h6">
-                        {voucher.description}
+                            {voucher.description}
 
-                    </Typography>
+                        </Typography>
                     </CardContent>
                     <CardContent className={classes.desc}>
                         <Typography variant="body1" className={classes.voucherDesc}>
-                        Pay for {voucher.price}$ to get {voucher.percentage}% discount
+                            Pay for {voucher.price}$ to get {voucher.percentage}% discount
                     </Typography>
 
                         <Typography variant="h5" component="h5" className={classes.voucherDesc1}>
@@ -77,59 +77,50 @@ const Detail = () => {
                         <CountDownTimeClock time={voucher.expiredDate} />
                     </CardContent>
 
-
-
                     <div className={classes.controls}>
                         {user ?
                             <Button className={classes.getButton} variant="outlined" color="primary" onClick={handleGoToProceed}>
                                 Get Now
                             </Button>
-                            : 
-                            
+                            :
+
                             <>
-                            <Button className={classes.getButton} variant="outlined" color="primary" onClick={handleClickOpenDialog}>
-                                Get Now
-                            </Button>
-                            <Dialog
-                                open={openDialog}
-                                onClose={handleClickCloseDialog}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                            >
-                                <DialogTitle id="alert-dialog-title">{"Login"}</DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
-                                        You are required to login to get this voucher!
-                            </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClickCloseDialog} color="primary">
-                                        Close
-                             </Button>
-                                    <Button onClick={handleClickCloseDialog} color="primary" autoFocus>
-                                        <Link href="/login">Login</Link>
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
+                                <Button className={classes.getButton} variant="outlined" color="primary" onClick={handleClickOpenDialog}>
+                                    Get Now
+                                </Button>
+                                <Dialog
+                                    open={openDialog}
+                                    onClose={handleClickCloseDialog}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                >
+                                    <DialogTitle id="alert-dialog-title">{"Login"}</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            You are required to login to get this voucher!
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleClickCloseDialog} color="primary">
+                                            Close
+                                        </Button>
+                                        <Button onClick={handleClickCloseDialog} color="primary" autoFocus>
+                                            <Link href="/login">Login</Link>
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </>
                         }
-      
-
-
-
-
-
                     </div>
 
                     <CardContent className={classes.desc}>
                         <Typography variant="body2" className={classes.voucherDesc}>
                             Start Date: {voucher.startedDate}
-                    </Typography>
+                        </Typography>
                         <Typography variant="body2" className={classes.voucherDesc}>
                             End Date: {voucher.expiredDate}
-                    </Typography>
+                        </Typography>
                     </CardContent>
-
 
                 </div>
                 <CardMedia
