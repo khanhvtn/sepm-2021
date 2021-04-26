@@ -18,6 +18,11 @@ const VoucherItem = ({ voucher }) => {
         })
     }
 
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
+
 
     return (
         <>
@@ -44,7 +49,7 @@ const VoucherItem = ({ voucher }) => {
                     </CardContent>
                     <CardContent className={classes.content}>
                         <Typography className={classes.price} component="h5" variant="h5">
-                            Pay for {voucher.price}$ to get {voucher.percentage}% discount
+                            Pay for {formatter.format(voucher.price)} to get {voucher.percentage}% discount
                         </Typography>
                     </CardContent>
                     <CardContent className={classes.description}>
