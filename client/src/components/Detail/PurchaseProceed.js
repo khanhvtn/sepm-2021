@@ -45,7 +45,7 @@ const PurchaseProceed = () => {
         setUser(authData)
     }, [authData])
 
- 
+
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
@@ -61,7 +61,12 @@ const PurchaseProceed = () => {
         const cashReward = (voucherPrice * 3) / 100;
         var accountBalance = 0;
         if (applyDiscount) {
-            accountBalance = (parseFloat(user.result.accountBalance) - voucher.price  + cashReward).toFixed(2);
+            if (parseFloat(user.result.accountBalance) >= voucher.price) {
+                accountBalance = (parseFloat(user.result.accountBalance) - voucher.price + cashReward).toFixed(2);
+            } else {
+                accountBalance = (0+ cashReward).toFixed(2);
+
+            }
         } else {
             accountBalance = (parseFloat(user.result.accountBalance) + cashReward).toFixed(2);
 
@@ -103,11 +108,11 @@ const PurchaseProceed = () => {
             }
         }
     }
- const formatter = new Intl.NumberFormat('vi-VN', {
+    const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
 
-    
+
     });
 
     const priceVND = formatter.format(voucher.price)
@@ -246,7 +251,7 @@ const PurchaseProceed = () => {
                                         <Typography variant="body2" gutterBottom>
                                             {voucher.description}
                                         </Typography>
-                                        
+
                                     </Grid>
                                     <Grid item xl>
                                         {applyDiscount ?

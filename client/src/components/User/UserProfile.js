@@ -241,7 +241,10 @@ const UserProfile = () => {
         dispatch(updateUser(newUpdateUser));
         setState(initialState);
     };
-
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
     return (
         <Grid container className={classes.root} spacing={2}>
             <Grid
@@ -346,7 +349,7 @@ const UserProfile = () => {
                                 className={classes.briefInfo}
                                 endIcon={<AccountBalance />}
                             >
-                                {userInfo?.accountBalance}
+                                {formatter.format(userInfo?.accountBalance)}
                             </Button>
                             <Button
                                 className={classes.briefInfo}
