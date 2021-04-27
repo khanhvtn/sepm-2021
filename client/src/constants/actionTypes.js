@@ -36,6 +36,8 @@ export const BRAND_PENDING = "BRAND_PENDING";
 export const LINK_PENDING = "LINK_PENDING";
 export const CREATE_LINK = "CREATE_LINK";
 export const ACCESS_LINK = "ACCESS_LINK";
+export const TRACK_USER = "TRACK_USER";
+export const LINK_NOT_FOUND = "LINK_NOT_FOUND";
 
 // Link History
 export const CREATE_HISTORY = "CREATE_HISTORY";

@@ -63,4 +63,5 @@ export const deleteHistory = (id) => API.delete(`/histories/${id}`)
 
 // API for Link
 export const createShareLink = (voucherId) => API.post('/links', voucherId);
-export const accessLink = (id) => API.post(`/links/${id}`);
+export const accessLink = (id, validToken) => API.post(`/links/${id}`, validToken);
+export const trackUser = (clientToken) => API.post('/links/track/user', clientToken);

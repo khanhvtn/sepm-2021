@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Guest from '../models/guest.js';
 import Link from '../models/link.js';
 import User from '../models/user.js';
 import Voucher from '../models/voucher.js';
@@ -27,7 +28,10 @@ export const createLink = async (req, res) => {
 
 export const accessLink = async (req, res) => {
     const { id: _id } = req.params;
+    const { validGuest } = req.body;
     const { userId } = req;
+
+    console.log("Valid Token: ", req.body)
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('Failed Id');
@@ -43,10 +47,16 @@ export const accessLink = async (req, res) => {
 
 
             if (userId === authorId) {
-                res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher cannot update point' })
+                res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher is current user' })
             }
 
-            if (fetchVoucher.expiredDate > Date.now() || fetchVoucher.startedDate < Date.now()) {
+            if (!validGuest){
+                res.status(200).json({ voucher: fetchVoucher, message: 'Author of the voucher cannot update point because this browser is expired' })
+            }
+
+            if (fetchVoucher.expiredDate < Date.now() || fetchVoucher.startedDate > Date.now()) {
+                console.log(fetchVoucher.expiredDate > Date.now())
+                console.log(fetchVoucher.startedDate < Date.now())
                 res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
             } else {
 
@@ -66,7 +76,31 @@ export const accessLink = async (req, res) => {
             }
 
         } else {
-            res.status(200).json({ expiredLink: true })
+            res.status(200).json({ expiredLink: true, message: 'This link is expired!' })
+        }
+
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+export const trackUser = async (req, res) => {
+    const { clientToken } = req.body;
+    console.log(req.body)
+    console.log("Track user: ", clientToken)
+
+    try {
+        const checkAvailableGuest = await Guest.findOne({ guestToken: clientToken })
+
+        if (checkAvailableGuest) {
+            res.status(200).json({ validGuest: false })
+        } else {
+            const newGuest = new Guest({
+                guestToken: clientToken
+            })
+
+            await newGuest.save()
+            res.status(200).json({ validGuest: true })
         }
 
     } catch (error) {
