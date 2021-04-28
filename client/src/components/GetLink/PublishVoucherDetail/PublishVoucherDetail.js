@@ -61,7 +61,7 @@ const PublishVoucherDetail = () => {
         <>
             { links.isLoading ?
                 <div align="center">
-                    <CircularProgress />
+                    <CircularProgress color="secondary"/>
                 </div>
                 :
                 links.publishVoucher.expiredLink ?

@@ -20,7 +20,7 @@ const GetLink = () => {
         <>
             { vouchers.isLoading ?
                 <div className={classes.progressWrapper} align="center">
-                    <CircularProgress />
+                    <CircularProgress color="secondary" />
                 </div>
                 :
                 vouchers.publishedVouchers.length === 0 ?

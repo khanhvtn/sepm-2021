@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getVouchersByCategory } from '../../actions/vouchers'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
-import { Grid, Typography } from '@material-ui/core'
+import { CircularProgress, Grid, Typography } from '@material-ui/core'
 import VoucherItem from './VoucherItem'
 
 const VoucherList = (props) => {
@@ -13,11 +13,11 @@ const VoucherList = (props) => {
     const [vouchers, setVouchers] = useState([]);
     const [loading, setLoading] = useState(true);
     const cat = location.state.category;
-    
+
     const fetchVouchers = async () => {
         const results = await axios.get(`/api/vouchers/category/${cat}`)
         setVouchers(results.data)
-        if(vouchers.length == 0) {
+        if (vouchers.length == 0) {
             setLoading(false);
         }
 
@@ -27,16 +27,18 @@ const VoucherList = (props) => {
         fetchVouchers();
     }, [cat]);
 
- 
 
 
-    
-   
+
+
+
 
     return vouchers.length == 0 ? (
         <>
             {loading ?
-                <img src="https://www.dailymusicroll.com/wp-content/themes/viral/images/loadingSpinner.gif?x31303" />
+                <div className={classes.contentWrapper} align="center">
+                    <CircularProgress color="secondary" />
+                </div>
                 : <Typography className={classes.vouchers} variant="h5">
                     No Vouchers
                     </Typography>}
@@ -44,7 +46,7 @@ const VoucherList = (props) => {
     ) : (
         <Grid item xs={12} md={12}>
             <Grid container justify="center" spacing={2}>
-                {vouchers.filter(voucher => new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now() ).map((voucher) => (
+                {vouchers.filter(voucher => new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now()).map((voucher) => (
                     <Grid
                         xs={12}
                         sm={4}
@@ -54,7 +56,7 @@ const VoucherList = (props) => {
                         key={voucher._id}
                         item
                     >
-                        <VoucherItem voucher={voucher}/>
+                        <VoucherItem voucher={voucher} />
                     </Grid>
                 ))}
             </Grid>

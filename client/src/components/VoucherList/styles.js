@@ -60,6 +60,9 @@ export default makeStyles((theme) => ({
         border: '2px solid',
         fontWeight: 'bold',
     },
+    contentWrapper: {
+        marginTop: '20%'
+    },
 
     [theme.breakpoints.down('sm')]: {
         root: {
