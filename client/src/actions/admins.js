@@ -128,14 +128,14 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error.message)
-        // const previousPath = history.location.pathname;
-        // dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
-        // dispatch({
-        //     type: IS_USER_CHECKING,
-        //     payload: false,
-        // });
-        // previousPath === '/'
-        //     ? history.push('/dashboard/admin')
-        //     : history.push('/admin/login', { previousPath });
+        const previousPath = history.location.pathname;
+        dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
+        dispatch({
+            type: IS_ADMIN_CHECKING,
+            payload: false,
+        });
+        previousPath === '/'
+            ? history.push('/dashboard/admin')
+            : history.push('/admin/login', { previousPath });
     }
 };
