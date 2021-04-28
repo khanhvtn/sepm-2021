@@ -43,7 +43,7 @@ const GetLink = () => {
                                         md={4}
                                         lg={4}
                                         xl={4}
-                                        key={voucher}
+                                        key={voucher._id}
                                         item
                                     >
                                         <PublishVoucher voucher={voucher} />
