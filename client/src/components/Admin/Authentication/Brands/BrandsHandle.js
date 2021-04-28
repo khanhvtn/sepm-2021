@@ -36,6 +36,11 @@ const BrandsHandle = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState('')
+    const [searchResult, setSearchResult] = useState([])
+
+    const handleSearchChange = event => { setSearchTerm(event.target.value) }
+
     const { brands } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
@@ -74,6 +79,12 @@ const BrandsHandle = () => {
         dispatch(getBrands());
     }, [dispatch]);
 
+    useEffect(() => {
+        const listBrands = !searchTerm ? brands.brands : brands.brands.filter(brand => brand.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        setSearchResult(listBrands)
+    }, [searchTerm, brands.isLoading]);
+
+
     return (
         <>
             <div className={classes.main}>
@@ -89,6 +100,8 @@ const BrandsHandle = () => {
                                     <TextField
                                         fullWidth
                                         placeholder="Search by email address, phone number, or user UID"
+                                        onChange={handleSearchChange}
+                                        value={searchTerm}
                                         InputProps={{
                                             disableUnderline: true,
                                             className: classes.searchInput,
@@ -140,7 +153,7 @@ const BrandsHandle = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {brands.brands.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((brand) => (
+                                            {searchResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((brand) => (
                                                 <TableRow hover role="checkbox" tabIndex={-1} key={brand._id}>
                                                     <TableCell key='email' align='left'>{brand.email}</TableCell>
                                                     <TableCell key='name' align='left'>{brand.name}</TableCell>
@@ -177,7 +190,7 @@ const BrandsHandle = () => {
                                 <TablePagination
                                     rowsPerPageOptions={[10, 25, 100]}
                                     component="div"
-                                    count={brands.brands.length}
+                                    count={searchResult.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}

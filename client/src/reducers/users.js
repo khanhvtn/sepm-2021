@@ -1,4 +1,4 @@
-import { FETCH_ALL, DELETE, USER_PENDING } from '../constants/actionTypes';
+import { FETCH_ALL_USER, DELETE, USER_PENDING } from '../constants/actionTypes';
 
 const initialState = {
     users: [],
@@ -7,7 +7,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_ALL:
+        case FETCH_ALL_USER:
             return { ...state, users: action.payload };
         case USER_PENDING:
             return { ...state, isLoading: action.payload };

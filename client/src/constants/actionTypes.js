@@ -28,6 +28,7 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 
 // Admin Actions
 export const USER_PENDING = "USER_PENDING";
+export const FETCH_ALL_USER = "FETCH_ALL_USER";
 
 // Brand Actions
 export const BRAND_PENDING = "BRAND_PENDING";
