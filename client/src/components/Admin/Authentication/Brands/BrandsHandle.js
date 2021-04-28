@@ -132,7 +132,7 @@ const BrandsHandle = () => {
                             </Grid>
                         </Grid>
                         :
-                        brands.brands.length === 0 ?
+                        searchResult.length === 0 ?
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No brands for this project yet

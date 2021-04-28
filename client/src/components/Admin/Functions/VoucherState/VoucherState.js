@@ -165,7 +165,7 @@ const VoucherState = () => {
                             </Grid>
                         </Grid>
                         :
-                        vouchers.acceptedVouchers.length === 0
+                        searchResult.length === 0
                             ?
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">

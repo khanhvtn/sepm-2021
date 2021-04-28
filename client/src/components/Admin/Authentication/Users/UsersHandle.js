@@ -134,7 +134,7 @@ const UsersHandle = () => {
                             </Grid>
                         </Grid>
                         :
-                        users.users.length === 0 ?
+                        searchResult.length === 0 ?
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No users for this project yet
