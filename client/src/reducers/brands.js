@@ -1,4 +1,4 @@
-import { CREATE, DELETE, UPDATE, FETCH_ALL, BRAND_PENDING } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL_BRAND, BRAND_PENDING } from '../constants/actionTypes';
 
 const initialState = {
     brands: [],
@@ -7,7 +7,7 @@ const initialState = {
 
 const brandReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_ALL:
+        case FETCH_ALL_BRAND:
             return { ...state, brands: action.payload };
         case BRAND_PENDING:
             return { ...state, isLoading: action.payload }

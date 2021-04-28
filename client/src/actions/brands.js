@@ -1,12 +1,12 @@
 import * as api from '../api';
-import { CREATE, DELETE, UPDATE, FETCH_ALL, BRAND_PENDING } from '../constants/actionTypes';
+import { CREATE, DELETE, UPDATE, FETCH_ALL_BRAND, BRAND_PENDING } from '../constants/actionTypes';
 
 //Action Brand
 export const getBrands = () => async (dispatch) => {
     try {
         dispatch({ type: BRAND_PENDING, payload: true });
         const { data } = await api.fetchBrands();
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_ALL_BRAND, payload: data });
         dispatch({ type: BRAND_PENDING, payload: false });
 
     } catch (error) {

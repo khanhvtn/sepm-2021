@@ -2,7 +2,7 @@ import {
     CREATE,
     DELETE,
     UPDATE,
-    FETCH_ALL,
+    FETCH_ALL_VOUCHER,
     FETCH_ACCEPTED_VOUCHER,
     PUBLISH_VOUCHER,
     FETCH_BY_CATEGORY,
@@ -22,7 +22,7 @@ const voucherReducer = (vouchers = initialState, action) => {
     switch (action.type) {
         case VOUCHER_PENDING:
             return { ...vouchers, isLoading: action.payload }
-        case FETCH_ALL:
+        case FETCH_ALL_VOUCHER:
             return { ...vouchers, allVouchers: action.payload };
         case FETCH_ACCEPTED_VOUCHER:
             return { ...vouchers, acceptedVouchers: action.payload };
