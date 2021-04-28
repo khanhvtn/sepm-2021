@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import React, { useState } from 'react';
 import GetLinkDialog from '../GetLinkDialog/GetLinkDialog';
+import moment from 'moment';
 
 const PublishVoucher = ({ voucher }) => {
     const classes = useStyles();
@@ -18,6 +19,11 @@ const PublishVoucher = ({ voucher }) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    });
 
 
     return (
@@ -42,7 +48,7 @@ const PublishVoucher = ({ voucher }) => {
                     </CardContent>
                     <CardContent className={classes.content}>
                         <Typography className={classes.price} component="h5" variant="h5">
-                            Pay for {voucher.price}$ to get {voucher.percentage}% discount
+                            Pay for {formatter.format(voucher.price)} to get {voucher.percentage}% discount
                         </Typography>
                     </CardContent>
                     <CardContent className={classes.description}>
@@ -50,10 +56,10 @@ const PublishVoucher = ({ voucher }) => {
                             {voucher.description}
                         </Typography>
                         <Typography className={classes.textDescription} variant="subtitle2" color="textSecondary">
-                            Start Date: {voucher.startedDate}
+                            Start Date: {moment(voucher.startedDate).format('LL')}
                         </Typography>
                         <Typography className={classes.textDescription} variant="subtitle2" color="textSecondary">
-                            Start Date: {voucher.expiredDate}
+                            End Date: {moment(voucher.expiredDate).format('LL')}
                         </Typography>
                     </CardContent>
                 </div>

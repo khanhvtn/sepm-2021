@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { useHistory } from 'react-router-dom'
 import React from 'react';
+import moment from 'moment';
 
 const VoucherItem = ({ voucher }) => {
     const classes = useStyles();
@@ -40,7 +41,7 @@ const VoucherItem = ({ voucher }) => {
                             </Typography>
                         </CardContent>
                         <CardContent className={classes.content}>
-                            <Typography className={classes.title} component="subtitle1" variant="textSecondary">
+                            <Typography className={classes.title}>
                                 Category: {voucher.category}
                             </Typography>
                         </CardContent>
@@ -54,10 +55,10 @@ const VoucherItem = ({ voucher }) => {
                                 {voucher.description}
                             </Typography>
                             <Typography className={classes.textDescription} variant="subtitle2" color="textSecondary">
-                                Start Date: {voucher.startedDate}
+                                Start Date: {moment(voucher.startedDate).format('LL')}
                             </Typography>
                             <Typography className={classes.textDescription} variant="subtitle2" color="textSecondary">
-                                Start Date: {voucher.expiredDate}
+                                End Date: {moment(voucher.expiredDate).format('LL')}
                             </Typography>
                         </CardContent>
 
