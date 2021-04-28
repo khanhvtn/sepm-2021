@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createHistory, getHistories } from '../../actions/histories'
+import { createHistory } from '../../actions/histories'
 import { updateUser } from '../../actions/auths';
 
 

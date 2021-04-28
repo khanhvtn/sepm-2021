@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import useStyles from './styles'
-import { useSelector } from 'react-redux';
-import { getVouchersByCategory } from '../../actions/vouchers'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { CircularProgress, Grid, Typography } from '@material-ui/core'
 import VoucherItem from './VoucherItem'
 
-const VoucherList = (props) => {
+const VoucherList = () => {
     const classes = useStyles();
     const location = useLocation();
     const [vouchers, setVouchers] = useState([]);

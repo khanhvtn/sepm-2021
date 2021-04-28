@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useStyles from './styles';
 
-import { Typography, Link, Grid, CircularProgress } from '@material-ui/core';
+import { Typography, Grid, CircularProgress } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublishedVoucher } from '../../actions/admins';
 import PublishVoucher from './PublishVoucher/PublishVoucher';

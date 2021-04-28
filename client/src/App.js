@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
@@ -26,15 +26,12 @@ import BlankLayout from './components/Layout/Blank/BlankLayout';
 import GetLink from './components/GetLink/GetLink';
 import Memorai from './components/Games/Memorai/Memorai';
 import GameCenter from './components/Games/GameCenter';
-import { useSelector } from 'react-redux';
 import RPSGame from './components/Games/RPS/RPSGame';
-import { checkCurrentAdmin } from './actions/admins';
 import PublishVoucherDetail from './components/GetLink/PublishVoucherDetail/PublishVoucherDetail';
 
 const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { auth } = useSelector((state) => state);
 
     useEffect(() => {
         dispatch(checkCurrentUser(history));
