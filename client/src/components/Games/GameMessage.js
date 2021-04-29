@@ -2,13 +2,22 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Typography, CircularProgress, Zoom } from "@material-ui/core";
 
-const GameMessage = ({ isWin }) => {
+const GameMessage = ({ isWin, isLostGame }) => {
     const { error, auth } = useSelector((state) => ({
         auth: state.auth,
         error: state.error.errors
     }))
     return (
-        !isWin ? (
+        isLostGame ? (<Zoom
+            in
+            style={{
+                transitionDelay: '500ms',
+            }}
+        >
+            <Typography variant="h5" color="secondary">
+                You lost the game
+            </Typography>
+        </Zoom>) : !isWin ? (
             ''
         ) : auth.isLoading ? (
             <CircularProgress />
