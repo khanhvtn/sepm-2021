@@ -43,7 +43,7 @@ const voucherSchema = mongoose.Schema(
         },
         isPublished: {
             type: Boolean,
-            default: true
+            default: false
         },
         isActive: {
             type: Boolean,

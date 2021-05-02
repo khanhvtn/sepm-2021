@@ -51,8 +51,13 @@ const PublishVoucherDetail = () => {
 
     useEffect(() => {
         // For access link
-        if (!auth.isUserChecking)
-            dispatch(accessLink(linkId.id, auth.authData.result._id))
+        if (!auth.isUserChecking){
+            if(auth.authData){
+                dispatch(accessLink(linkId.id, auth.authData.result._id))
+            } else {
+                dispatch(accessLink(linkId.id, null))
+            }
+        }
     }, [auth.isUserChecking])
 
     const formatter = new Intl.NumberFormat('vi-VN', {
