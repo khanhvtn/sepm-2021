@@ -65,9 +65,9 @@ export const checkCurrentUser = (history) => async (dispatch) => {
             type: IS_USER_CHECKING,
             payload: false,
         });
-        previousPath === '/'
-            ? history.push('/')
-            : history.push('/login', { isSignup: false, previousPath });
+        // previousPath === '/'
+        //     ? history.push('/')
+        //     : history.push('/login', { isSignup: false, previousPath });
     }
 };
 export const signup = (formData, history) => async (dispatch) => {

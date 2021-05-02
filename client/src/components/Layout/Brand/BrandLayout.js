@@ -4,8 +4,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 
-import Navigator from '../../Admin/Navigator/Navigator';
-import Header from '../../Admin/Header/Header';
+import BrandNavigator from '../../BrandDashboard/BrandNavigator/BrandNavigator';
+import BrandHeader from '../../BrandDashboard/BrandHeader/BrandHeader';
 
 
 
@@ -121,7 +121,7 @@ theme = {
 
 const drawerWidth = 256;
 
-const AdminLayout = ({ children }) => {
+const BrandLayout = ({ children }) => {
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -136,7 +136,7 @@ const AdminLayout = ({ children }) => {
                     <CssBaseline />
                     <nav className={classes.drawer}>
                         <Hidden smUp implementation="js">
-                            <Navigator
+                            <BrandNavigator
                                 PaperProps={{ style: { width: drawerWidth } }}
                                 variant="temporary"
                                 open={mobileOpen}
@@ -144,11 +144,11 @@ const AdminLayout = ({ children }) => {
                             />
                         </Hidden>
                         <Hidden xsDown implementation="css">
-                            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+                            <BrandNavigator PaperProps={{ style: { width: drawerWidth } }} />
                         </Hidden>
                     </nav>
                     <div className={classes.app}>
-                        <Header onDrawerToggle={handleDrawerToggle} />
+                        <BrandHeader onDrawerToggle={handleDrawerToggle} />
                         <main className={classes.main}>
                             {children}
                         </main>
@@ -159,4 +159,4 @@ const AdminLayout = ({ children }) => {
     )
 }
 
-export default AdminLayout;
+export default BrandLayout;

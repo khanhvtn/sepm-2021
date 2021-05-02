@@ -30,6 +30,11 @@ import { useSelector } from 'react-redux';
 import RPSGame from './components/Games/RPS/RPSGame';
 import { checkCurrentAdmin } from './actions/admins';
 import PublishVoucherDetail from './components/GetLink/PublishVoucherDetail/PublishVoucherDetail';
+import BrandLayout from './components/Layout/Brand/BrandLayout';
+import BrandHomeDashboard from './components/BrandDashboard/BrandHomeDashboard';
+import VoucherHandle from './components/BrandDashboard/VoucherHandle/VoucherHandle';
+import CodeHandle from './components/BrandDashboard/CodeHandle/CodeHandle';
+import BrandLogin from './components/BrandDashboard/BrandLogin/BrandLogin';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -67,6 +72,25 @@ const App = () => {
                     </AdminLayout>
                 </Route>
 
+                <Route path='/brand/:path?' exact>
+                    <BlankLayout>
+                        <Switch>
+                            <Route path='/brand/login' component={BrandLogin} />
+                            <Route component={Error} />
+                        </Switch>
+                    </BlankLayout>
+                </Route>
+                
+                <Route path='/dashboard/brand/:path?' exact>
+                    <BrandLayout>
+                        <Switch>
+                            <Route path='/dashboard/brand' component={BrandHomeDashboard} exact/>
+                            <Route path='/dashboard/brand/vouchers' component={VoucherHandle} />
+                            <Route path='/dashboard/brand/codes' component={CodeHandle} />
+                        </Switch>
+                    </BrandLayout>
+                </Route>
+
                 <Route>
                     <UserLayout>
                         <Switch>
@@ -79,11 +103,11 @@ const App = () => {
                             {/* End Testing */}
                             <Route exact path="/brand" component={BrandHome} />
 
-                            <Route exact path="/login">
+                            <Route path="/login">
                                 <Auth isSignup={false} />
                             </Route>
 
-                            <Route exact path="/register">
+                            <Route path="/register">
                                 <Auth isSignup={true} />
                             </Route>
 
