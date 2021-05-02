@@ -1,6 +1,6 @@
 import * as api from '../api';
 import { 
-    FETCH_ALL, 
+    FETCH_ALL_USER, 
     DELETE, UPDATE, 
     AUTH_ADMIN, 
     CHECK_CURRENT_ADMIN, 
@@ -18,7 +18,7 @@ export const getUsers = () => async (dispatch) => {
     try {
         dispatch({ type: USER_PENDING, payload: true });
         const { data } = await api.fetchUsers();
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_ALL_USER, payload: data });
         dispatch({ type: USER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)
@@ -128,14 +128,14 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error.message)
-        // const previousPath = history.location.pathname;
-        // dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
-        // dispatch({
-        //     type: IS_USER_CHECKING,
-        //     payload: false,
-        // });
-        // previousPath === '/'
-        //     ? history.push('/dashboard/admin')
-        //     : history.push('/admin/login', { previousPath });
+        const previousPath = history.location.pathname;
+        dispatch({ type: CHECK_CURRENT_ADMIN, data: null });
+        dispatch({
+            type: IS_ADMIN_CHECKING,
+            payload: false,
+        });
+        previousPath === '/'
+            ? history.push('/dashboard/admin')
+            : history.push('/admin/login', { previousPath });
     }
 };

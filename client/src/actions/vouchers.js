@@ -3,7 +3,7 @@ import {
     CREATE, 
     DELETE, 
     UPDATE, 
-    FETCH_ALL, 
+    FETCH_ALL_VOUCHER, 
     FETCH_BY_CATEGORY,
     VOUCHER_PENDING
 } from '../constants/actionTypes';
@@ -13,7 +13,7 @@ export const getVouchers = () => async (dispatch) => {
     try {
         dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.fetchVouchers();
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_ALL_VOUCHER, payload: data });
         dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message);

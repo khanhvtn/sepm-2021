@@ -84,6 +84,10 @@ const VoucherState = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [open, setOpen] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+
+    const handleSearchChange = event => { setSearchTerm(event.target.value) }
 
 
     const { vouchers } = useSelector(state => state)
@@ -110,6 +114,10 @@ const VoucherState = () => {
         dispatch(getAcceptedVoucher())
     }, [dispatch]);
 
+    useEffect(() => {
+        const listVouchers = !searchTerm ? vouchers.allVouchers : vouchers.acceptedVouchers.filter(voucher => voucher.brand.toLowerCase().includes(searchTerm.toLowerCase()))
+        setSearchResult(listVouchers)
+    }, [searchTerm, vouchers.isLoading]);
 
     return (
         <>
@@ -125,6 +133,8 @@ const VoucherState = () => {
                                     <TextField
                                         fullWidth
                                         placeholder="Search by email address, phone number, or user UID"
+                                        onChange={handleSearchChange}
+                                        value={searchTerm}
                                         InputProps={{
                                             disableUnderline: true,
                                             className: classes.searchInput,
@@ -155,7 +165,7 @@ const VoucherState = () => {
                             </Grid>
                         </Grid>
                         :
-                        vouchers.acceptedVouchers.length === 0
+                        searchResult.length === 0
                             ?
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
@@ -177,7 +187,7 @@ const VoucherState = () => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {vouchers.acceptedVouchers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
+                                            {searchResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
                                                 <TableRow hover role="checkbox" key={voucher.title}>
                                                     <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
                                                     <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
@@ -195,7 +205,7 @@ const VoucherState = () => {
                                 <TablePagination
                                     rowsPerPageOptions={[10, 25, 100]}
                                     component="div"
-                                    count={vouchers.acceptedVouchers.length}
+                                    count={searchResult.length}
                                     rowsPerPage={rowsPerPage}
                                     page={page}
                                     onChangePage={handleChangePage}

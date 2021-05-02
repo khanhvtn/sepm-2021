@@ -1,5 +1,5 @@
 import { CircularProgress } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Redirect, useHistory } from 'react-router-dom';
 import { checkCurrentAdmin } from '../actions/admins';

@@ -14,13 +14,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory, useParams } from 'react-router-dom';
 import { accessLink } from '../../../actions/links';
 import CountDownTimeClock from '../../Detail/CountDownTimeClock';
+import { checkCurrentUser } from '../../../actions/auths';
 
 
 
 const PublishVoucherDetail = () => {
     const classes = useStyles();
-    const authData = useSelector(state => state.auth.authData)
-    const [user, setUser] = useState(authData)
+    const { auth } = useSelector(state => state)
     const [openDialog, setOpenDialog] = useState(false);
     const history = useHistory();
 
@@ -46,11 +46,14 @@ const PublishVoucherDetail = () => {
     }
 
     useEffect(() => {
-        setUser(authData)
-        // For access link
-        dispatch(accessLink(linkId.id))
+        dispatch(checkCurrentUser(history))
+    }, []);
 
-    }, [authData])
+    useEffect(() => {
+        // For access link
+        if (!auth.isUserChecking)
+            dispatch(accessLink(linkId.id, auth.authData.result._id))
+    }, [auth.isUserChecking])
 
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -61,7 +64,7 @@ const PublishVoucherDetail = () => {
         <>
             { links.isLoading ?
                 <div align="center">
-                    <CircularProgress />
+                    <CircularProgress color="secondary" />
                 </div>
                 :
                 links.publishVoucher.expiredLink ?
@@ -105,7 +108,7 @@ const PublishVoucherDetail = () => {
 
 
                                 <div className={classes.controls}>
-                                    {user ?
+                                    {auth.authData ?
                                         <Button className={classes.getButton} variant="outlined" color="primary" onClick={handleGoToProceed}>
                                             Get Now
                                     </Button>

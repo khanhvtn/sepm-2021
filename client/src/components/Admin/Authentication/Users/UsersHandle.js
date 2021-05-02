@@ -37,6 +37,11 @@ const UsersHandle = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState('')
+    const [searchResult, setSearchResult] = useState([])
+
+    const handleSearchChange = event => { setSearchTerm(event.target.value) }
+
     const { users } = useSelector(state => state)
 
     const handleChangePage = (event, newPage) => {
@@ -77,6 +82,11 @@ const UsersHandle = () => {
         dispatch(getUsers());
     }, [dispatch]);
 
+    useEffect(() => {
+        const listUsers = !searchTerm ? users.users : users.users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        setSearchResult(listUsers)
+    }, [searchTerm, users.isLoading]);
+
     return (
         <>
             <div className={classes.main}>
@@ -92,6 +102,8 @@ const UsersHandle = () => {
                                     <TextField
                                         fullWidth
                                         placeholder="Search by email address, phone number, or user UID"
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
                                         InputProps={{
                                             disableUnderline: true,
                                             className: classes.searchInput,
@@ -122,7 +134,7 @@ const UsersHandle = () => {
                             </Grid>
                         </Grid>
                         :
-                        users.users.length === 0 ?
+                        searchResult.length === 0 ?
                             <div className={classes.contentWrapper}>
                                 <Typography color="textSecondary" align="center">
                                     No users for this project yet
@@ -143,7 +155,7 @@ const UsersHandle = () => {
                                         </TableHead>
                                         <TableBody>
 
-                                            {users.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
+                                            {searchResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => (
                                                 <TableRow hover role="checkbox" tabIndex={-1} key={user._id}>
                                                     <TableCell key='email' align='left'>{user.email}</TableCell>
                                                     <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
@@ -178,7 +190,7 @@ const UsersHandle = () => {
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 15]}
                                         component="div"
-                                        count={users.users.length}
+                                        count={searchResult.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         onChangePage={handleChangePage}

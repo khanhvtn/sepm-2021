@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import bgTriangle from '../images/bg-triangle.svg';
 import paperIcon from '../images/icon-paper.svg';

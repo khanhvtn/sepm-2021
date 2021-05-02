@@ -7,9 +7,7 @@ import {
     Toolbar,
     InputBase,
     Button,
-    Avatar,
-    Typography,
-    
+    Avatar,    
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';

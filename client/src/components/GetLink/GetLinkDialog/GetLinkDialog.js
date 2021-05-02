@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useStyles from './styles'
-import { CircularProgress, Tooltip } from '@material-ui/core';
+import { CircularProgress, Tooltip, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { createShareLink } from '../../../actions/links';
 
@@ -47,22 +47,34 @@ const GetLinkDialog = ({ open, handleClose, voucherId }) => {
                         <CircularProgress />
                     </div>
                     :
-                    <DialogContent className={classes.container}>
-                        <TextField
-                            autoFocus
-                            id="share-link"
-                            label="Your share link"
-                            type="text"
-                            variant="outlined"
-                            value={links.linkId ? `localhost:3000/voucher/share/${links.linkId}` : 'Error! Cannot create link'}
-                            className={classes.textField}
+                    links.linkId ?
+                        <DialogContent className={classes.container}>
+                            <TextField
+                                autoFocus
+                                id="share-link"
+                                label="Your share link"
+                                type="text"
+                                variant="outlined"
+                                value={links.linkId ? `localhost:3000/voucher/share/${links.linkId}` : 'Error! Cannot create link'}
+                                className={classes.textField}
 
-                        />
-                        {copySuccess ?
-                            <Tooltip
-                                open={copySuccess}
-                                title="Copied!"
-                                placement="top">
+                            />
+                            {copySuccess ?
+                                <Tooltip
+                                    open={copySuccess}
+                                    title="Copied!"
+                                    placement="top">
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={saveLinkToClipboard}
+                                    >
+                                        Copy Link
+                                </Button>
+                                </Tooltip>
+                                :
                                 <Button
                                     type="submit"
                                     variant="contained"
@@ -71,20 +83,13 @@ const GetLinkDialog = ({ open, handleClose, voucherId }) => {
                                     onClick={saveLinkToClipboard}
                                 >
                                     Copy Link
-                                </Button>
-                            </Tooltip>
-                            :
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                onClick={saveLinkToClipboard}
-                            >
-                                Copy Link
                             </Button>
-                        }
-                    </DialogContent>
+                            }
+                        </DialogContent>
+                        :
+                        <div align="center">
+                            <Typography>Cannot get link!</Typography>
+                        </div>
                 }
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">

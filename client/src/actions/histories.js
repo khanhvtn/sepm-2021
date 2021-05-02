@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { CREATE_HISTORY, DELETE, UPDATE, FETCH_ALL, IS_SUCCESS_PURCHASE } from '../constants/actionTypes';
+import { CREATE_HISTORY, DELETE, FETCH_ALL, IS_SUCCESS_PURCHASE } from '../constants/actionTypes';
 
 export const getHistories = () => async (dispatch) => {
     try {

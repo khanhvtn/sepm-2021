@@ -19,7 +19,7 @@ export default function UserDialog({ open, handleDialogClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatchEvent(createUser({ ...userData }))
+        handleDialogClose();
         clear();
     }
 

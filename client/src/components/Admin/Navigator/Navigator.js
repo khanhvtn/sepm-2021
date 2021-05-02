@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
