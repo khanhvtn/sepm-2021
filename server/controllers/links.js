@@ -43,24 +43,20 @@ export const accessLink = async (req, res) => {
             const authorId = checkAvailableLink.userId.toString();
             const fetchVoucher = await Voucher.findById({ _id: checkAvailableLink.voucherId })
 
-
-            console.log("userId:", userId)
-            console.log("AuthorId:", authorId)
-            console.log("Check user id: ", userId === authorId)
-            if (userId === authorId) {
-                res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher is current user' })
+            if (fetchVoucher.expiredDate < Date.now() || fetchVoucher.startedDate > Date.now()) {
+                console.log("Check voucher's valid date: ", true)
+                res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
             } else {
-                console.log("Check valid guest: ", validGuest)
-                if (!validGuest) {
-                    res.status(200).json({ voucher: fetchVoucher, message: 'Author of the voucher cannot update point because this browser is expired' })
+                console.log("userId:", userId)
+                console.log("AuthorId:", authorId)
+                console.log("Check user id: ", userId === authorId)
+                if (userId === authorId) {
+                    res.status(200).json({ voucher: fetchVoucher, authorAccess: true, expiredLink: false, message: 'Author of the voucher is current user' })
                 } else {
-                    if (fetchVoucher.expiredDate < Date.now() || fetchVoucher.startedDate > Date.now()) {
-                        console.log(fetchVoucher.expiredDate > Date.now())
-                        console.log(fetchVoucher.startedDate < Date.now())
-                        res.status(200).json({ expiredLink: true, message: 'This voucher is expired!' })
+                    console.log("Check valid guest: ", validGuest)
+                    if (!validGuest) {
+                        res.status(200).json({ voucher: fetchVoucher, message: 'Author of the voucher cannot update point because this browser is expired' })
                     } else {
-                        console.log("Check valid date: ", true)
-
                         // Query Author of the share link to get the current point to update
                         const currentAuthor = await User.findById({ _id: authorId })
                         const updatePoint = `${parseInt(currentAuthor.points) + 100}`
