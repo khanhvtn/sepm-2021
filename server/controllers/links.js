@@ -4,6 +4,26 @@ import Link from '../models/link.js';
 import User from '../models/user.js';
 import Voucher from '../models/voucher.js';
 
+export const getLinks = async (req, res) => {
+    try {
+        const links = await Link.find();
+        res.status(200).json(links);
+    } catch (error) {
+        res.status(404).json(error);
+
+    }
+
+}
+
+export const deleteLink = async(req, res) => {
+    const {id: _id} = req.params;
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('No Link with that id');
+    }
+    await Link.findByIdAndRemove(_id);
+    res.json({ message: 'Link deleted successfully' });
+}
+
 
 export const createLink = async (req, res) => {
     const { voucherId } = req.body;
@@ -16,6 +36,7 @@ export const createLink = async (req, res) => {
 
     try {
         await newLink.save();
+        
         console.log("Create browser token: ", newLink._id)
 
         res.status(200).json(newLink._id)

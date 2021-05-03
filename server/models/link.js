@@ -10,11 +10,14 @@ const linkSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             required: true
         },
+        createdAt: { type: Date, default: Date.now, index: { unique: true} }
+       
+
     },
-    { timestamps: true }
+    // { timestamps: true }
 );
 
-linkSchema.index({ createdAt: 1 }, { expires: "5m"})
+linkSchema.index({ createdAt: 1 }, {expires: "3m"} )
 
 const Link = mongoose.model('Link', linkSchema);
 export default Link;

@@ -6,11 +6,18 @@ const guestSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        expireAt: {
+            type: Date,
+            default: null,
+            index: { unique: true, expires: '2m' }
+        }
+
+
     },
     { timestamps: true }
 );
 
-guestSchema.index({ createdAt: 1 }, { expires: "5m" })
+guestSchema.index({ expireAt: 1 },{ expires: "2m" })
 
 const Guest = mongoose.model('Guest', guestSchema);
 export default Guest;
