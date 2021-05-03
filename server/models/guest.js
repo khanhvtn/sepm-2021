@@ -10,7 +10,7 @@ const guestSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-guestSchema.index({ createdAt: 1 }, { expireAfterSeconds: 6000 })
+guestSchema.index({ createdAt: 1 }, { expires: "5m" })
 
 const Guest = mongoose.model('Guest', guestSchema);
 export default Guest;
