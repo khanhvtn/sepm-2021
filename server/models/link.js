@@ -14,7 +14,7 @@ const linkSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-linkSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 })
+linkSchema.index({ createdAt: 1 }, { expireAfterSeconds: 6000 })
 
 const Link = mongoose.model('Link', linkSchema);
 export default Link;
