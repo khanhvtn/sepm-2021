@@ -69,8 +69,10 @@ export const setVoucherStatus = (id, action) => async (dispatch) => {
 export const publishVoucher = (id, action) => async (dispatch) => {
     try {
         console.log(id)
+        dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.setVoucherPublish(id, action);
         dispatch({ type: PUBLISH_VOUCHER, payload: data });
+        dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)
     }

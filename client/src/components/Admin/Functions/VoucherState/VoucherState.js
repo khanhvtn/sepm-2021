@@ -115,7 +115,7 @@ const VoucherState = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        const listVouchers = !searchTerm ? vouchers.allVouchers : vouchers.acceptedVouchers.filter(voucher => voucher.brand.toLowerCase().includes(searchTerm.toLowerCase()))
+        const listVouchers = !searchTerm ? vouchers.acceptedVouchers : vouchers.acceptedVouchers.filter(voucher => voucher.brand.toLowerCase().includes(searchTerm.toLowerCase()))
         setSearchResult(listVouchers)
     }, [searchTerm, vouchers.isLoading]);
 
