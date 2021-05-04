@@ -44,3 +44,7 @@ export const LINK_NOT_FOUND = 'LINK_NOT_FOUND';
 
 // Link History
 export const CREATE_HISTORY = 'CREATE_HISTORY';
+
+// Code History
+export const FETCH_ALL_CODE = 'FETCH_ALL_CODE';
+

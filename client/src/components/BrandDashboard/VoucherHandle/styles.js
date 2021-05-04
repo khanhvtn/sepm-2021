@@ -7,5 +7,13 @@ export default makeStyles((theme) => ({
     main: {
         padding: theme.spacing(6, 4),
         background: '#eaeff1',
-    }
+    },
+    tableContainer: {
+        marginTop: 20
+    },
+    rowImage: {
+        maxWidth: "70%",
+        maxHeight: "70%"
+    },
+    
 }));

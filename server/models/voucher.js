@@ -5,9 +5,7 @@ const voucherSchema = mongoose.Schema(
         title: { type: String, required: [true, 'Title can not be blanked.'] },
         creator: {
             type: String,
-        },
-        creatorName: {
-            type: String,
+            required: true
         },
         description: {
             type: String,
@@ -48,7 +46,7 @@ const voucherSchema = mongoose.Schema(
         isActive: {
             type: Boolean,
             default: null,
-            required: true
+           
 
         },
         isAvailable: {

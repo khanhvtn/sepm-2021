@@ -12,8 +12,7 @@ export const getVouchers = async (req, res) => {
 };
 export const createVoucher = async (req, res) => {
     const voucher = req.body;
-
-    const newVoucher = new Voucher({ ...voucher, creator: req.userId });
+    const newVoucher = new Voucher(voucher);
 
     try {
         await newVoucher.save();

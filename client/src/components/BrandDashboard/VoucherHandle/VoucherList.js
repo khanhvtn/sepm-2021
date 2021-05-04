@@ -1,87 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import useStyles from './styles'
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react'
 import Table from '@material-ui/core/Table';
+import Grid from '@material-ui/core/Grid'
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getVouchers } from '../../../actions/vouchers';
-import { Button, CircularProgress} from '@material-ui/core';
+import useStyles from './styles'
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
+import { deleteVoucher, getVouchers } from '../../../actions/vouchers';
+import moment from 'moment';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
-const CodeHandle = () => {
+
+const VoucherList = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const vouchers = useSelector((state) => state.vouchers);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [open, setOpen] = useState(false);
+    const handleOpenDeleteDialog = () => {
+        setOpenDeleteDialog(true)
+    }
+
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false)
+    }
+
+    const handleDeleteVoucher = (id) => {
+        dispatch(deleteVoucher(id));
+        handleCloseDeleteDialog();
+    }
+
     useEffect(() => {
         dispatch(getVouchers());
     }, [dispatch]);
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-
-    const handleDialogOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setOpen(false);
-    };
-
-    const handleDeleteBrand = (id) => {
-        setAnchorEl(null)
-    }
-
-    return (
-        <>
-            <AppBar
-                component="div"
-                className={classes.secondaryBar}
-                position="static"
-                elevation={0}
-                color="default"
-            >
-                <Toolbar>
-                    <Grid container alignItems="center" spacing={1}>
-                        <Grid item xs>
-                            <Typography color="inherit" variant="h5" component="h1">
-                                Code
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <div className={classes.main}>
-                {vouchers.isLoading ? (
+    return vouchers.isLoading ? (
         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
             <Grid item style={{ textAlign: 'center' }}>
                 <CircularProgress variant="indeterminate" />
@@ -108,6 +70,7 @@ const CodeHandle = () => {
                                     <TableCell align="right">Starting Date</TableCell>
                                     <TableCell align="right">End Date</TableCell>
                                     <TableCell align="right">Status</TableCell>
+                                    <TableCell align="right">Action</TableCell>
 
 
                                 </TableRow>
@@ -130,9 +93,34 @@ const CodeHandle = () => {
                                         <TableCell align="right">{moment(voucher.startedDate).format('LL')}</TableCell>
                                         <TableCell align="right">{moment(voucher.expiredDate).format('LL')}</TableCell>
                                         <TableCell align="right">{voucher.isActive == true ? "Verified" : "Unverifed"}</TableCell>
-                                      
+                                        <TableCell>
+                                            <Button color="secondary">Update</Button>
 
-                                        
+                                            <Button color="secondary" onClick={handleOpenDeleteDialog}>Delete</Button>
+
+                                        </TableCell>
+
+                                        <Dialog
+                                            open={openDeleteDialog}
+                                            onClose={handleCloseDeleteDialog}
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                        >
+                                            <DialogTitle id="alert-dialog-title">Delete Voucher</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText id="alert-dialog-description">
+                                                    Are you sure that you want to delete voucher {voucher.title}
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleCloseDeleteDialog} color="primary">
+                                                    Disagree
+                                            </Button>
+                                                <Button onClick={(e) => handleDeleteVoucher(voucher._id)} color="primary" autoFocus>
+                                                    Agree
+                                            </Button>
+                                            </DialogActions>
+                                        </Dialog>
 
                                     </TableRow>
 
@@ -142,10 +130,7 @@ const CodeHandle = () => {
                     </TableContainer>
 
                 </div>
-            )}
-            </div>
-        </>
-    )
+            )
 }
 
-export default CodeHandle;
+export default VoucherList;
