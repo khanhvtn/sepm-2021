@@ -10,6 +10,23 @@ export default makeStyles((theme) => ({
         padding: '50px',
         margin: '50px'
     },
+    tab: {
+        display: 'flex',
+    },
+    tabPanelCover: {
+        width: '100%',
+        margin: '50px'
+    },
+    imageCover: {
+        width: '100%',
+        padding: '50px',
+        margin: '50px',
+    },
+    imageHeight: {
+        fontSize: '5em',
+        color: theme.palette.getContrastText(pink[400]),
+        backgroundColor: pink[400],
+    },
     avatar: {
         height: theme.spacing(20),
         width: theme.spacing(20),
@@ -42,7 +59,10 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
         flexWrap: 'wrap',
         width: '600px',
-        margin: '90px auto',
+        margin: '50px auto',
+    },
+    media: {
+        height: 140,
     },
     [theme.breakpoints.down('xs')]: {
         gridRight: {

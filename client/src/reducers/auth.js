@@ -7,6 +7,7 @@ import {
     CHECK_CURRENT_ADMIN,
     CHECK_CURRENT_BRAND,
     UPDATE_USER,
+    UPDATE_BRAND,
     USER_LOADING,
     IS_USER_CHECKING,
     USER_WIN_GAME,
@@ -64,6 +65,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 authData: { ...state.authData, result: action?.data },
+            };
+        case UPDATE_BRAND:
+            return {
+                ...state,
+                brandData: { ...state.brandData, result: action?.data },
             };
         case USER_LOADING:
             return {

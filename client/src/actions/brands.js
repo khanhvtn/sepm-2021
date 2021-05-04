@@ -2,7 +2,7 @@ import * as api from '../api';
 import {
     CREATE,
     DELETE,
-    UPDATE,
+    UPDATE_BRAND,
     FETCH_ALL_BRAND,
     BRAND_PENDING,
     IS_BRAND_CHECKING,
@@ -32,10 +32,12 @@ export const createBrand = (newBrand) => async (dispatch) => {
         console.log(error.message);
     }
 };
-export const updateBrand = (id, updateBrand) => async (dispatch) => {
+export const updateBrand = (updateBrand) => async (dispatch) => {
     try {
-        const { data } = await api.updateBrand(id, updateBrand);
-        dispatch({ type: UPDATE, payload: data });
+        dispatch({ type: USER_LOADING, payload: true });
+        const { data } = await api.updateBrand(updateBrand);
+        dispatch({ type: UPDATE_BRAND, data });
+        dispatch({ type: USER_LOADING, payload: false });
     } catch (error) {
         console.log(error.message);
     }
@@ -63,7 +65,6 @@ export const checkCurrentBrand = (history) => async (dispatch) => {
                 payload: true,
             });
             const { data } = await api.checkCurrentBrand();
-            console.log(data)
             dispatch({
                 type: CHECK_CURRENT_BRAND,
                 data: { result: data.result, token: brandProfile.token },

@@ -5,12 +5,12 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import dateFNS from 'date-fns';
 
-export const getUsers = async(req, res) => {
+export const getUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json(users)
     } catch (error) {
-        res.status(404).json({message: error.message})
+        res.status(404).json({ message: error.message })
     }
 }
 

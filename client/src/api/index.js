@@ -31,10 +31,8 @@ export const deleteVoucher = (id) => API.delete(`${'/vouchers'}/${id}`);
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 export const checkCurrentUser = () => API.get(`/user/checkCurrentUser`);
-export const updateUser = (newUser) =>
-    API.patch(`/user/${newUser._id}`, newUser);
-export const userWinGame = (newUpdateUser) =>
-    API.post(`/user/wingame`, newUpdateUser);
+export const updateUser = (newUser) => API.patch(`/user/${newUser._id}`, newUser);
+export const userWinGame = (newUpdateUser) => API.post(`/user/wingame`, newUpdateUser);
 
 // API for Brand
 export const fetchBrands = () => API.get('/brands');
@@ -42,8 +40,7 @@ export const signInBrand = (formData) => API.post('/brands/signin', formData)
 export const signUpBrand = (formData) => API.post('brands/signup', formData)
 export const createBrand = (newBrand) => API.post('/brands', newBrand);
 export const checkCurrentBrand = () => API.get(`/brands/checkCurrentBrand`);
-export const updateBrand = (id, updateBrand) =>
-    API.patch(`${'/brands'}/${id}`, updateBrand);
+export const updateBrand = (updateBrand) => API.patch(`${'/brands'}/${updateBrand._id}`, updateBrand);
 export const deleteBrand = (id) => API.delete(`${'/brands'}/${id}`);
 
 // API for Admin
