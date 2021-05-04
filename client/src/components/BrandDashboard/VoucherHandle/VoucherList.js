@@ -26,7 +26,7 @@ const VoucherList = () => {
     const dispatch = useDispatch();
     const vouchers = useSelector((state) => state.vouchers);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const brand = useSelector((state) => state.auth)
+    const brand = useSelector((state) => state.auth.brandData.result)
 
     const handleOpenDeleteDialog = () => {
         setOpenDeleteDialog(true)
@@ -43,7 +43,6 @@ const VoucherList = () => {
 
     useEffect(() => {
         dispatch(getVouchers());
-        console.log(brand)
     }, [dispatch]);
     return vouchers.isLoading ? (
         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
@@ -79,7 +78,7 @@ const VoucherList = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {vouchers.allVouchers.map((voucher) => (
+                                {vouchers.allVouchers.filter((voucher) => voucher.creator === brand._id).map((voucher) => (
                                     <TableRow key={voucher._id}>
                                         <TableCell scope="row">
                                             <img src={voucher.image} className={classes.rowImage} />

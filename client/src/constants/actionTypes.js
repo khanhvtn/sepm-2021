@@ -45,9 +45,9 @@ export const LINK_NOT_FOUND = 'LINK_NOT_FOUND';
 // Link History
 export const CREATE_HISTORY = 'CREATE_HISTORY';
 
-// Code History
+// Code 
 export const FETCH_ALL_CODE = 'FETCH_ALL_CODE';
-
+export const CREATE_CODE = 'CREATE_CODE'
 // Brand Action
 export const AUTH_BRAND = "AUTH_BRAND";
 export const IS_BRAND_CHECKING = "IS_BRAND_CHECKING";

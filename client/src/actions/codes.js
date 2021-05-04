@@ -1,10 +1,18 @@
 import * as api from '../api'
-import {FETCH_ALL_CODE} from '../constants/actionTypes'
+import {FETCH_ALL_CODE, CRE, CREATE_CODE} from '../constants/actionTypes'
 export const getCodes = () => async (dispatch) => {
     try {
         const {data} = await api.fetchCodes();
-        dispatch({ type: FETCH_ALL, payload: data })
+        dispatch({ type: FETCH_ALL_CODE, payload: data })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
+export const createCode = (newCode) => async (dispatch) => {
+    try {
+        const { data } = await api.createCode(newCode);
+        dispatch({type: CREATE_CODE, payload: data})
     } catch (error) {
         console.log(error.message)
     }

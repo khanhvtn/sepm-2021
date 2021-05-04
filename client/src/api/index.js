@@ -65,3 +65,4 @@ export const trackUser = (clientToken) => API.post('/links/track/user', clientTo
 
 // API for code
 export const fetchCodes = () => API.get('/codes')
+export const createCode = (newCode) => API.post('/codes', newCode)

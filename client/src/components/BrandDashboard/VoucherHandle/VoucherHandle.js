@@ -18,7 +18,7 @@ import {
 import FileBase from 'react-file-base64';
 
 import useStyles from './styles'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createVoucher, updateVoucher } from '../../../actions/vouchers';
 import VoucherList from './VoucherList';
 
@@ -29,7 +29,7 @@ const initialVoucherData = {
     brand: '',
     category: '',
     image: '',
-    creator: '6072fa8975219810078b853f',
+    creator: '',
     price: '0',
     percentage: '0',
     startedDate: new Date(),
@@ -44,11 +44,12 @@ const VoucherHandle = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
-    
+    const brandInfo = useSelector((state) => state.auth.brandData.result)
+
     const [openDialog, setOpenDialog] = useState(false);
     useEffect(() => {
-        setVoucherData({...initialVoucherData, brand: "SUMO BBQ"})
-    },[])
+        setVoucherData({...voucherData, brand: brandInfo.name, creator: brandInfo._id})
+    }, [dispatch]);
     const handleClickOpenDialog = () => {
         setOpen(true);
     };
@@ -61,6 +62,7 @@ const VoucherHandle = () => {
         e.preventDefault();
         dispatch(createVoucher(voucherData))
         clearField();
+        handleCloseDialog();
     }
 
     const clearField = () => {
