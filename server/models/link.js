@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import dateFNS from 'date-fns';
 
 const linkSchema = mongoose.Schema(
     {
