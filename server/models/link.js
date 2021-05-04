@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import dateFNS from 'date-fns';
 
 const linkSchema = mongoose.Schema(
     {
@@ -10,14 +11,16 @@ const linkSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             required: true
         },
-        createdAt: { type: Date, default: Date.now, index: { unique: true} }
-       
-
+        expireAt: {
+            type: Date,
+            default: Date.now,
+            index: { unique: true, expires: '5m' }
+        }
     },
-    // { timestamps: true }
+    { timestamps: true }
 );
 
-linkSchema.index({ createdAt: 1 }, {expires: "3m"} )
+linkSchema.index({ expireAt: 1 }, { expires: "5m" })
 
 const Link = mongoose.model('Link', linkSchema);
 export default Link;
