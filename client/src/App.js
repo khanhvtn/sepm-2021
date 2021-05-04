@@ -34,6 +34,7 @@ import VoucherHandle from './components/BrandDashboard/VoucherHandle/VoucherHand
 import CodeHandle from './components/BrandDashboard/CodeHandle/CodeHandle';
 import BrandLogin from './components/BrandDashboard/BrandLogin/BrandLogin';
 import BrandPrivateRoute from './Routes/BrandPrivateRoute';
+import BrandProfile from './components/BrandDashboard/BrandProfile/BrandProfile';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -90,6 +91,7 @@ const App = () => {
                     <BrandLayout>
                         <Switch>
                             <BrandPrivateRoute path='/dashboard/brand' component={BrandHomeDashboard} exact />
+                            <BrandPrivateRoute path='/dashboard/brand/profile' component={BrandProfile} />
                             <BrandPrivateRoute path='/dashboard/brand/vouchers' component={VoucherHandle} />
                             <BrandPrivateRoute path='/dashboard/brand/codes' component={CodeHandle} />
                         </Switch>
@@ -106,7 +108,7 @@ const App = () => {
                             <Route exact path="/create-voucher" component={CreateVoucher} />
                             <Route exact path="/create-brand" component={CreateBrand} />
                             {/* End Testing */}
-                            <Route exact path="/brand" component={BrandHome} />
+                            <Route exact path="/brand-home" component={BrandHome} />
 
                             <Route path="/login">
                                 <Auth isSignup={false} />

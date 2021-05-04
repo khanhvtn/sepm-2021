@@ -14,8 +14,6 @@ const BrandPrivateRoute = ({ component: Component, ...rest }) => {
         dispatch(checkCurrentBrand(history))
     }, []);
 
-    console.log(auth)
-
     return (
         <>
             {auth.isBrandChecking ?

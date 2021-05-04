@@ -5,29 +5,10 @@ export default makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    form: {
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        width: '300px',
-        margin: '90px auto',
-    },
-    tab: {
-        display: 'flex',
-    },
-    button: {
-        marginTop: '10px',
-    },
-    input: {
-        width: '100%',  
-        marginBottom: '15px',
-    },
-    inputImage: {
-        display: 'none',
-    },
     paper: {
         width: '100%',
-        padding: '15px 0',
+        padding: '50px',
+        margin: '50px'
     },
     avatar: {
         height: theme.spacing(20),
@@ -35,6 +16,13 @@ export default makeStyles((theme) => ({
         fontSize: '5em',
         color: theme.palette.getContrastText(pink[400]),
         backgroundColor: pink[400],
+    },
+    input: {
+        width: '100%',
+        marginBottom: '15px',
+    },
+    inputImage: {
+        display: 'none',
     },
     btnPhotoCamera: {
         marginTop: '10px',
@@ -44,6 +32,17 @@ export default makeStyles((theme) => ({
     },
     btnCancel: {
         marginLeft: '10px',
+    },
+    mtb_20: {
+        marginTop: '20px',
+        marginBottom: '20px'
+    },
+    form: {
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        width: '600px',
+        margin: '90px auto',
     },
     [theme.breakpoints.down('xs')]: {
         gridRight: {

@@ -15,6 +15,7 @@ import {
     ExitToApp
 } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import useStyles from './styles'
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,6 +45,12 @@ function BrandHeader(props) {
         setAnchorEl(null);
     };
 
+    //handle to go to user profile
+    const handleGoToProfile = (type) => {
+        history.push('/dashboard/brand/profile')
+        handleMenuClose();
+    };
+
     //Logout
     const logout = () => {
         dispatch({
@@ -65,6 +72,18 @@ function BrandHeader(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+            <MenuItem onClick={handleGoToProfile}>
+                <IconButton
+                    aria-label="account of current user"
+                    aria-controls="primary-search-account-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                <p>My Profile</p>
+            </MenuItem>
+
             <MenuItem onClick={logout}>
                 <IconButton aria-label="logout" color="inherit">
                     <ExitToApp />
