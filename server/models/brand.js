@@ -12,10 +12,7 @@ const brandSchema = mongoose.Schema(
         },
         name: { type: String },
         description: { type: String },
-        category: {
-            type: String,
-            required: [true, 'Category can not be blanked.'],
-        },
+        category: { type: String },
         brandImage: { type: String },
         coverImage: { type: String },
     },

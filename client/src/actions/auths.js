@@ -59,7 +59,7 @@ export const checkCurrentUser = (history) => async (dispatch) => {
             });
         }
     } catch (error) {
-        const previousPath = history.location.pathname;
+        // const previousPath = history.location.pathname;
         dispatch({ type: CHECK_CURRENT_USER, data: null });
         dispatch({
             type: IS_USER_CHECKING,

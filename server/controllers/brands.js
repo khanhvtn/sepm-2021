@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import Brand from '../models/brand.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export const getBrands = async (req, res) => {
     try {
@@ -9,7 +11,7 @@ export const getBrands = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
-export const signInBrand = async (req, res) => {
+export const signin = async (req, res) => {
     const { email, password } = req.body;
     try {
         const existingBrand = await Brand.findOne({ email });
@@ -37,17 +39,22 @@ export const signInBrand = async (req, res) => {
         //response success
         res.status(200).json({ result: existingBrand, token });
     } catch (error) {
-        res.status(500).json({ message: 'Something went wrong.' });
+        res.status(500).json({ message: error.message });
     }
 };
 
-export const signUpBrand = async (req, res) => {
-    const { name, category, email, password } = req.body;
+export const signup = async (req, res) => {
+    const { name, email, password, confirmPassword } = req.body;
     try {
-        const existingBrand = await Brand.findOne({ username });
+        const existingBrand = await Brand.findOne({ email });
         // Response error if email already exists.
         if (existingBrand) {
             return res.status(404).json({ message: 'Brand already exists' });
+        }
+
+        //Reponse error if password and confirm password does no match
+        if (password !== confirmPassword) {
+            return res.status(404).json({ message: "Passwords don't match" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -56,13 +63,21 @@ export const signUpBrand = async (req, res) => {
             email,
             password: hashedPassword,
             name: name,
-            category: category
         });
 
+        const token = jwt.sign(
+            {
+                email: newBrand.email,
+                id: newBrand._id,
+            },
+            'vouchy123',
+            { expiresIn: '1h' }
+        );
+
         //response success
-        res.status(200).json({ result: newBrand });
+        res.status(200).json({ result: newBrand, token });
     } catch (error) {
-        res.status(500).json({ message: 'Something went wrong.' });
+        res.status(500).json({ message: error.message });
     }
 };
 

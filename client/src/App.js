@@ -72,16 +72,23 @@ const App = () => {
                 <Route path='/brand/:path?' exact>
                     <BlankLayout>
                         <Switch>
-                            <Route path='/brand/login' component={BrandLogin} />
+                            <Route path="/brand/login">
+                                <BrandLogin isSignup={false} />
+                            </Route>
+
+                            <Route path="/brand/register">
+                                <BrandLogin isSignup={true} />
+                            </Route>
+
                             <Route component={Error} />
                         </Switch>
                     </BlankLayout>
                 </Route>
-                
+
                 <Route path='/dashboard/brand/:path?' exact>
                     <BrandLayout>
                         <Switch>
-                            <Route path='/dashboard/brand' component={BrandHomeDashboard} exact/>
+                            <Route path='/dashboard/brand' component={BrandHomeDashboard} exact />
                             <Route path='/dashboard/brand/vouchers' component={VoucherHandle} />
                             <Route path='/dashboard/brand/codes' component={CodeHandle} />
                         </Switch>
