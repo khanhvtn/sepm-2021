@@ -62,7 +62,8 @@ export const checkCurrentBrand = (history) => async (dispatch) => {
                 type: IS_BRAND_CHECKING,
                 payload: true,
             });
-            const { data } = await api.checkCurrentUser();
+            const { data } = await api.checkCurrentBrand();
+            console.log(data)
             dispatch({
                 type: CHECK_CURRENT_BRAND,
                 data: { result: data.result, token: brandProfile.token },
@@ -85,6 +86,7 @@ export const checkCurrentBrand = (history) => async (dispatch) => {
             type: IS_BRAND_CHECKING,
             payload: false,
         });
+        console.log(error.message)
         // previousPath === '/'
         //     ? history.push('/')
         //     : history.push('/login', { isSignup: false, previousPath });

@@ -26,6 +26,7 @@ const VoucherList = () => {
     const dispatch = useDispatch();
     const vouchers = useSelector((state) => state.vouchers);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const brand = useSelector((state) => state.auth)
 
     const handleOpenDeleteDialog = () => {
         setOpenDeleteDialog(true)
@@ -42,6 +43,7 @@ const VoucherList = () => {
 
     useEffect(() => {
         dispatch(getVouchers());
+        console.log(brand)
     }, [dispatch]);
     return vouchers.isLoading ? (
         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
@@ -52,10 +54,11 @@ const VoucherList = () => {
         :
         vouchers.allVouchers.length == 0
             ? (
-                <Typography>No Vouchers</Typography>
+                <Typography>No Vouchers </Typography>
             )
             : (
                 <div>
+                   
                     <TableContainer component={Paper} className={classes.tableContainer}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>

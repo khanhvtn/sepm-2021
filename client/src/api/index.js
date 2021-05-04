@@ -41,6 +41,7 @@ export const fetchBrands = () => API.get('/brands');
 export const signInBrand = (formData) => API.post('/brands/signin', formData)
 export const signUpBrand = (formData) => API.post('brands/signup', formData)
 export const createBrand = (newBrand) => API.post('/brands', newBrand);
+export const checkCurrentBrand = () => API.get(`/brands/checkCurrentBrand`);
 export const updateBrand = (id, updateBrand) =>
     API.patch(`${'/brands'}/${id}`, updateBrand);
 export const deleteBrand = (id) => API.delete(`${'/brands'}/${id}`);

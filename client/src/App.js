@@ -33,6 +33,7 @@ import BrandHomeDashboard from './components/BrandDashboard/BrandHomeDashboard';
 import VoucherHandle from './components/BrandDashboard/VoucherHandle/VoucherHandle';
 import CodeHandle from './components/BrandDashboard/CodeHandle/CodeHandle';
 import BrandLogin from './components/BrandDashboard/BrandLogin/BrandLogin';
+import BrandPrivateRoute from './Routes/BrandPrivateRoute';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -88,9 +89,9 @@ const App = () => {
                 <Route path='/dashboard/brand/:path?' exact>
                     <BrandLayout>
                         <Switch>
-                            <Route path='/dashboard/brand' component={BrandHomeDashboard} exact />
-                            <Route path='/dashboard/brand/vouchers' component={VoucherHandle} />
-                            <Route path='/dashboard/brand/codes' component={CodeHandle} />
+                            <BrandPrivateRoute path='/dashboard/brand' component={BrandHomeDashboard} exact />
+                            <BrandPrivateRoute path='/dashboard/brand/vouchers' component={VoucherHandle} />
+                            <BrandPrivateRoute path='/dashboard/brand/codes' component={CodeHandle} />
                         </Switch>
                     </BrandLayout>
                 </Route>

@@ -43,6 +43,21 @@ export const signin = async (req, res) => {
     }
 };
 
+export const checkCurrentBrand = async (req, res) => {
+    const { userId } = req;
+
+    try {
+        const existingBrand = await Brand.findById(userId);
+        if (existingBrand) {
+            res.status(200).json({ result: existingBrand });
+        } else {
+            res.status(404).json({ message: "Brand doesn't exist" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const signup = async (req, res) => {
     const { name, email, password, confirmPassword } = req.body;
     try {

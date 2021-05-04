@@ -38,8 +38,6 @@ const BrandLogin = ({ isSignup }) => {
         setFormData(initialFormData);
     }, [location]);
 
-    console.log(auth)
-
     //Handle
     const handleSubmit = (e) => {
         e.preventDefault();
