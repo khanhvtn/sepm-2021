@@ -6,12 +6,13 @@ import auth from './auth';
 import users from './users';
 import error from './errors';
 import links from './links';
-
+import codes from './codes'
 export default combineReducers({
     brands,
     vouchers,
     auth,
     users,
     error,
-    links
+    links,
+    codes
 });

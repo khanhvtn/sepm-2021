@@ -18,6 +18,6 @@ router.patch('/:id', updateBrand);
 router.delete('/:id', deleteBrand);
 router.post('/signin', signin);
 router.post('/signup', signup)
-router.post('/checkCurrentBrand', auth, checkCurrentBrand)
+router.get('/checkCurrentBrand', auth, checkCurrentBrand)
 
 export default router;
