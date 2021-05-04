@@ -2,21 +2,21 @@ import { CircularProgress } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Redirect, useHistory } from 'react-router-dom';
-import { checkCurrentAdmin } from '../actions/admins';
+import { checkCurrentBrand } from '../actions/brands';
 
-const AdminPrivateRoute = ({ component: Component, ...rest }) => {
+const BrandPrivateRoute = ({ component: Component, ...rest }) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
     const { auth } = useSelector((state) => state);
 
     useEffect(() => {
-        dispatch(checkCurrentAdmin(history))
+        dispatch(checkCurrentBrand(history))
     }, []);
 
     return (
         <>
-            {auth.isAdminChecking ?
+            {auth.isBrandChecking ?
                 <div align="center">
                     <CircularProgress />
                 </div>
@@ -24,13 +24,13 @@ const AdminPrivateRoute = ({ component: Component, ...rest }) => {
                 <Route
                     {...rest}
                     render={(props) =>
-                        auth.adminData ? (
+                        auth.brandData ? (
                             <Component {...props} />
                         ) :
                             (
                                 <Redirect
                                     to={{
-                                        pathname: '/admin/login',
+                                        pathname: '/brand/login',
                                         state: {
                                             isSignup: false,
                                             previousPath: props.location.pathname,
@@ -46,4 +46,4 @@ const AdminPrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 
-export default AdminPrivateRoute;
+export default BrandPrivateRoute;

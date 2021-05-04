@@ -44,3 +44,8 @@ export const LINK_NOT_FOUND = 'LINK_NOT_FOUND';
 
 // Link History
 export const CREATE_HISTORY = 'CREATE_HISTORY';
+
+// Brand Action
+export const AUTH_BRAND = "AUTH_BRAND";
+export const IS_BRAND_CHECKING = "IS_BRAND_CHECKING";
+export const CHECK_CURRENT_BRAND = "CHECK_CURRENT_BRAND";

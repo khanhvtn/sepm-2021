@@ -15,6 +15,7 @@ import { LockOutlined } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { signin, signup } from '../../actions/auths';
+
 const initialFormData = {
     firstName: '',
     lastName: '',
@@ -146,8 +147,8 @@ const Auth = ({ isSignup }) => {
                         ) : isSignup ? (
                             'Sign Up'
                         ) : (
-                            'Sign In'
-                        )}
+                                    'Sign In'
+                                )}
                     </Button>
                     {/* <GoogleLogin
                         clientId="649113248320-vcuks8cgnta6u2uhdbm67m73go4h9kdh.apps.googleusercontent.com"

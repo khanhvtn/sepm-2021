@@ -27,14 +27,14 @@ function BrandHeader(props) {
     const classes = useStyles()
     const dispatch = useDispatch();
     const history = useHistory();
-    const { adminData } = useSelector((state) => state.auth);
-    const [user, setUser] = useState(adminData);
+    const { brandData } = useSelector((state) => state.auth);
+    const [user, setUser] = useState(brandData);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
     useEffect(() => {
-        setUser(adminData);
-    }, [adminData]);
+        setUser(brandData);
+    }, [brandData]);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);

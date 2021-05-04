@@ -136,8 +136,8 @@ export const checkCurrentAdmin = (history) => async (dispatch) => {
             type: IS_ADMIN_CHECKING,
             payload: false,
         });
-        previousPath === '/'
-            ? history.push('/dashboard/admin')
-            : history.push('/admin/login', { previousPath });
+        // previousPath === '/'
+        //     ? history.push('/dashboard/admin')
+        //     : history.push('/admin/login', { previousPath });
     }
 };

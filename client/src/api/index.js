@@ -7,12 +7,12 @@ API.interceptors.request.use((req) => {
         const token = JSON.parse(localStorage.getItem('userProfile')).token;
         req.headers.Authorization = `Bearer ${token}`;
     }
-    return req;
-});
-
-API.interceptors.request.use((req) => {
     if (localStorage.getItem('admin')) {
         const token = JSON.parse(localStorage.getItem('admin')).token;
+        req.headers.Authorization = `Bearer ${token}`;
+    }
+    if (localStorage.getItem('brandProfile')) {
+        const token = JSON.parse(localStorage.getItem('brandProfile')).token;
         req.headers.Authorization = `Bearer ${token}`;
     }
     return req;
@@ -38,8 +38,8 @@ export const userWinGame = (newUpdateUser) =>
 
 // API for Brand
 export const fetchBrands = () => API.get('/brands');
-export const signInBrands = (formData) => API.post('/brands/signin', formData)
-export const signUpBrands = (formData) => API.post('brands/signup', formData)
+export const signInBrand = (formData) => API.post('/brands/signin', formData)
+export const signUpBrand = (formData) => API.post('brands/signup', formData)
 export const createBrand = (newBrand) => API.post('/brands', newBrand);
 export const updateBrand = (id, updateBrand) =>
     API.patch(`${'/brands'}/${id}`, updateBrand);

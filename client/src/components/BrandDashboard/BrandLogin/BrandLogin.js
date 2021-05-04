@@ -6,19 +6,23 @@ import {
     Paper,
     Grid,
     Container,
-    Button
+    Button,
+    CircularProgress
 } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import Input from '../../Auth/Input';
+import { signin, signup } from '../../../actions/brands';
 
 
 const initialFormData = {
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: '',
 };
-const BrandLogin = () => {
+const BrandLogin = ({ isSignup }) => {
     //useState
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
@@ -27,16 +31,23 @@ const BrandLogin = () => {
     const history = useHistory();
     const location = useLocation();
     const { previousPath } = { ...location.state };
+    const { auth } = useSelector((state) => state);
 
     //useEffect
     useEffect(() => {
         setFormData(initialFormData);
     }, [location]);
 
+    console.log(auth)
+
     //Handle
     const handleSubmit = (e) => {
         e.preventDefault();
-        // dispatch(signin(formData, history, previousPath));
+        if (isSignup) {
+            dispatch(signup(formData, history));
+        } else {
+            dispatch(signin(formData, history, previousPath));
+        }
     };
 
     const handleChange = (e) => {
@@ -47,15 +58,33 @@ const BrandLogin = () => {
         setShowPassword(!showPassword);
     };
 
+    const switchAuth = () => {
+        //reset form data
+        setFormData(initialFormData);
+        history.push(isSignup ? '/brand/login' : '/brand/register');
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
                     <LockOutlined />
                 </Avatar>
-                <Typography variant="h5"> Sign In </Typography>
+                <Typography variant="h5"> {isSignup ? 'Sign Up' : 'Sign In'} </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
+                        {isSignup &&
+                            <>
+                                <Input
+                                    value={formData.firstName}
+                                    name="name"
+                                    label="name"
+                                    handleChange={handleChange}
+                                    autoFocus={true}
+                                />
+                            </>
+                        }
+
                         <Input
                             value={formData.email}
                             name="email"
@@ -71,6 +100,16 @@ const BrandLogin = () => {
                             type={showPassword ? 'text' : 'password'}
                             handleShowPassword={handleShowPassword}
                         />
+
+                        {isSignup && (
+                            <Input
+                                value={formData.confirmPassword}
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                handleChange={handleChange}
+                                type="password"
+                            />
+                        )}
                     </Grid>
 
                     <Button
@@ -80,8 +119,18 @@ const BrandLogin = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        {auth.isLoading ? <CircularProgress color="inherit" />
+                            : isSignup ? 'Sign Up' : 'Sign In'}
                     </Button>
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <Button onClick={switchAuth}>
+                                {isSignup
+                                    ? 'Alrady have an account? Sign In'
+                                    : `Don't have an account? Sign Up`}
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </form>
             </Paper>
         </Container>

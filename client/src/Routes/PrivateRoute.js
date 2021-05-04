@@ -10,7 +10,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
     return (
         <>
-            {auth.isUserChecking ? <CircularProgress /> :
+            {auth.isUserChecking ?
+                <div align="center">
+                    <CircularProgress />
+                </div>
+                :
                 <Route
                     {...rest}
                     render={(props) =>
