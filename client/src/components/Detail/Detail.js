@@ -42,7 +42,7 @@ const Detail = () => {
 
     const handleGoToBrandDetail = (id) => {
         history.push({
-            pathname: `/brands/${id}`
+            pathname: `/brand-home/${id}`
         })
     }
 
@@ -61,9 +61,9 @@ const Detail = () => {
             <Card className={classes.root}>
                 <div className={classes.detailWithMedia}>
                     <CardActions className={classes.branding}>
-                        <Link onClick={() => handleGoToBrandDetail(voucher.creator)}>
-                            <Typography>{voucher.brand}</Typography>
-                        </Link>
+                      
+                            <Typography className={classes.brandName} onClick={() => handleGoToBrandDetail(voucher.creator)}>{voucher.brand}</Typography>
+                        
                     </CardActions>
                     <CardContent className={classes.content}>
                         <Typography className={classes.title} component="h5" variant="h5">

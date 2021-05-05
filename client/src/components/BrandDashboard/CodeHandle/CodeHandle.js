@@ -24,6 +24,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { createCode, deleteCode, getCodes } from '../../../actions/codes';
 
 
+
 const initialVoucherCode = {
     code: "",
     voucher: ""
@@ -34,8 +35,9 @@ const CodeHandle = () => {
     const dispatch = useDispatch();
     const vouchers = useSelector((state) => state.vouchers);
     const codes = useSelector((state) => state.codes);
-
+    const [activeModal, setActiveModal] = useState(null);
     const brandInfo = useSelector((state) => state.auth.brandData.result)
+    const [initialBrandInfo, setInitialBrandInfo] = useState([]);
     const [code, setCode] = useState(initialVoucherCode)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -45,6 +47,12 @@ const CodeHandle = () => {
         dispatch(getVouchers());
         dispatch(getCodes());
     }, [dispatch]);
+
+    useEffect(() => {
+        setInitialBrandInfo(codes)
+    }, [dispatch]);
+
+  
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -64,13 +72,13 @@ const CodeHandle = () => {
     };
 
 
-    const handleDialogOpen = () => {
-        setOpen(true);
+    const handleDialogOpen = (e, id) => {
+        setActiveModal(id)
 
     };
 
     const handleDialogClose = () => {
-        setOpen(false);
+        setActiveModal(null)
     };
 
     const handleDeleteBrand = (id) => {
@@ -81,14 +89,13 @@ const CodeHandle = () => {
         dispatch(createCode(code))
         clearField();
         handleDialogClose();
-        location.reload();
+        
 
     }
 
     const handleDeleteCode = (id) => {
         dispatch(deleteCode(id));
         handleDialogClose();
-        location.reload();
 
     }
 
@@ -172,10 +179,12 @@ const CodeHandle = () => {
                                                     <TableCell align="right">{moment(voucher.startedDate).format('LL')}</TableCell>
                                                     <TableCell align="right">{moment(voucher.expiredDate).format('LL')}</TableCell>
                                                     <TableCell align="right">{voucher.isActive == true ? "Verified" : "Unverifed"}</TableCell>
-                                                    <TableCell align="right">{codes.allCodes.length == 0 ?  "0" : codes.allCodes.filter((code) => code.voucher === voucher._id && code.isSold == false).length}</TableCell>
+                                                    <TableCell align="right">{codes.allCodes.length == 0 ? "0" :  Array.isArray(codes.allCodes) ? codes.allCodes.filter((code) => code.voucher === voucher._id && code.isSold == false).length : 
+                                                    <CircularProgress/>
+                                                    }</TableCell>
                                                     <TableCell align="right">
-                                                        <Button color="secondary" onClick={handleDialogOpen}>ADD CODE</Button>
-                                                        <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
+                                                        <Button color="secondary" onClick={(e) => handleDialogOpen(e, voucher._id)}>ADD CODE</Button>
+                                                        <Dialog open={activeModal === voucher._id} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
                                                             <DialogTitle id="form-dialog-title">ADD CODE</DialogTitle>
                                                             <DialogContent>
                                                                 <DialogContentText>
@@ -193,7 +202,7 @@ const CodeHandle = () => {
                                                                     </TableHead>
                                                                 </TableContainer>
                                                                 <TableBody>
-                                                                    {codes.allCodes.length !== 0 ? codes.allCodes.filter((code) => code.voucher === voucher._id).map((code) => (
+                                                                    {codes.allCodes.length !== 0 && Array.isArray(codes.allCodes) ? codes.allCodes.filter((code) => code.voucher === voucher._id).map((code) => (
                                                                         <TableRow id={code._id}>
                                                                             <TableCell>
                                                                                 {code.code}

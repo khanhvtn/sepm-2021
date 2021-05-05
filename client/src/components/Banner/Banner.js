@@ -13,13 +13,15 @@ import { Link } from 'react-router-dom'
 const Banner = ({ isBannerStatus, brandInfo }) => {
     const classes = useStyles();
     const [displayCardMedia, setDisplayCardMedia] = useState(true)
-    const { title, description, button, image, brand, isBanner } = isBannerStatus
+    const { title, description, button, image, brand, isBanner } = false
 
     const readFullDescription = () => {
         setDisplayCardMedia(!displayCardMedia)
     }
 
-    return (
+    return brandInfo == null ? (
+        <></>
+    ):(
         <>
             <Card className={classes.root}>
                 <div className={displayCardMedia ? classes.details : classes.detailsNoMedia}>
