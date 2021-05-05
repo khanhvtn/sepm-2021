@@ -40,6 +40,12 @@ const Detail = () => {
         })
     }
 
+    const handleGoToBrandDetail = (id) => {
+        history.push({
+            pathname: `/brands/${id}`
+        })
+    }
+
     useEffect(() => {
         setUser(authData)
     }, [authData])
@@ -55,7 +61,7 @@ const Detail = () => {
             <Card className={classes.root}>
                 <div className={classes.detailWithMedia}>
                     <CardActions className={classes.branding}>
-                        <Link href="#">
+                        <Link onClick={() => handleGoToBrandDetail(voucher.creator)}>
                             <Typography>{voucher.brand}</Typography>
                         </Link>
                     </CardActions>

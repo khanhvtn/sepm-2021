@@ -108,7 +108,7 @@ const App = () => {
                             <Route exact path="/create-voucher" component={CreateVoucher} />
                             <Route exact path="/create-brand" component={CreateBrand} />
                             {/* End Testing */}
-                            <Route exact path="/brand-home" component={BrandHome} />
+                            <Route exact path="/brand-home/:id" component={BrandHome} />
 
                             <Route path="/login">
                                 <Auth isSignup={false} />

@@ -129,7 +129,7 @@ function BrandHeader(props) {
                                     onClick={handleProfileMenuOpen}
                                     className={classes.iconButtonAvatar}>
                                     <Avatar
-                                        src="/static/images/avatar/1.jpg"
+                                        src={user.brandImage}
                                         alt="My Avatar" />
                                 </IconButton>
                             )}

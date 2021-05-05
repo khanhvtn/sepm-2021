@@ -21,7 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { createCode, getCodes } from '../../../actions/codes';
+import { createCode, deleteCode, getCodes } from '../../../actions/codes';
 
 
 const initialVoucherCode = {
@@ -66,7 +66,7 @@ const CodeHandle = () => {
 
     const handleDialogOpen = () => {
         setOpen(true);
-        
+
     };
 
     const handleDialogClose = () => {
@@ -81,6 +81,15 @@ const CodeHandle = () => {
         dispatch(createCode(code))
         clearField();
         handleDialogClose();
+        location.reload();
+
+    }
+
+    const handleDeleteCode = (id) => {
+        dispatch(deleteCode(id));
+        handleDialogClose();
+        location.reload();
+
     }
 
     const clearField = () => {
@@ -147,7 +156,7 @@ const CodeHandle = () => {
                                         </TableHead>
                                         <TableBody>
                                             {vouchers.allVouchers.filter((voucher) => voucher.creator === brandInfo._id).map((voucher) => (
-                                                <TableRow key={voucher._id}>
+                                                <TableRow key={voucher._id} >
                                                     <TableCell scope="row">
                                                         <img src={voucher.image} className={classes.rowImage} />
                                                     </TableCell>
@@ -163,15 +172,50 @@ const CodeHandle = () => {
                                                     <TableCell align="right">{moment(voucher.startedDate).format('LL')}</TableCell>
                                                     <TableCell align="right">{moment(voucher.expiredDate).format('LL')}</TableCell>
                                                     <TableCell align="right">{voucher.isActive == true ? "Verified" : "Unverifed"}</TableCell>
-                                                    <TableCell align="right">{codes.allCodes.filter((code) => code.voucher === voucher._id && code.isSold == false).length}</TableCell>
+                                                    <TableCell align="right">{codes.allCodes.length == 0 ?  "0" : codes.allCodes.filter((code) => code.voucher === voucher._id && code.isSold == false).length}</TableCell>
                                                     <TableCell align="right">
                                                         <Button color="secondary" onClick={handleDialogOpen}>ADD CODE</Button>
                                                         <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
                                                             <DialogTitle id="form-dialog-title">ADD CODE</DialogTitle>
                                                             <DialogContent>
                                                                 <DialogContentText>
-                                                                    Fill in your code for your vouchers
-          </DialogContentText>
+                                                                    Here are a list of codes:
+                                                                </DialogContentText>
+
+                                                                <TableContainer component={Paper} className={classes.tableContainer}>
+                                                                    <TableHead>
+                                                                        <TableRow>
+                                                                            <TableCell align="left">Code</TableCell>
+                                                                            <TableCell align="right">Status</TableCell>
+                                                                            <TableCell align="right">Action</TableCell>
+
+                                                                        </TableRow>
+                                                                    </TableHead>
+                                                                </TableContainer>
+                                                                <TableBody>
+                                                                    {codes.allCodes.length !== 0 ? codes.allCodes.filter((code) => code.voucher === voucher._id).map((code) => (
+                                                                        <TableRow id={code._id}>
+                                                                            <TableCell>
+                                                                                {code.code}
+                                                                            </TableCell>
+                                                                            <TableCell>
+                                                                                {code.status == true ? "Sold" : "Available"}
+                                                                            </TableCell>
+                                                                            <TableCell>
+                                                                                <Button color="secondary" onClick={(e) => handleDeleteCode(code._id)} >Remove</Button>
+
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    )) : (
+                                                                        <Typography>No Code Added</Typography>
+                                                                    )}
+                                                                </TableBody>
+
+
+                                                                <DialogContentText>
+                                                                    Please fill in the field below to create new codes:
+                                                                </DialogContentText>
+
                                                                 <TextField
                                                                     autoFocus
                                                                     margin="dense"
@@ -180,7 +224,7 @@ const CodeHandle = () => {
                                                                     type="text"
                                                                     fullWidth
                                                                     value={code.code}
-                                                                    onChange={(e) => setCode({...code, code:e.target.value, voucher: voucher._id})}
+                                                                    onChange={(e) => setCode({ ...code, code: e.target.value, voucher: voucher._id })}
                                                                 />
                                                             </DialogContent>
                                                             <DialogActions>

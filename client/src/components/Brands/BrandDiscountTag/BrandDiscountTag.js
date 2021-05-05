@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useStyles from './styles';
 import { CardActions, Typography, Chip } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
-const BrandDiscountTag = ({ brand }) => {
+import { useHistory } from 'react-router-dom'
+
+const BrandDiscountTag = ({ voucher }) => {
     const classes = useStyles();
+
+    const history = useHistory();
+    const handleGoToDetail = (voucher) => {
+        history.push({
+            pathname: `/detail/${voucher._id}`,
+            state: { voucher: voucher }
+        })
+    }
+
+
     return (
         <>
-            { !brand ?
+            { !voucher ?
                 <Card className={classes.root}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
@@ -42,14 +54,19 @@ const BrandDiscountTag = ({ brand }) => {
                         </CardActions>
                         <CardContent className={classes.content}>
                             <Typography className={classes.title} component="h5" variant="h5">
-                                {brand.title}
+                                {voucher.title}
                             </Typography>
                         </CardContent>
                         <CardContent className={classes.description}>
                             <Typography className={classes.textDescription} variant="subtitle1" color="textSecondary">
-                                {brand.description}
+                                {voucher.description}
                             </Typography>
                         </CardContent>
+                        <div className={classes.controls}>
+                            <Button size="large" className={classes.getButton} onClick={() => handleGoToDetail(voucher)} variant="outlined" color="primary">
+                                Get now
+                        </Button>
+                        </div>
                     </div>
 
                 </Card>

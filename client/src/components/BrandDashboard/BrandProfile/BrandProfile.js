@@ -168,7 +168,7 @@ const BrandProfile = () => {
                         >
 
                             <Typography variant="h4" gutterBottom>
-                                Apple
+                                {brandInfo.name}
                             </Typography>
                             {auth.isLoading ? <CircularProgress />
                                 :

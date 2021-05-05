@@ -36,6 +36,7 @@ export const userWinGame = (newUpdateUser) => API.post(`/user/wingame`, newUpdat
 
 // API for Brand
 export const fetchBrands = () => API.get('/brands');
+export const getBrand = (id) => API.get(`/brands/information/${id}`)
 export const signInBrand = (formData) => API.post('/brands/signin', formData)
 export const signUpBrand = (formData) => API.post('brands/signup', formData)
 export const createBrand = (newBrand) => API.post('/brands', newBrand);
@@ -66,3 +67,4 @@ export const trackUser = (clientToken) => API.post('/links/track/user', clientTo
 // API for code
 export const fetchCodes = () => API.get('/codes')
 export const createCode = (newCode) => API.post('/codes', newCode)
+export const deleteCode = (id) => API.delete(`/codes/${id}`);
