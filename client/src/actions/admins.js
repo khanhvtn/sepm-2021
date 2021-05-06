@@ -1,11 +1,13 @@
 import * as api from '../api';
-import { 
-    FETCH_ALL_USER, 
-    DELETE, UPDATE, 
-    AUTH_ADMIN, 
-    CHECK_CURRENT_ADMIN, 
-    FETCH_ACCEPTED_VOUCHER, 
-    PUBLISH_VOUCHER,
+import {
+    FETCH_ALL_USER,
+    DELETE,
+    UPDATE,
+    AUTH_ADMIN,
+    CHECK_CURRENT_ADMIN,
+    FETCH_ACCEPTED_VOUCHER,
+    UPDATE_ACTIVE_VOUCHER,
+    UPDATE_PUBLISH_VOUCHER,
     USER_PENDING,
     IS_ADMIN_CHECKING,
     USER_LOADING,
@@ -59,8 +61,10 @@ export const getPublishedVoucher = () => async (dispatch) => {
 export const setVoucherStatus = (id, action) => async (dispatch) => {
     try {
         console.log(action)
+        // dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.setVoucher(id, action);
-        dispatch({ type: UPDATE, payload: data });
+        dispatch({ type: UPDATE_ACTIVE_VOUCHER, payload: data });
+        // dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message);
     }
@@ -68,11 +72,10 @@ export const setVoucherStatus = (id, action) => async (dispatch) => {
 
 export const publishVoucher = (id, action) => async (dispatch) => {
     try {
-        console.log(id)
-        dispatch({ type: VOUCHER_PENDING, payload: true });
+        // dispatch({ type: VOUCHER_PENDING, payload: true });
         const { data } = await api.setVoucherPublish(id, action);
-        dispatch({ type: PUBLISH_VOUCHER, payload: data });
-        dispatch({ type: VOUCHER_PENDING, payload: false });
+        dispatch({ type: UPDATE_PUBLISH_VOUCHER, payload: data });
+        // dispatch({ type: VOUCHER_PENDING, payload: false });
     } catch (error) {
         console.log(error.message)
     }

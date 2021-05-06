@@ -4,7 +4,8 @@ import {
     UPDATE,
     FETCH_ALL_VOUCHER,
     FETCH_ACCEPTED_VOUCHER,
-    PUBLISH_VOUCHER,
+    UPDATE_PUBLISH_VOUCHER,
+    UPDATE_ACTIVE_VOUCHER,
     FETCH_BY_CATEGORY,
     VOUCHER_PENDING,
     FETCH_PUBLISHED_VOUCHER
@@ -34,11 +35,17 @@ const voucherReducer = (vouchers = initialState, action) => {
             return { ...vouchers, allVouchers: action.payload };
         case UPDATE:
             return {
-                ...vouchers, allVouchers: vouchers.acceptedVouchers.map((voucher) =>
+                ...vouchers, allVouchers: vouchers.allVouchers.map((voucher) =>
                     voucher._id === action.payload._id ? action.payload : voucher
                 )
             };
-        case PUBLISH_VOUCHER:
+        case UPDATE_ACTIVE_VOUCHER:
+            return {
+                ...vouchers, allVouchers: vouchers.allVouchers.map((voucher) =>
+                    voucher._id === action.payload._id ? action.payload : voucher
+                )
+            };
+        case UPDATE_PUBLISH_VOUCHER:
             return {
                 ...vouchers, acceptedVouchers: vouchers.acceptedVouchers.map((voucher) =>
                     voucher._id === action.payload._id ? action.payload : voucher

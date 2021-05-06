@@ -21,7 +21,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { Chip, CircularProgress, Typography } from '@material-ui/core';
 import { getAcceptedVoucher, publishVoucher } from '../../../../actions/admins';
 
 
@@ -68,9 +68,7 @@ const ThreeDotMenu = ({ data }) => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={() => handlePublishVoucher(data)}>Publish</MenuItem>
-                <MenuItem onClick={() => handleUnpublishVoucher(data)}>
-                    Remove
-            </MenuItem>
+                <MenuItem onClick={() => handleUnpublishVoucher(data)}>Remove</MenuItem>
             </Menu>
         </>
     )
@@ -83,6 +81,7 @@ const VoucherState = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [open, setOpen] = useState(false);
+    const [reload, setReload] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -109,15 +108,19 @@ const VoucherState = () => {
         setOpen(false);
     };
 
+    const reloadTable = () => {
+        setReload(!reload)
+    }
+
 
     useEffect(() => {
         dispatch(getAcceptedVoucher())
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
     useEffect(() => {
         const listVouchers = !searchTerm ? vouchers.acceptedVouchers : vouchers.acceptedVouchers.filter(voucher => voucher.brand.toLowerCase().includes(searchTerm.toLowerCase()))
         setSearchResult(listVouchers)
-    }, [searchTerm, vouchers.isLoading]);
+    }, [searchTerm, vouchers.isLoading, vouchers.acceptedVouchers]);
 
     return (
         <>
@@ -149,7 +152,7 @@ const VoucherState = () => {
                                         Share voucher
                                     </Button>
                                     <Tooltip title="Reload">
-                                        <IconButton onClick={() => window.location.reload(false)}>
+                                        <IconButton onClick={reloadTable}>
                                             <RefreshIcon className={classes.block} color="inherit" />
                                         </IconButton>
                                     </Tooltip>
@@ -188,12 +191,27 @@ const VoucherState = () => {
                                         </TableHead>
                                         <TableBody>
                                             {searchResult.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((voucher) => (
-                                                <TableRow hover role="checkbox" key={voucher.title}>
+                                                <TableRow hover role="checkbox" key={voucher._id}>
                                                     <TableCell key='creatorName' align='left'>{voucher.brand}</TableCell>
                                                     <TableCell key='vTitle' align='left'>{voucher.title}</TableCell>
                                                     <TableCell key='name' align='left'>{voucher.price}</TableCell>
                                                     <TableCell key='_id' align='left'>{voucher._id}</TableCell>
-                                                    <TableCell key='status' align='left'>{voucher.isPublished ? 'Published' : 'Unpublished'}</TableCell>
+                                                    <TableCell key='status' align='left'>
+                                                        {voucher.isPublished ?
+                                                            <Chip
+                                                                className={classes.fixedWidthChip}
+                                                                size="small"
+                                                                label="Publish"
+                                                                color="primary"
+                                                            />
+                                                            :
+                                                            <Chip
+                                                                className={classes.setPendingColorChip}
+                                                                size="small"
+                                                                label="Pending"
+                                                            />
+                                                        }
+                                                    </TableCell>
                                                     <TableCell key='setting' align='center'>
                                                         <ThreeDotMenu data={voucher._id} />
                                                     </TableCell>

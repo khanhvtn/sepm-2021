@@ -18,11 +18,57 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { useDispatch, useSelector } from 'react-redux';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { Chip, CircularProgress, Menu, MenuItem, Typography } from '@material-ui/core';
 import { setVoucherStatus } from '../../../../actions/admins';
 import { getVouchers } from '../../../../actions/vouchers';
-import DoneIcon from '@material-ui/icons/Done';
-import CloseIcon from '@material-ui/icons/Close';
+
+
+const SecondDotMenu = ({ data, acceptVoucher, declineVoucher, classes }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDeclineVoucher = (id) => {
+        declineVoucher(id)
+        setAnchorEl(null)
+    };
+
+    const handleAcceptVoucher = (id) => {
+        acceptVoucher(id)
+        setAnchorEl(null)
+    };
+
+    return (
+        <>
+            <Chip
+                clickable
+                className={classes.setColorChip}
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                label="Pending"
+                size="small"
+                onClick={handleClick}
+            />
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={() => handleAcceptVoucher(data)}>Accept</MenuItem>
+                <MenuItem onClick={() => handleDeclineVoucher(data)}>Decline</MenuItem>
+            </Menu>
+        </>
+    )
+}
 
 const VouchersHandle = () => {
     const classes = useStyles();
@@ -33,6 +79,7 @@ const VouchersHandle = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
+    const [reload, setReload] = useState(false)
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -81,15 +128,18 @@ const VouchersHandle = () => {
         dispatch(setVoucherStatus(id, null))
     }
 
+    const reloadTable = () => {
+        setReload(!reload)
+    }
 
     useEffect(() => {
         dispatch(getVouchers());
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
     useEffect(() => {
         const listVouchers = !searchTerm ? vouchers.allVouchers : vouchers.allVouchers.filter(voucher => voucher.brand.toLowerCase().includes(searchTerm.toLowerCase()))
         setSearchResult(listVouchers)
-    }, [searchTerm, vouchers.isLoading]);
+    }, [searchTerm, vouchers.isLoading, vouchers.allVouchers]);
 
     return (
         <>
@@ -122,7 +172,7 @@ const VouchersHandle = () => {
                                         Add voucher
                                     </Button>
                                     <Tooltip title="Reload">
-                                        <IconButton onClick={() => window.location.reload(false)}>
+                                        <IconButton onClick={reloadTable}>
                                             <RefreshIcon className={classes.block} color="inherit" />
                                         </IconButton>
                                     </Tooltip>
@@ -154,7 +204,7 @@ const VouchersHandle = () => {
                                                 <TableCell key='title'> Title </TableCell>
                                                 <TableCell key='price'> Price </TableCell>
                                                 <TableCell key='voucher-id'> VID </TableCell>
-                                                <TableCell key='setting' />
+                                                <TableCell key='setting' align="center">Status </TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -165,27 +215,33 @@ const VouchersHandle = () => {
                                                     <TableCell key='name' align='left'>{voucher.price}</TableCell>
                                                     <TableCell key='_id' align='left'>{voucher._id}</TableCell>
                                                     <TableCell key='setting' align='center'>
-                                                        {voucher.isActive === true && <DoneIcon color='primary' />}
-                                                        {voucher.isActive === false && <CloseIcon color='secondary' />}
 
                                                         {voucher.isActive === null ?
-                                                            <>
-                                                                <Button
-                                                                    className={classes.pd5}
-                                                                    variant="contained"
-                                                                    onClick={() => acceptVoucher(voucher._id)}
-                                                                    color="primary">
-                                                                    Accept
-                                                            </Button>
-                                                                <Button
-                                                                    className={classes.pd5}
-                                                                    variant="contained"
+                                                            <SecondDotMenu
+                                                                data={voucher._id}
+                                                                acceptVoucher={acceptVoucher}
+                                                                declineVoucher={declineVoucher}
+                                                                classes={classes}
+                                                            />
+                                                            : voucher.isActive
+                                                                ?
+                                                                <Chip
+                                                                    clickable
+                                                                    className={classes.fixedWidthChip}
+                                                                    size="small"
+                                                                    label="Accept"
+                                                                    color="primary"
                                                                     onClick={() => declineVoucher(voucher._id)}
-                                                                    color="secondary">
-                                                                    Decline
-                                                            </Button>
-                                                            </>
-                                                            : null
+                                                                />
+                                                                :
+                                                                <Chip
+                                                                    clickable
+                                                                    className={classes.fixedWidthChip}
+                                                                    size="small"
+                                                                    label="Decline"
+                                                                    color="secondary"
+                                                                    onClick={() => acceptVoucher(voucher._id)}
+                                                                />
                                                         }
                                                     </TableCell>
                                                 </TableRow>

@@ -36,6 +36,7 @@ const UsersHandle = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
+    const [reload, setReload] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResult, setSearchResult] = useState([])
@@ -78,9 +79,13 @@ const UsersHandle = () => {
         setAnchorEl(null)
     }
 
+    const reloadTable = () => [
+        setReload(!reload)
+    ]
+
     useEffect(() => {
         dispatch(getUsers());
-    }, [dispatch]);
+    }, [dispatch, reload]);
 
     useEffect(() => {
         const listUsers = !searchTerm ? users.users : users.users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -119,7 +124,7 @@ const UsersHandle = () => {
                                         Add user
                                     </Button>
                                     <Tooltip title="Reload">
-                                        <IconButton onClick={() => window.location.reload(false)}>
+                                        <IconButton onClick={reloadTable}>
                                             <RefreshIcon className={classes.block} color="inherit" />
                                         </IconButton>
                                     </Tooltip>

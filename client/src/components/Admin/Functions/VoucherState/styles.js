@@ -35,5 +35,11 @@ export default makeStyles((theme) => ({
     },
     pd5: {
         margin: '2px'
+    },
+    fixedWidthChip: {
+        minWidth: 65
+    },
+    setPendingColorChip: {
+        backgroundColor: '#ffeb3b'
     }
 }));
