@@ -8,7 +8,8 @@ import {
     IS_BRAND_CHECKING,
     CHECK_CURRENT_BRAND,
     AUTH_BRAND,
-    USER_LOADING
+    USER_LOADING,
+    GET_BRAND_SPECIFC
 } from '../constants/actionTypes';
 
 //Action Brand
@@ -23,6 +24,15 @@ export const getBrands = () => async (dispatch) => {
         console.log(error.message);
     }
 };
+
+export const getBrand = (id) => async(dispatch) => {
+    try {
+       const {data} = await api.getBrand(id);
+       dispatch({type: GET_BRAND_SPECIFC, payload: data}) 
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 export const createBrand = (newBrand) => async (dispatch) => {
     try {

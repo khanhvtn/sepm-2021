@@ -15,6 +15,12 @@ export default makeStyles((theme) => ({
         "-webkit-box-orient": "vertical",
         fontSize: 16
     },
+    brandImageCover: {
+        borderRadius: "80%",
+        width: '50%',
+        height: '50%',
+        paddingTop: '56.25%'
+    },
 
     brandDesc1: {
         fontSize: 16

@@ -15,4 +15,9 @@ export default makeStyles((theme) => ({
         maxWidth: "70%",
         maxHeight: "70%"
     },
+    codeList: {
+        ...theme.typography.button,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(1),
+    }
 }));

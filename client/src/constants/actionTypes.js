@@ -49,8 +49,11 @@ export const CREATE_HISTORY = 'CREATE_HISTORY';
 // Code 
 export const FETCH_ALL_CODE = 'FETCH_ALL_CODE';
 export const CREATE_CODE = 'CREATE_CODE'
+export const DELETE_CODE = 'DELETE_CODE'
+
 // Brand Action
 export const AUTH_BRAND = "AUTH_BRAND";
 export const IS_BRAND_CHECKING = "IS_BRAND_CHECKING";
 export const CHECK_CURRENT_BRAND = "CHECK_CURRENT_BRAND";
 export const UPDATE_BRAND = "UPDATE_BRAND";
+export const GET_BRAND_SPECIFC = "GET_BRAND_SPECIFIC"

@@ -120,6 +120,11 @@ export default makeStyles((theme) => ({
         
     },
 
+    brandName: {
+        cursor: "pointer",
+        color: "#bc348f"
+    },
+
     checkout:{
         padding: theme.spacing(2),
         textAlign: 'center'

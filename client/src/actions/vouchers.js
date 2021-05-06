@@ -50,6 +50,7 @@ export const deleteVoucher = (id) => async (dispatch) => {
     try {
         await api.deleteVoucher(id);
         dispatch({ type: DELETE, payload: id });
+        location.reload();
     } catch (error) {
         console.log(error.message);
     }

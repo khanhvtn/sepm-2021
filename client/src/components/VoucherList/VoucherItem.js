@@ -17,6 +17,13 @@ const VoucherItem = ({ voucher }) => {
         })
     }
 
+    const handleGoToBrandDetail = (id) => {
+        history.push({
+            pathname: `/brand-home/${id}`
+           
+        })
+    }
+
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
@@ -31,7 +38,7 @@ const VoucherItem = ({ voucher }) => {
                 <Card className={classes.root} onClick={() => handleGoToDetail(voucher)}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
-                            <Link href="/brand">
+                            <Link onClick={() => handleGoToBrandDetail(voucher.creator)}>
                                 <Typography>{voucher.brand}</Typography>
                             </Link>
                         </CardActions>

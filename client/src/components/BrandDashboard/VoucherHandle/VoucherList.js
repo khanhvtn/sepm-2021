@@ -27,13 +27,14 @@ const VoucherList = () => {
     const vouchers = useSelector((state) => state.vouchers);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const brand = useSelector((state) => state.auth.brandData.result)
+    const [activeDeleteModal, setActiveDeleteModal] = useState(null);
 
-    const handleOpenDeleteDialog = () => {
-        setOpenDeleteDialog(true)
+    const handleOpenDeleteDialog = (e, id) => {
+       setActiveDeleteModal(id)
     }
 
     const handleCloseDeleteDialog = () => {
-        setOpenDeleteDialog(false)
+        setActiveDeleteModal(null)
     }
 
     const handleDeleteVoucher = (id) => {
@@ -98,12 +99,12 @@ const VoucherList = () => {
                                         <TableCell>
                                             <Button color="secondary">Update</Button>
 
-                                            <Button color="secondary" onClick={handleOpenDeleteDialog}>Delete</Button>
+                                            <Button color="secondary" onClick={(e) => handleOpenDeleteDialog(e, voucher._id)}>Delete</Button>
 
                                         </TableCell>
 
                                         <Dialog
-                                            open={openDeleteDialog}
+                                            open={activeDeleteModal === voucher._id}
                                             onClose={handleCloseDeleteDialog}
                                             aria-labelledby="alert-dialog-title"
                                             aria-describedby="alert-dialog-description"

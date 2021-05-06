@@ -11,6 +11,17 @@ export const getBrands = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
+export const getBrand = async (req, res) => {
+    const {id: _id} = req.params;
+    try {
+        const brands = await Brand.findById(_id);
+        res.status(200).json(brands);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
 export const signin = async (req, res) => {
     const { email, password } = req.body;
     try {
