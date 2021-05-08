@@ -40,9 +40,6 @@ const VoucherHandle = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [voucherData, setVoucherData] = useState(initialVoucherData);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
     const brandInfo = useSelector((state) => state.auth.brandData.result)
 
@@ -50,6 +47,7 @@ const VoucherHandle = () => {
     useEffect(() => {
         setVoucherData({...voucherData, brand: brandInfo.name, creator: brandInfo._id})
     }, [dispatch]);
+
     const handleClickOpenDialog = () => {
         setOpen(true);
     };
@@ -69,36 +67,9 @@ const VoucherHandle = () => {
         setVoucherData(initialVoucherData)
     }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+    
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-
-    const handleDialogOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDialogClose = () => {
-        setOpen(false);
-    };
-
-    const handleDeleteBrand = (id) => {
-        setAnchorEl(null)
-    }
+   
 
     return (
         <>

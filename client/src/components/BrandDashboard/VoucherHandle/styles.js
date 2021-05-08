@@ -15,5 +15,10 @@ export default makeStyles((theme) => ({
         maxWidth: "70%",
         maxHeight: "70%"
     },
+
+    voucherInfoUpdate: {
+        color: "grey",
+        fontSize: 10
+    }
     
 }));
