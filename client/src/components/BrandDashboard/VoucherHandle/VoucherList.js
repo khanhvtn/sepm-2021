@@ -69,7 +69,7 @@ const VoucherList = () => {
         setActiveDeleteModal(null)
     }
 
-    const handleDeleteVoucher = (id) => {
+    const handleDeleteVoucher = (e ,id) => {
         dispatch(deleteVoucher(id));
         handleCloseDeleteDialog();
     }
