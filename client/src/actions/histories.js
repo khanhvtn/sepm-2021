@@ -1,11 +1,10 @@
 import * as api from '../api'
-import { CREATE_HISTORY, DELETE, FETCH_ALL, IS_SUCCESS_PURCHASE } from '../constants/actionTypes';
+import { CREATE_HISTORY, DELETE, FETCH_ALL, IS_SUCCESS_PURCHASE, FETCH_HISTORIES } from '../constants/actionTypes';
 
 export const getHistories = () => async (dispatch) => {
     try {
         const { data } = await api.fetchHistories();
-        dispatch({ type: FETCH_ALL, payload: data })
-        console.log(data)
+        dispatch({ type: FETCH_HISTORIES, payload: data })
     } catch (error) {
         console.log(error.message)
     }

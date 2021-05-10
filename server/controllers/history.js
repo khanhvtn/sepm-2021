@@ -9,7 +9,7 @@ import { html } from '../template/mail.js'
 
 export const getHistories = async (req, res) => {
     try {
-        const histories = await History.find()
+        const histories = await History.find().populate('voucher')
         // .populate('user').populate('voucher');
         res.status(200).json(histories)
     } catch (error) {

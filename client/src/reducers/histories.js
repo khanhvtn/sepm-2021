@@ -1,9 +1,14 @@
-import { CREATE_HISTORY, DELETE, UPDATE, FETCH_ALL } from '../constants/actionTypes';
+import { CREATE_HISTORY, DELETE, UPDATE, FETCH_ALL, FETCH_HISTORIES } from '../constants/actionTypes';
 
-const historyReducer = (histories = [], action) => {
+const initialState = {
+    histories: []
+}
+
+
+const historyReducer = (histories = initialState, action) => {
     switch (action.type) {
-        case FETCH_ALL:
-            return action.payload;
+        case FETCH_HISTORIES:
+            return {...histories, histories: action.payload};
         case CREATE_HISTORY:
             return [...histories, action.payload];
         case UPDATE:

@@ -7,6 +7,7 @@ import users from './users';
 import error from './errors';
 import links from './links';
 import codes from './codes'
+import histories from './histories'
 export default combineReducers({
     brands,
     vouchers,
@@ -14,5 +15,6 @@ export default combineReducers({
     users,
     error,
     links,
-    codes
+    codes,
+    histories
 });

@@ -208,7 +208,7 @@ const CodeHandle = () => {
                                                                                 {code.code}
                                                                             </TableCell>
                                                                             <TableCell>
-                                                                                {code.status == true ? "Sold" : "Available"}
+                                                                                {code.isSold == true ? "Sold" : "Available"}
                                                                             </TableCell>
                                                                             <TableCell>
                                                                                 <Button color="secondary" onClick={(e) => handleDeleteCode(code._id)} >Remove</Button>
