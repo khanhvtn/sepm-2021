@@ -65,6 +65,16 @@ export default makeStyles((theme) => ({
         paddingTop: '56.25%', // 16:9,
     },
 
+    root1: {
+        maxWidth: 345
+    },
+
+    media: {
+        width: '100%',
+        height: 140,
+        paddingTop: '56.25%', // 16:9,
+    },
+
     controls: {
         display: 'flex',
         alignItems: 'center',
@@ -72,7 +82,9 @@ export default makeStyles((theme) => ({
         paddingBottom: theme.spacing(3),
     },
 
-    getButton: {
+    brandName: {
+        color: "#e24378"
+    },Button: {
         border: '2px solid',
         fontWeight: 'bold',
     },

@@ -9,16 +9,23 @@ import Avatar from '@material-ui/core/Avatar';
 import { Delete, Edit } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { deleteBrand } from '../../../actions/brands';
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 
-const Brand = ({ brand, setCurrentId }) => {
+const Brand = ({ voucher }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
+    const handleGoToDetail = (voucher) => {
+        history.push({
+            pathname: `/detail/${voucher._id}`,
+            state: { voucher: voucher }
+        })
+    }
 
     return (
         <>
-            { !brand ?
+            { !voucher ?
                 <Card className={classes.root}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
@@ -52,48 +59,28 @@ const Brand = ({ brand, setCurrentId }) => {
                 <Card className={classes.root}>
                     <div className={classes.details}>
                         <CardActions className={classes.branding}>
-                            <Link to="/brand">
-                                <Avatar className={classes.logo} alt='logo' src={brand.image} />
-                            </Link>
+                           <Typography className={classes.brandName}>{voucher.brand}</Typography>
                         </CardActions>
                         <CardContent className={classes.content}>
                             <Typography className={classes.title} component="h5" variant="h5">
-                                {brand.title}
+                                {voucher.title}
                             </Typography>
                         </CardContent>
                         <CardContent className={classes.description}>
                             <Typography className={classes.textDescription} variant="subtitle1" color="textSecondary">
-                                {brand.description}
+                                {voucher.description}
                             </Typography>
-                            <Grid item container justify="flex-end">
-                                <Button
-                                    size="medium"
-                                    variant="contained"
-                                    color="secondary"
-                                    startIcon={<Delete />}
-                                    onClick={() =>
-                                        dispatch(deleteBrand(brand._id))
-                                    }
-                                >
-                                    Remove
-                            </Button>
-                                <Button
-                                    onClick={() => setCurrentId(brand._id)}
-                                    style={{ marginLeft: 10 }}
-                                    size="medium"
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<Edit />}
-                                >
-                                    Edit
-                            </Button>
-                            </Grid>
                         </CardContent>
+                        <div className={classes.controls}>
+                            <Button className={classes.getButton} onClick={() => handleGoToDetail(voucher)} variant="outlined" color="primary">
+                                Get now
+                            </Button>
+                        </div>
                     </div>
                     <CardMedia
                         className={classes.cover}
-                        image={brand.image}
-                        title={brand.title}
+                        image={voucher.image}
+                        title={voucher.title}
                     />
                 </Card>
             }

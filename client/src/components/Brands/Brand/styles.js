@@ -5,6 +5,7 @@ export default makeStyles((theme) => ({
         display: 'flex',
         borderRadius: '0 24px 24px 24px',
         flexDirection: 'column',
+        
     },
     details: {
         display: 'flex',
@@ -25,12 +26,20 @@ export default makeStyles((theme) => ({
     content: {
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(1),
+        minHeight: 100
+    },
+
+
+    brandName:{
+      color:  "#e24378"
     },
 
     description: {
         flex: '1 0 auto',
         paddingLeft: theme.spacing(3),
         paddingTop: theme.spacing(3),
+        minHeight: 150
+
     },
 
     cover: {
