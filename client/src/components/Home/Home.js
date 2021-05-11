@@ -102,7 +102,7 @@ const Home = () => {
 
                 <Grid item xs={12} md={12}>
                     <Grid container justify="center" spacing={2}>
-                        {vouchers.allVouchers.map((voucher) => (
+                        {vouchers.allVouchers.filter((voucher) => voucher.isAvailable === true && new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now()).map((voucher) => (
                             <Grid
                                 xs={12}
                                 sm={6}

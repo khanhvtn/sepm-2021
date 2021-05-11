@@ -71,9 +71,9 @@ const BrandsHandle = () => {
         setOpen(false);
     };
 
-    const handleDeleteBrand = (id) => {
+    const handleDeleteBrand = (e, id) => {
         dispatch(deleteBrand(id))
-        setAnchorEl(null)
+      
     }
 
     const reloadTable = () => {
@@ -117,6 +117,7 @@ const BrandsHandle = () => {
                                     <Button variant="contained"
                                         color="primary"
                                         onClick={handleDialogOpen}
+                                        disabled
                                         className={classes.addUser}>
                                         Add brand
                                     </Button>
@@ -166,26 +167,10 @@ const BrandsHandle = () => {
                                                     <TableCell key='createdAt' align='left'>{moment(brand.createdAt).fromNow()}</TableCell>
                                                     <TableCell key='bid' align='left'>{brand._id}</TableCell>
                                                     <TableCell key='setting' align='right'>
-                                                        <IconButton
-                                                            aria-label="more"
-                                                            aria-controls="long-menu"
-                                                            aria-haspopup="true"
-                                                            onClick={handleClick}
-                                                        >
-                                                            <MoreVertIcon />
-                                                        </IconButton>
-                                                        <Menu
-                                                            id="simple-menu"
-                                                            anchorEl={anchorEl}
-                                                            keepMounted
-                                                            open={Boolean(anchorEl)}
-                                                            onClose={handleClose}
-                                                        >
-                                                            <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
-                                                            <MenuItem onClick={() => handleDeleteBrand(brand._id)}>
-                                                                Delete
-                                                        </MenuItem>
-                                                        </Menu>
+
+                                                        <Button color="primary" onClick={(e) => handleDeleteBrand(e, brand._id)}>
+                                                            Delete
+                                                        </Button>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}

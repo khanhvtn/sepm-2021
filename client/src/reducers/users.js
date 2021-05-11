@@ -12,7 +12,7 @@ const userReducer = (state = initialState, action) => {
         case USER_PENDING:
             return { ...state, isLoading: action.payload };
         case DELETE:
-            return state.filter((user) => user._id !== action.payload);
+            return state.filter((user) => user._id !== action.payload)
         default:
             return state;
     }

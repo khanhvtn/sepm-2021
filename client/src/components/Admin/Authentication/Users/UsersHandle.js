@@ -55,7 +55,7 @@ const UsersHandle = () => {
     };
 
 
-    const handleClick = (event) => {
+    const handleClick = (event, id) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -74,9 +74,8 @@ const UsersHandle = () => {
         setOpen(false);
     };
 
-    const handleDeleteUser = (id) => {
+    const handleDeleteUser = (e, id) => {
         dispatch(deleteUser(id))
-        setAnchorEl(null)
     }
 
     const reloadTable = () => [
@@ -119,6 +118,7 @@ const UsersHandle = () => {
                                     <Button
                                         variant="contained"
                                         color="primary"
+                                        disabled
                                         onClick={handleDialogOpen}
                                         className={classes.addUser}>
                                         Add user
@@ -166,27 +166,13 @@ const UsersHandle = () => {
                                                     <TableCell key='createdAt' align='left'>{moment(user.createdAt).format('LL')}</TableCell>
                                                     <TableCell key='name' align='left'>{user.name}</TableCell>
                                                     <TableCell key='_id' align='left'>{user._id}</TableCell>
+
                                                     <TableCell key='setting' align='right'>
-                                                        <IconButton
-                                                            aria-label="more"
-                                                            aria-controls="long-menu"
-                                                            aria-haspopup="true"
-                                                            onClick={handleClick}
-                                                        >
-                                                            <MoreVertIcon />
-                                                        </IconButton>
-                                                        <Menu
-                                                            id="simple-menu"
-                                                            anchorEl={anchorEl}
-                                                            keepMounted
-                                                            open={Boolean(anchorEl)}
-                                                            onClose={handleClose}
-                                                        >
-                                                            <MenuItem onClick={handleDialogOpen}>Edit</MenuItem>
-                                                            <MenuItem onClick={() => handleDeleteUser(user._id)}>
-                                                                Delete
-                                                        </MenuItem>
-                                                        </Menu>
+
+                                                        <Button color="primary" onClick={(e) => handleDeleteUser(e, user._id)}>
+                                                            Delete
+                                                        </Button>
+
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
