@@ -100,8 +100,8 @@ const Home = () => {
                 
                 </Typography>
 
-                <Grid item xs={12} md={12}>
-                    <Grid container justify="center" spacing={2}>
+                
+                    <Grid container justify="flex-start" spacing={2}>
                         {vouchers.allVouchers.filter((voucher) => voucher.isAvailable === true && new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now()).map((voucher) => (
                             <Grid
                                 xs={12}
@@ -111,11 +111,12 @@ const Home = () => {
                                 xl={4}
                                 key={voucher}
                                 item
+                                
                             >
                                 <Brand voucher={voucher} />
                             </Grid>
                         ))}
-                    </Grid>
+               
                 </Grid>
 
 
