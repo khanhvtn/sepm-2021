@@ -17,11 +17,12 @@ dotenv.config();
 
 
 //body parser
-app.use(bodyParser.urlencoded({  extended: true }));
-app.use(bodyParser.json({  extended: true }));
+app.use(bodyParser.urlencoded({  limit: "30mb" ,extended: true }));
+app.use(bodyParser.json({  limit: "30mb" ,extended: true }));
 
 //user Cors
 app.use(cors());
+
 
 //All Routes
 app.use('/api/vouchers', voucherRoutes);

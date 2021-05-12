@@ -34,6 +34,7 @@ export const createVoucher = (newVoucher) => async (dispatch) => {
     try {
         const { data } = await api.createVoucher(newVoucher);
         dispatch({ type: CREATE, payload: data });
+        location.reload();
     } catch (error) {
         console.log(error.message);
     }
@@ -42,6 +43,7 @@ export const updateVoucher = (id, updateVoucher) => async (dispatch) => {
     try {
         const { data } = await api.updateVoucher(id, updateVoucher);
         dispatch({ type: UPDATE, payload: data });
+        location.reload();
     } catch (error) {
         console.log(error.message);
     }
