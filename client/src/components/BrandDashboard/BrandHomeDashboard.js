@@ -89,13 +89,13 @@ const BrandHomeDashboard = () => {
 
 
 
-    return !histories.length ?
+    return histories.isLoading ?
         <Grid container className={classes.contentWrapper} direction="column" alignItems="stretch">
             <Grid item style={{ textAlign: 'center' }}>
                 <CircularProgress variant="indeterminate" />
             </Grid>
         </Grid>
-        : (
+        : histories.length === 0 ? <Typography className={classes.contentWrapper}>No Data</Typography> : (
             <>
                 <div className={classes.main}>
                     <Typography variant="h2" color="textSecondary" className={classes.titlePage}>

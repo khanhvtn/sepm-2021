@@ -21,7 +21,6 @@ export const IS_USER_CHECKING = 'IS_USER_CHECKING';
 export const IS_ADMIN_CHECKING = 'IS_ADMIN_CHECKING';
 export const USER_LOADING = 'USER_LOADING';
 export const UPDATE_USER = 'UPDATE_USER';
-export const IS_SUCCESS_PURCHASE = 'IS_SUCCESS_PURCHASE';
 export const USER_WIN_GAME = 'USER_WIN_GAME';
 
 //Auth Error actions
@@ -46,6 +45,10 @@ export const LINK_NOT_FOUND = 'LINK_NOT_FOUND';
 // Link History
 export const CREATE_HISTORY = 'CREATE_HISTORY';
 export const FETCH_HISTORIES = 'FETCH_HISTORIES'
+export const HISTORY_PENDING = 'HISTORY_PENDING';
+export const IS_SUCCESS_BUY = 'IS_SUCCESS_BUY';
+
+
 // Code 
 export const FETCH_ALL_CODE = 'FETCH_ALL_CODE';
 export const CREATE_CODE = 'CREATE_CODE'

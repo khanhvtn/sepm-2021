@@ -11,7 +11,6 @@ import {
     USER_LOADING,
     IS_USER_CHECKING,
     USER_WIN_GAME,
-    IS_SUCCESS_PURCHASE,
     IS_ADMIN_CHECKING,
     IS_BRAND_CHECKING
 } from '../constants/actionTypes';
@@ -137,11 +136,7 @@ const authReducer = (state = initialState, action) => {
                 //localStorage.clear();
                 return { ...state, brandData: action?.data };
             }
-        case IS_SUCCESS_PURCHASE:
-            return {
-                ...state,
-                isSuccessPurchase: action.payload
-            };
+       
         default:
             return state;
     }

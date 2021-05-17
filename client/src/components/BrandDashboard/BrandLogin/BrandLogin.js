@@ -76,7 +76,7 @@ const BrandLogin = ({ isSignup }) => {
                                 <Input
                                     value={formData.firstName}
                                     name="name"
-                                    label="name"
+                                    label="Name"
                                     handleChange={handleChange}
                                     autoFocus={true}
                                 />
@@ -124,7 +124,7 @@ const BrandLogin = ({ isSignup }) => {
                         <Grid item>
                             <Button onClick={switchAuth}>
                                 {isSignup
-                                    ? 'Alrady have an account? Sign In'
+                                    ? 'Already have an account? Sign In'
                                     : `Don't have an account? Sign Up`}
                             </Button>
                         </Grid>

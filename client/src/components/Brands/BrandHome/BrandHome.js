@@ -53,7 +53,7 @@ const Home = () => {
                 </Typography>
                 {vouchers.length !== 0 ?
                     <Grid container justify="center" spacing={2}>
-                        {vouchers.filter((voucher) => voucher.creator === brandInfo._id).map((voucher) => (
+                        {vouchers.filter((voucher) => voucher.creator === brandInfo._id && voucher.isAvailable === true && voucher.isActive === true && new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now()).map((voucher) => (
                             <Grid xs={12} sm={6} md={3} lg={3} xl={3} key={voucher._id} item justify="flex-start">
                                 <BrandDiscountTag voucher={voucher} />
                             </Grid>
