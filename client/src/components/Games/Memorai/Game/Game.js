@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { winGame } from '../../../../actions/auths';
 import { CLEAR_ERROR } from '../../../../constants/actionTypes';
 import GameMessage from '../../GameMessage';
+const maximumTimePlay = 60 //60 euqal to 1 minute
+let timer
 
 function shuffleArray(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -45,6 +47,8 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
     const [firstCard, setFirstCard] = useState(null);
     const [secondCard, setSecondCard] = useState(null);
     const [isWin, setIsWin] = useState(false);
+    const [timerPlay, setTimerPlay] = useState(maximumTimePlay);
+    const [isLostGame, setIsLostGame] = useState(false);
 
     function setCardIsFlipped(cardID, isFlipped) {
         setCards((prev) =>
@@ -65,7 +69,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
 
     // showcase
     useEffect(() => {
-        if (isWin) return;
+        if (isWin || isLostGame) return;
         setTimeout(() => {
             let index = 0;
             for (const card of cards) {
@@ -76,7 +80,23 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
             }
             setTimeout(() => setCanFlip(true), cards.length * 100);
         }, 3000);
-    }, [isWin]);
+        let maxTimePlay = maximumTimePlay;
+        timer = setInterval(() => {
+            setTimerPlay(--maxTimePlay)
+            if (maxTimePlay == 0) {
+                clearInterval(timer)
+                //set isLostGame
+                setIsLostGame(true)
+                //set disable flip function for all cards
+                for (const card of cards) {
+                    setCardCanFlip(card.id, false)
+                }
+            }
+        }, 1000);
+        return () => {
+            clearInterval(timer)
+        }
+    }, [isWin, isLostGame]);
 
     function resetFirstAndSecondCards() {
         setFirstCard(null);
@@ -86,9 +106,9 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
     const checkWinGame = () => {
         const isWin = cards.every((card) => card.isFlipped === false);
         if (isWin) {
+            clearInterval(timer)
             setIsWin((prevState) => ({ ...prevState, isWin }));
             //calculate points after user win the game
-
             const points = String(parseInt(userInfo.points) + 500);
             const newUpdatedUser = { ...userInfo, points };
             dispatch(winGame(newUpdatedUser));
@@ -99,6 +119,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
         dispatch({ type: CLEAR_ERROR });
         setCards(() => generateCards(totalCards));
         setIsWin(false);
+        setIsLostGame(false)
     };
     function onSuccessGuess() {
         setCardCanFlip(firstCard.id, false);
@@ -149,7 +170,8 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
             <Typography variant="h3" gutterBottom>
                 Memorai
             </Typography>
-            <GameMessage isWin={isWin} />
+            <GameMessage isWin={isWin} isLostGame={isLostGame} />
+            <Typography variant="h6">Timer: {timerPlay}s</Typography>
             <div className="cards-container">
                 {cards.map((card) => (
                     <Card
@@ -159,7 +181,7 @@ export default function Game({ fieldWidth = 6, fieldHeight = 3 }) {
                     />
                 ))}
             </div>
-            {isWin ? (
+            {isWin || isLostGame ? (
                 <Button
                     onClick={handlePlayAgagin}
                     className="btn-back"
