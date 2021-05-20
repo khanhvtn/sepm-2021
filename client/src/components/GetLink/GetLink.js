@@ -36,7 +36,7 @@ const GetLink = () => {
                         </Typography>
                         <Grid item xs={12} md={12}>
                             <Grid container justify="center" spacing={3}>
-                                {vouchers.publishedVouchers.filter(voucher => new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now()).map((voucher) => (
+                                {vouchers.publishedVouchers.filter(voucher => new Date(voucher.expiredDate).getTime() >= Date.now() && new Date(voucher.startedDate).getTime() <= Date.now() && voucher.isAvailable === true).map((voucher) => (
                                     <Grid
                                         xs={12}
                                         sm={4}
