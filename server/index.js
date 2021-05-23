@@ -23,6 +23,12 @@ app.use(bodyParser.json({  limit: "30mb" ,extended: true }));
 //user Cors
 app.use(cors());
 
+//Deploy config
+app.use(express.static(path.join(__dirname, '../build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build'))
+})
+
 
 //All Routes
 app.use('/api/vouchers', voucherRoutes);
