@@ -10,9 +10,10 @@ import historyRoutes from './routes/history.js'
 import codeRoutes from './routes/codes.js'
 import linkRoutes from './routes/links.js'
 import dotenv from 'dotenv';
+import path from 'path'
 
 const app = express();
-
+var __dirname = path.resolve();
 dotenv.config();
 
 
@@ -23,12 +24,15 @@ app.use(bodyParser.json({  limit: "30mb" ,extended: true }));
 //user Cors
 app.use(cors());
 
-//Deploy config
-app.use(express.static(path.join(__dirname, '../build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build'))
-})
-
+// Serve Static Access If In Production
+if(process.env.NODE_ENV === 'production') {
+    // set static folder
+    app.use(express.static('../client/build'));
+  
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+  }
 
 //All Routes
 app.use('/api/vouchers', voucherRoutes);
